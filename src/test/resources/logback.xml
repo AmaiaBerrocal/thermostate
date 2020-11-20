@@ -1,0 +1,26 @@
+<configuration>
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %p %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="roll-by-time"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/home/inigo/logs/thermostate.amaia.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/home/inigo/logs/thermostate.%d{yyyy-MM-dd}.amaia.log.zip
+            </fileNamePattern>
+            <maxHistory>20</maxHistory>
+            <totalSizeCap>1MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %p %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="debug">
+        <appender-ref ref="stdout"/>
+    </root>
+</configuration>
