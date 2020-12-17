@@ -8,15 +8,21 @@ import java.util.List;
 
 public class SqulitoConnection {
     public static void main(String args[]) {
-        //createTable();
-        //insertUser(new User("amarillo", "colorao", ""));
-        //User user = findUserByUsername("ROSA");
-        //User user = findUserById(2);
-        boolean isValid = isValidPassword("ROSA", "colorao");
+        /*
+        SqulitoConnection conn = new SqulitoConnection();
+        conn.createTable();
+        conn.insertUser(new User("amarillo", "verde", ""));
+        conn.insertUser(new User("rosa", "colorao", ""));
+        conn.insertUser(new User("cosas", "casi", ""));
+        conn.insertUser(new User("amar", "zurixe", ""));
+        User user = conn.findUserByUsername("ROSA");
+        user = conn.findUserById(2);
+        boolean isValid = conn.isValidPassword("rosa", "colorao");
         System.out.println(isValid);
+        */
     }
 
-    public static Connection createConnection() {
+    public Connection createConnection() {
         Connection c = null;
         try {
             Class.forName("org.sqlite.JDBC");
@@ -28,7 +34,7 @@ public class SqulitoConnection {
         return c;
     }
 
-    private static void createTable() {
+    private void createTable() {
         try(Connection c = createConnection();
             Statement stmt = c.createStatement()) {
 
@@ -45,7 +51,7 @@ public class SqulitoConnection {
         System.out.println("Table created successfully");
     }
 
-    public static void insertUser(User user) {
+    public void insertUser(User user) {
         try(Connection c = createConnection();
             PreparedStatement stmt = c.prepareStatement("INSERT INTO USERS (NAME,PASSWORD,SALT) VALUES (?, ?, ?);")) {
 
@@ -61,7 +67,7 @@ public class SqulitoConnection {
         System.out.println("Records created successfully");
     }
 
-    public static User findUserByUsername(String name) {
+    public User findUserByUsername(String name) {
         User user = null;
         try(Connection c = createConnection();
             PreparedStatement stmt = c.prepareStatement("SELECT * FROM USERS WHERE NAME=?;")) {
@@ -84,7 +90,7 @@ public class SqulitoConnection {
         return user;
     }
 
-    public static User findUserById(int id) {
+    public User findUserById(int id) {
         User user = null;
         try(Connection c = createConnection();
             PreparedStatement stmt = c.prepareStatement("SELECT * FROM USERS WHERE ID=?;")) {
@@ -105,10 +111,5 @@ public class SqulitoConnection {
             System.exit(0);
         }
         return user;
-    }
-
-    public static boolean isValidPassword(String name, String password) {
-        User user = findUserByUsername(name);
-        return (user.getPassword().equals(password));
     }
 }
