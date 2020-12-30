@@ -40,9 +40,11 @@ public class SqulitoConnection {
 
             String sql = "CREATE TABLE USERS" +
                     "(ID INTEGER PRIMARY KEY," +
-                    " NAME TEXT NOT NULL UNIQUE, " +
-                    " PASSWORD TEXT NOT NULL, " +
-                    " SALT TEXT)";
+                    " NAME TEXT NOT NULL UNIQUE," +
+                    " PASSWORD TEXT NOT NULL," +
+                    " SALT TEXT," +
+                    " ACTIVATION_DATE INTEGER," +
+                    " ACTIVE BOOLEAN)";
             stmt.executeUpdate(sql);
 
         } catch (Exception e) {
@@ -53,11 +55,14 @@ public class SqulitoConnection {
 
     public void insertUser(User user) {
         try(Connection c = createConnection();
-            PreparedStatement stmt = c.prepareStatement("INSERT INTO USERS (NAME,PASSWORD,SALT) VALUES (?, ?, ?);")) {
+            PreparedStatement stmt = c.prepareStatement(
+                    "INSERT INTO USERS (NAME,PASSWORD,SALT, ACTIVATION_DATE, ACTIVE) VALUES (?, ?, ?, ?, ?);")) {
 
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getPassword());
             stmt.setString(3, user.getSalt());
+            stmt.setInt(4, user.getActivationDate());
+            stmt.setBoolean(5, user.isActive());
             stmt.executeUpdate();
 
         } catch (Exception e) {
@@ -79,8 +84,9 @@ public class SqulitoConnection {
                         rs.getInt("ID"),
                         rs.getString("NAME"),
                         rs.getString("PASSWORD"),
-                        rs.getString("SALT")
-                        );
+                        rs.getString("SALT"),
+                        rs.getInt("ACTIVATION_DATE"),
+                        rs.getBoolean("ACTIVE"));
             }
 
         } catch (Exception e) {
@@ -102,8 +108,9 @@ public class SqulitoConnection {
                         rs.getInt("ID"),
                         rs.getString("NAME"),
                         rs.getString("PASSWORD"),
-                        rs.getString("SALT")
-                );
+                        rs.getString("SALT"),
+                        rs.getInt("ACTIVATION_DATE"),
+                        rs.getBoolean("ACTIVE"));
             }
 
         } catch (Exception e) {

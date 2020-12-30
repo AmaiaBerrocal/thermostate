@@ -1,11 +1,10 @@
 package com.thermostate.application;
 
 import com.thermostate.dominio.User;
+import com.thermostate.dominio.UserObjectMother;
 import com.thermostate.infrastructure.SqulitoConnection;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -23,20 +22,20 @@ class UsersTest {
 
     @Test
     public void should_return_true_if_user_with_given_password_exists(){
-        User user = new User("name","password", "salt");
+        User user = UserObjectMother.randomUser();
         when(conn.findUserByUsername(any())).thenReturn(user);
 
         Users users = new Users(conn);
-        assertTrue(users.isValidPassword("name", "password"));
+        assertTrue(users.isValidPassword(user.getName(), user.getPassword()));
     }
 
     @Test
     public void should_return_false_if_user_with_given_password_does_not_exists(){
-        User user = new User("name","password", "salt");
+        User user = UserObjectMother.randomUser();;
         when(conn.findUserByUsername(any())).thenReturn(user);
 
         Users users = new Users(conn);
-        assertFalse(users.isValidPassword("name", "tutifruti"));
+        assertFalse(users.isValidPassword(user.getName(), user.getPassword()+"ka"));
     }
 
     @Test
