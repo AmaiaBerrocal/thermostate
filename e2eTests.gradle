@@ -1,0 +1,43 @@
+sourceSets {
+    e2eTests {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/e2eTests/kotlin')
+        }
+        resources.srcDir file('src/e2eTests/resources')
+    }
+}
+rootProject.tasks.named("processE2eTestsResources") {
+    duplicatesStrategy = 'include'
+}
+
+task e2eTests(type: Test) {
+    useJUnitPlatform()
+    afterSuite { desc, result ->
+        if (!desc.parent) {
+            println "\n\nTest result: ${result.resultType}"
+            println "Test summary: ${result.testCount} tests, " +
+                    "${result.successfulTestCount} succeeded, " +
+                    "${result.failedTestCount} failed, " +
+                    "${result.skippedTestCount} skipped"
+        }
+    }
+    testClassesDirs = sourceSets.e2eTests.output.classesDirs
+    classpath = sourceSets.e2eTests.runtimeClasspath
+}
+
+dependencies {
+    e2eTestsImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.50"
+    e2eTestsImplementation "org.junit.jupiter:junit-jupiter:${junit5version}"
+    e2eTestsRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit5version}"
+    e2eTestsImplementation "org.springframework.boot:spring-boot-starter-test"
+    e2eTestsImplementation group: "com.google.code.gson", name: "gson", version: "${gsonversion}"
+    e2eTestsImplementation "org.assertj:assertj-core:${assertJVersion}"
+    e2eTestsImplementation "org.mockito:mockito-core:${mockitoVersion}"
+    e2eTestsImplementation "com.github.inigodm:E2EHelper:0.0.5"
+    e2eTestsImplementation group: "com.squareup.okhttp3", name: "okhttp", version: "${okhttp3}"
+    e2eTestsImplementation "org.xerial:sqlite-jdbc:${sqliteVersion}"
+    e2eTestsImplementation group: "org.junit.platform", name: "junit-platform-launcher", version: "1.8.2"
+
+}

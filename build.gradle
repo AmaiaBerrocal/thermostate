@@ -18,12 +18,16 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven { url 'https://jitpack.io' }
 }
+
+apply from: "./e2eTests.gradle"
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.36.0.3'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -32,7 +36,7 @@ dependencies {
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
 	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 	testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.22.0'
-
+	testImplementation 'com.github.inigodm:E2EHelper:0.0.5'
 }
 
 tasks.named('test') {
