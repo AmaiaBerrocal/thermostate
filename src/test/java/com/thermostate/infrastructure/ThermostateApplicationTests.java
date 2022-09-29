@@ -1,4 +1,4 @@
-package com.amaia.thermostate;
+package com.thermostate.infrastructure;
 
 import org.junit.jupiter.api.Test;
 

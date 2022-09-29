@@ -1,4 +1,4 @@
-package com.amaia.thermostate;
+package com.thermostate.infrastructure;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
