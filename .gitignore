@@ -41,3 +41,7 @@ gradlew
 gradlew.bat
 
 gradle/wrapper/
+
+*.db
+
+.gitignore
