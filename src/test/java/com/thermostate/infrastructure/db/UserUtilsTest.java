@@ -1,5 +1,7 @@
 package com.thermostate.infrastructure.db;
 
+import com.thermostate.shared.DbUtils;
+import com.thermostate.users.infrastucture.UserDbRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +22,7 @@ class UserUtilsTest {
     @Test
     public void users_table_should_be_create() throws SQLException {
         //given
-        UserUtils sut = new UserUtils(dbUtils);
+        UserDbRepo sut = new UserDbRepo(dbUtils);
         //when
         sut.createUserTable();
         //then
@@ -28,10 +30,10 @@ class UserUtilsTest {
     }
 
     String sql = "CREATE TABLE IF NOT EXISTS USERS (ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-            "NAME TEXT NOT NULL," +
+            "NAME TEXT UNIQUE NOT NULL," +
             "PASSWORD VARCHAR NOT NULL," +
             "SALT TEXT NOT NULL," +
-            "MAIL TEXT NOT NULL," +
-            "CREATE_AT DATE," +
+            "EMAIL TEXT UNIQUE NOT NULL," +
+            "CREATED_AT DATE," +
             "ACTIVE BOOLEAN);";
 }

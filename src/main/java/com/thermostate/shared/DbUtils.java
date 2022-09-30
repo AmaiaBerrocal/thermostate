@@ -1,6 +1,5 @@
-package com.thermostate.infrastructure.db;
+package com.thermostate.shared;
 
-import com.thermostate.infrastructure.properties.PropertiesLoader;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -29,12 +28,12 @@ public class DbUtils {
         }
     }
 
-    public void executeUpdate(String sql) throws SQLException {
+    public void executeUpdate(String sql) {
         try(Connection con = createConnection();
             Statement stms = con.createStatement()) {
             stms.executeUpdate(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("Unable to execute " + sql, e);
         }
     }
 

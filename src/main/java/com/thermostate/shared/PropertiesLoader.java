@@ -1,4 +1,4 @@
-package com.thermostate.infrastructure.properties;
+package com.thermostate.shared;
  
 import lombok.AllArgsConstructor;
 import lombok.Getter;
