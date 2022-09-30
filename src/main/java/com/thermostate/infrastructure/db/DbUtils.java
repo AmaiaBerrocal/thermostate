@@ -4,10 +4,11 @@ import com.thermostate.infrastructure.properties.PropertiesLoader;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Component
 @AllArgsConstructor
@@ -35,5 +36,30 @@ public class DbUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Map<String, Object>> executeQuery(String sql) {
+        System.out.println(sql);
+        try(Connection con = createConnection();
+            Statement stms = con.createStatement()) {
+            ResultSet result = stms.executeQuery(sql);
+            return resultToList(result);
+        } catch (Exception e) {
+            throw new RuntimeException("Error ejecutando la sql: " + sql, e);
+        }
+    }
+
+    public List<Map<String, Object>> resultToList(ResultSet result) throws SQLException {
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        while (result.next()) {
+            ResultSetMetaData md = result.getMetaData();
+            Map<String, Object> row = new HashMap<>();
+            int columns = md.getColumnCount();
+            for (int i = 1; i <= columns; i++) {
+                row.put(md.getColumnName(i), result.getObject(i));
+                resultList.add(row);
+            }
+        }
+        return resultList;
     }
 }
