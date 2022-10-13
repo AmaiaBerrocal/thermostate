@@ -28,6 +28,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation "org.xerial:sqlite-jdbc:${sqliteVersion}"
+	implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -36,7 +37,7 @@ dependencies {
 	testImplementation "org.junit.jupiter:junit-jupiter-api:${junit5version}"
 	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit5version}"
 	testImplementation group: 'org.assertj', name: 'assertj-core', version: "${assertJVersion}"
-	testImplementation 'com.github.inigodm:E2EHelper:0.0.5'
+	testImplementation 'com.github.inigodm:E2EHelper:master-SNAPSHOT'
 }
 
 tasks.named('test') {

@@ -1,4 +1,4 @@
-package com.thermostate.infrastructure;
+package com.thermostate;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

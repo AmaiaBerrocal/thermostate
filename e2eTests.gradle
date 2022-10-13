@@ -35,7 +35,7 @@ dependencies {
     e2eTestsImplementation group: "com.google.code.gson", name: "gson", version: "${gsonversion}"
     e2eTestsImplementation "org.assertj:assertj-core:${assertJVersion}"
     e2eTestsImplementation "org.mockito:mockito-core:${mockitoVersion}"
-    e2eTestsImplementation "com.github.inigodm:E2EHelper:0.0.5"
+    e2eTestsImplementation "com.github.inigodm:E2EHelper:master-SNAPSHOT"
     e2eTestsImplementation group: "com.squareup.okhttp3", name: "okhttp", version: "${okhttp3}"
     e2eTestsImplementation "org.xerial:sqlite-jdbc:${sqliteVersion}"
     e2eTestsImplementation group: "org.junit.platform", name: "junit-platform-launcher", version: "1.8.2"
