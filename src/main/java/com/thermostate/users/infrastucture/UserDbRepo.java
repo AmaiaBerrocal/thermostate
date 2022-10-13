@@ -9,10 +9,13 @@ import java.sql.SQLException;
 
 @Component
 public class UserDbRepo implements UserRepo {
+    //En lugar de heredar de DbUtils, tiene un objeto DbUtils como atributo y se le pasa al constructor.
+    //Se prioriza la creación de objetos frente a la hernecia (ya veré por qué en el libro Desing Patterns).
     final DbUtils dbUtils;
 
     public UserDbRepo(DbUtils dbUtils) {
         this.dbUtils = dbUtils;
+        //así tengo acceso a todos los métodos de DbUtils.
     }
 
     public void createUserTable() {
@@ -38,4 +41,7 @@ public class UserDbRepo implements UserRepo {
 
         dbUtils.executeUpdate(sql);
     }
+    //getUser
+    //delteUser
+    //updateUser
 }

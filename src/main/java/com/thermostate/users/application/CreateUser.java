@@ -1,5 +1,6 @@
 package com.thermostate.users.application;
 
+import com.thermostate.shared.ClientError;
 import com.thermostate.shared.HashGenerator;
 import com.thermostate.shared.RandomStringGenerator;
 import com.thermostate.users.model.User;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Component;
 public class CreateUser {
     final UserRepo userRepo;
     final RandomStringGenerator randomStringGenerator;
-
     final HashGenerator hashGenerator;
 
     public CreateUser(UserRepo userRepo, RandomStringGenerator randomStringGenerator, HashGenerator hashGenerator) {
@@ -20,11 +20,18 @@ public class CreateUser {
     }
 
     public void execute(String name, String password, String email) {
+        checkData(name, password, email);
         String salt = randomStringGenerator.generate();
         String hash = hashGenerator.generate(password, salt);
         User user = new User(name, hash, email, salt);
-        if (isValidName(name) && isValidPassword(password) && isValidEmail(email)) {
-            userRepo.create(user);
+        userRepo.create(user);
+    }
+
+    private void checkData(String name, String password, String email) {
+        if (!(isValidName(name)
+                && isValidPassword(password)
+                && isValidEmail(email))){
+            throw (new ClientError());
         }
     }
 
