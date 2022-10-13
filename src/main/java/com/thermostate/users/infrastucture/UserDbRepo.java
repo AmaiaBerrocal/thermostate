@@ -5,7 +5,6 @@ import com.thermostate.users.model.User;
 import com.thermostate.users.model.UserRepo;
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLException;
 
 @Component
 public class UserDbRepo implements UserRepo {
@@ -42,6 +41,6 @@ public class UserDbRepo implements UserRepo {
         dbUtils.executeUpdate(sql);
     }
     //getUser
-    //delteUser
+    //deleteUser
     //updateUser
 }
