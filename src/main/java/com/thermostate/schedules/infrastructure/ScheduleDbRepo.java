@@ -21,7 +21,7 @@ public class ScheduleDbRepo implements ScheduleRepo {
                 "TIME_FROM TEXT NOT NULL," +
                 "TIME_TO TEXT NOT NULL," +
                 "ACTIVE BOOLEAN," +
-                "MIN_TEMP DOUBLE," +
+                "MIN_TEMP INTEGER," +
                 "CREATED_AT DATE);";
         dbUtils.executeUpdate(sql);
     }
