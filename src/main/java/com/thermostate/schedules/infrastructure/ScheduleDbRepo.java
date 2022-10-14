@@ -33,9 +33,9 @@ public class ScheduleDbRepo implements ScheduleRepo {
                 "','" + schedule.dateTo() +
                 "','" + schedule.timeFrom() +
                 "','" + schedule.timeTo() +
-                "', true," +
-                "','" + schedule.minTemp() +
-                " CURRENT_TIMESTAMP)";
+                "',true" +
+                "," + schedule.minTemp() +
+                ", CURRENT_TIMESTAMP)";
         dbUtils.executeUpdate(sql);
     }
 }

@@ -1,5 +1,6 @@
 package com.thermostate.schedules.application;
 
+import com.thermostate.schedules.infrastructure.ScheduleDbRepo;
 import com.thermostate.schedules.model.Schedule;
 import com.thermostate.schedules.model.ScheduleRepo;
 import com.thermostate.shared.ClientError;
@@ -47,12 +48,18 @@ public class CreateSchedule {
     }
 
     public boolean isValidTimeFrom(String timeFrom) {
+        if (timeFrom == null) {
+            return false;
+        }
         Pattern timePattern = Pattern.compile("[0-2][0-9]:[0-5][0-9]");
         Matcher mat = timePattern.matcher(timeFrom);
-        return isNotEmpty(timeFrom) && mat.matches();
+        return isNotEmpty(timeFrom) || mat.matches();
     }
 
     public boolean isValidTimeTo(String timeTo) {
+        if (timeTo == null) {
+            return false;
+        }
         Pattern timePattern = Pattern.compile("[0-2][0-9]:[0-5][0-9]");
         Matcher mat = timePattern.matcher(timeTo);
         return isNotEmpty(timeTo) && mat.matches();
