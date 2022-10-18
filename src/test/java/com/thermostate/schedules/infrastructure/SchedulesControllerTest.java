@@ -1,7 +1,8 @@
 package com.thermostate.schedules.infrastructure;
 
 import com.thermostate.schedules.application.CreateSchedule;
-import com.thermostate.schedules.infrastructure.ScheduleCreateRequest;
+import com.thermostate.schedules.application.GetAllSchedules;
+import com.thermostate.schedules.application.GetScheduleById;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,12 +13,16 @@ import static org.mockito.Mockito.verify;
 
 public class SchedulesControllerTest {
     CreateSchedule createSchedule;
+    GetScheduleById getScheduleById;
+    GetAllSchedules getAllSchedules;
     SchedulesController sut;
 
     @BeforeEach
     public void setup() {
         createSchedule = mock(CreateSchedule.class);
-        sut = new SchedulesController(createSchedule);
+        getScheduleById = mock(GetScheduleById.class);
+        getAllSchedules = mock(GetAllSchedules.class);
+        sut = new SchedulesController(createSchedule, getScheduleById, getAllSchedules);
     }
 
     @Test
