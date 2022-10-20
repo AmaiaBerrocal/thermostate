@@ -37,7 +37,7 @@ dependencies {
 	testImplementation "org.junit.jupiter:junit-jupiter-api:${junit5version}"
 	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit5version}"
 	testImplementation group: 'org.assertj', name: 'assertj-core', version: "${assertJVersion}"
-	testImplementation 'com.github.inigodm:E2EHelper:master-SNAPSHOT'
+	testImplementation 'com.github.inigodm:E2EHelper:0.1.0'
 }
 
 tasks.named('test') {
