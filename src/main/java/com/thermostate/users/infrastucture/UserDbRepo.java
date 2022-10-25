@@ -60,8 +60,8 @@ public class UserDbRepo implements UserRepo {
     private static User buildUserFromMap(Map<String, Object> row) {
         return new User((String) row.get("NAME"),
                 (String) row.get("PASSWORD"),
-                (String) row.get("SALT"),
-                (String) row.get("EMAIL"));
+                (String) row.get("EMAIL"),
+                (String) row.get("SALT"));
     }
     //deleteUser
     //updateUser

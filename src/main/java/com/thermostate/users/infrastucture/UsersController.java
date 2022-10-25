@@ -27,9 +27,11 @@ public class UsersController {
     @ExceptionHandler(value = ClientError.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public void handleException(Exception ex) {
+        ex.printStackTrace();
     }
 
     @GetMapping("/login/{name}/{hash}")
+    @ResponseBody
     public User login(@PathVariable String name, @PathVariable String hash) {
         return getUser.execute(name, hash);
     }
