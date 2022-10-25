@@ -25,7 +25,7 @@ public class CreateScheduleTest {
     public void should_create_schedule_if_data_are_correct() {
         //given
         LocalDate dateFrom = LocalDate.of(2022, 11, 15);
-        LocalDate dateTo = LocalDate.of(2023, 03, 15);
+        LocalDate dateTo = LocalDate.of(2023, 3, 15);
         String timeFrom = "19:00";
         String timeTo = "23:59";
         Boolean active = true;
@@ -40,15 +40,13 @@ public class CreateScheduleTest {
     public void should_not_create_schedule_if_datefrom_is_incorrect() {
         //given
         LocalDate dateFrom = null;
-        LocalDate dateTo = LocalDate.of(2023, 03, 15);
+        LocalDate dateTo = LocalDate.of(2023, 3, 15);
         String timeFrom = "19:00";
         String timeTo = "23:59";
         Boolean active = true;
         Integer minTemp = 16;
         //when
-        assertThatThrownBy( () -> {
-            sut.execute(dateFrom, dateTo, timeFrom, timeTo, active, minTemp);
-        }
+        assertThatThrownBy( () -> sut.execute(dateFrom, dateTo, timeFrom, timeTo, active, minTemp)
         ).isInstanceOf(ClientError.class);
         //then
         verifyNoInteractions(scheduleRepo);
@@ -57,16 +55,14 @@ public class CreateScheduleTest {
     @Test
     public void should_not_create_schedule_if_dateto_is_incorrect() {
         //given
-        LocalDate dateFrom = LocalDate.of(2023, 03, 15);
+        LocalDate dateFrom = LocalDate.of(2023, 3, 15);
         LocalDate dateTo = null;
         String timeFrom = "19:00";
         String timeTo = "23:59";
         Boolean active = true;
         Integer minTemp = 16;
         //when
-        assertThatThrownBy( () -> {
-                    sut.execute(dateFrom, dateTo, timeFrom, timeTo, active, minTemp);
-                }
+        assertThatThrownBy( () -> sut.execute(dateFrom, dateTo, timeFrom, timeTo, active, minTemp)
         ).isInstanceOf(ClientError.class);
         //then
         verifyNoInteractions(scheduleRepo);
@@ -75,16 +71,14 @@ public class CreateScheduleTest {
     @Test
     public void should_not_create_schedule_if_timefrom_is_incorrect() {
         //given
-        LocalDate dateFrom = LocalDate.of(2023, 03, 15);
+        LocalDate dateFrom = LocalDate.of(2023, 3, 15);
         LocalDate dateTo = LocalDate.of(2022, 12, 15);
         String timeFrom = null;
         String timeTo = "23:59";
         Boolean active = true;
         Integer minTemp = 16;
         //when
-        assertThatThrownBy( () -> {
-                    sut.execute(dateFrom, dateTo, timeFrom, timeTo, active, minTemp);
-                }
+        assertThatThrownBy( () -> sut.execute(dateFrom, dateTo, timeFrom, timeTo, active, minTemp)
         ).isInstanceOf(ClientError.class);
         //then
         verifyNoInteractions(scheduleRepo);
@@ -93,16 +87,14 @@ public class CreateScheduleTest {
     @Test
     public void should_not_create_schedule_if_timeto_is_incorrect() {
         //given
-        LocalDate dateFrom = LocalDate.of(2023, 03, 15);
+        LocalDate dateFrom = LocalDate.of(2023, 3, 15);
         LocalDate dateTo = LocalDate.of(2022, 12, 15);
         String timeFrom = "23:59";
         String timeTo = null;
         Boolean active = true;
         Integer minTemp = 16;
         //when
-        assertThatThrownBy( () -> {
-                    sut.execute(dateFrom, dateTo, timeFrom, timeTo, active, minTemp);
-                }
+        assertThatThrownBy( () -> sut.execute(dateFrom, dateTo, timeFrom, timeTo, active, minTemp)
         ).isInstanceOf(ClientError.class);
         //then
         verifyNoInteractions(scheduleRepo);
@@ -111,16 +103,14 @@ public class CreateScheduleTest {
     @Test
     public void should_not_create_schedule_if_activate_is_incorrect() {
         //given
-        LocalDate dateFrom = LocalDate.of(2023, 03, 15);
+        LocalDate dateFrom = LocalDate.of(2023, 3, 15);
         LocalDate dateTo = LocalDate.of(2022, 12, 15);
         String timeFrom = "23:59";
         String timeTo = "15:00";
         Boolean active = null;
         Integer minTemp = 16;
         //when
-        assertThatThrownBy( () -> {
-                    sut.execute(dateFrom, dateTo, timeFrom, timeTo, active, minTemp);
-                }
+        assertThatThrownBy( () -> sut.execute(dateFrom, dateTo, timeFrom, timeTo, active, minTemp)
         ).isInstanceOf(ClientError.class);
         //then
         verifyNoInteractions(scheduleRepo);
@@ -129,16 +119,14 @@ public class CreateScheduleTest {
     @Test
     public void should_not_create_schedule_if_mintemp_is_incorrect() {
         //given
-        LocalDate dateFrom = LocalDate.of(2023, 03, 15);
+        LocalDate dateFrom = LocalDate.of(2023, 3, 15);
         LocalDate dateTo = LocalDate.of(2022, 12, 15);
         String timeFrom = "23:59";
         String timeTo = "15:00";
         Boolean active = false;
         Integer minTemp = null;
         //when
-        assertThatThrownBy( () -> {
-                    sut.execute(dateFrom, dateTo, timeFrom, timeTo, active, minTemp);
-                }
+        assertThatThrownBy( () -> sut.execute(dateFrom, dateTo, timeFrom, timeTo, active, minTemp)
         ).isInstanceOf(ClientError.class);
         //then
         verifyNoInteractions(scheduleRepo);

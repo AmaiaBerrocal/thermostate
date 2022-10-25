@@ -56,8 +56,8 @@ public class DbUtils {
             int columns = md.getColumnCount();
             for (int i = 1; i <= columns; i++) {
                 row.put(md.getColumnName(i), result.getObject(i));
-                resultList.add(row);
             }
+            resultList.add(row);
         }
         return resultList;
     }
