@@ -24,12 +24,6 @@ class GetScheduleByIdTest {
     public void should_return_an_schedule() {
         //given
         Integer id = 8;
-        LocalDate dateFrom = LocalDate.of(2023, 3, 15);
-        LocalDate dateTo = LocalDate.of(2033, 3, 5);;
-        String timeFrom = "19:00";
-        String timeTo = "23:59";
-        Boolean active = true;
-        Integer minTemp = 16;
         //when
         sut.execute(id);
         //then
