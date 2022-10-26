@@ -39,8 +39,8 @@ class UsersTest {
     void should_return_a_user_if_name_and_password_are_corrects() {
         createUser("Amaia", "pass", "lala@gmail.com");
         E2EResponse res = E2ERequest
-                .to("http://localhost:8080/login/Amaia/pass")
-                .sendAGet(Map.of())
+                .to("http://localhost:8080/login/")
+                .sendAPost(Map.of("name", "Amaia", "password", "pass"))
                 .assertThatResponseIsOk();
 
         res.assertThatBodyContains(Map.of("name", "Amaia", "email", "lala@gmail.com"));

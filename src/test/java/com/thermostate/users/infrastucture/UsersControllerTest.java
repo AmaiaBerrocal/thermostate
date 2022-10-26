@@ -40,7 +40,7 @@ class UsersControllerTest {
         String pass = "contraseña";
         when(getUser.execute(name, pass)).thenReturn(expected);
         //when
-        User user = sut.login(name, pass);
+        User user = sut.login(new UserLoginRequest(name, pass));
         //then
         assertThat(user).isEqualTo(expected);
     }

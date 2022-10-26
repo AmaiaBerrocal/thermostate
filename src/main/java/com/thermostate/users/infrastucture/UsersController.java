@@ -30,10 +30,10 @@ public class UsersController {
         ex.printStackTrace();
     }
 
-    @GetMapping("/login/{name}/{hash}")
+    @PostMapping("/login")
     @ResponseBody
-    public User login(@PathVariable String name, @PathVariable String hash) {
-        return getUser.execute(name, hash);
+    public User login(@RequestBody UserLoginRequest request) {
+        return getUser.execute(request.name, request.password);
     }
 }
 
@@ -43,4 +43,10 @@ class UserCreateRequest {
     String password;
     String name;
     String email;
+}
+
+@AllArgsConstructor
+class UserLoginRequest {
+    String name;
+    String password;
 }
