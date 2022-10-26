@@ -11,7 +11,7 @@ class UsersTest {
     @BeforeEach
     public void setup() {
         e2edb = new E2EDB("jdbc:sqlite:./db/thermostate.db");
-        e2edb.givenEmptyTable("USERS");
+        //e2edb.givenEmptyTable("USERS");
     }
     @Test
     void should_create_a_user() {
@@ -37,12 +37,13 @@ class UsersTest {
 
     @Test
     void should_return_a_user_if_name_and_password_are_corrects() {
-        createUser("Amaia", "pass", "lala@gmail.com");
+        //createUser("Amaia", "pass", "lala@gmail.com");
         E2EResponse res = E2ERequest
                 .to("http://localhost:8080/login/")
                 .sendAPost(Map.of("name", "Amaia", "password", "pass"))
                 .assertThatResponseIsOk();
 
+        res.getReturned().body();
         res.assertThatBodyContains(Map.of("name", "Amaia", "email", "lala@gmail.com"));
     }
 
