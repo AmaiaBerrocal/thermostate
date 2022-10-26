@@ -23,7 +23,7 @@ public class CreateUser {
         checkData(name, password, email);
         String salt = randomStringGenerator.generate();
         String hash = hashGenerator.generate(password, salt);
-        User user = new User(name, hash, email, salt);
+        User user = new User(-1, name, hash, email, salt);
         userRepo.create(user);
     }
 

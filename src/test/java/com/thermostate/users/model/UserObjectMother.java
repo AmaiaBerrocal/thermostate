@@ -7,6 +7,7 @@ public class UserObjectMother{
     public static User randomUser(){
         Faker faker = new Faker();
         return new User(
+                faker.number().positive(),
 				faker.friends().character(), 
 				faker.buffy().characters(), 
 				"email@email.com",

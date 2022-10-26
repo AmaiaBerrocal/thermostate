@@ -34,7 +34,7 @@ class UserDbRepoTest {
     public void user_should_be_insert() {
         //given
         UserDbRepo sut = new UserDbRepo(dbUtils);
-        User user = new User("name","pass", "email@gmail.com", "hjkhk");
+        User user = new User(null, "name","pass", "email@gmail.com", "hjkhk");
         String sql = "INSERT INTO USERS (NAME, PASSWORD, EMAIL, SALT, CREATED_AT, ACTIVE) VALUES (" +
                 "'" + user.name() +
                 "','" + user.password() +
