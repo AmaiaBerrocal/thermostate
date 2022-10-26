@@ -15,11 +15,8 @@ class UsersTest {
     }
     @Test
     void should_create_a_user() {
-        E2ERequest
-                .to("http://localhost:8080/user")
-                .withContentType("application/json;charset=UTF-8")
-                .sendAPost(Map.of("name", "Amaia", "password", "pass", "email", "lala@gmail.com"))
-                .assertThatResponseIsOk();
+        createUser("Amaia", "pass", "lala@gmail.com");
+
         e2edb
                 .doQuery("SELECT * FROM USERS WHERE NAME = 'Amaia'")
                 .assertThatExistAnEntryWithFields(Map.of("email", "lala@gmail.com"));
@@ -32,6 +29,7 @@ class UsersTest {
                 .withContentType("application/json;charset=UTF-8")
                 .sendAPost(Map.of("name", "", "password", "pass", "email", "lala@gmail.com"))
                 .assertThatResponseCodeIs(400);
+
         e2edb
                 .doQuery("SELECT * FROM USERS WHERE email = 'lala@gmail.com'")
                 .assertThatNumberOfResults(0);
@@ -39,15 +37,20 @@ class UsersTest {
 
     @Test
     void should_return_a_user_if_name_and_password_are_corrects() {
-        E2ERequest
-                .to("http://localhost:8080/user")
-                .withContentType("application/json;charset=UTF-8")
-                .sendAPost(Map.of("name", "Amaia", "password", "pass", "email", "lala@gmail.com"))
-                .assertThatResponseIsOk();
+        createUser("Amaia", "pass", "lala@gmail.com");
         E2EResponse res = E2ERequest
                 .to("http://localhost:8080/login/Amaia/pass")
                 .sendAGet(Map.of())
                 .assertThatResponseIsOk();
+
         res.assertThatBodyContains(Map.of("name", "Amaia", "email", "lala@gmail.com"));
+    }
+
+    void createUser(String name, String password, String email) {
+        E2ERequest
+                .to("http://localhost:8080/user")
+                .withContentType("application/json;charset=UTF-8")
+                .sendAPost(Map.of("name", name, "password", password, "email", email))
+                .assertThatResponseIsOk();
     }
 }
