@@ -3,7 +3,12 @@ package com.thermostate.users.infrastucture;
 import com.thermostate.shared.DbUtils;
 import com.thermostate.users.model.User;
 import com.thermostate.users.model.UserRepo;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Map;
+
 
 
 @Component
@@ -40,7 +45,24 @@ public class UserDbRepo implements UserRepo {
 
         dbUtils.executeUpdate(sql);
     }
-    //getUser
+    
+    public User getByName(String name) {
+        String sql = "SELECT * FROM USERS WHERE NAME = '" + name + "'";
+        List<Map<String, Object>> result = dbUtils.executeQuery(sql);
+        if (result.isEmpty()) {
+            return null;
+        }
+        Map<String, Object> res = result.get(0);
+        return buildUserFromMap(res);
+    }
+
+    @NotNull
+    private static User buildUserFromMap(Map<String, Object> row) {
+        return new User((String) row.get("NAME"),
+                (String) row.get("PASSWORD"),
+                (String) row.get("EMAIL"),
+                (String) row.get("SALT"));
+    }
     //deleteUser
     //updateUser
 }

@@ -72,32 +72,4 @@ public class SchedulesTest {
                 "active", "true",
                 "minTemp", "15"));
     }
-
-    /*
-    @Test
-    void should_return_schedule_with_id() {
-        //given
-        E2ERequest
-                .to("http://localhost:8080/schedule")
-                .withContentType("application/json;charset=UTF-8")
-                .sendAPost(Map.of("dateFrom", "2022-01-02",
-                        "dateTo", "2023-03-04",
-                        "timeFrom", "16:00",
-                        "timeTo", "20:16",
-                        "active", "true",
-                        "minTemp", "15"));
-        //when
-        E2EResponse res = E2ERequest
-                .to("http://localhost:8080/schedule/")
-                .sendAGet(Map.of())
-                .assertThatResponseIsOk();
-        //Then
-        res.assertThatBodyContains(Map.of("dateFrom", "2022-01-02",
-                "dateTo", "2023-03-04",
-                "timeFrom", "16:00",
-                "timeTo", "20:16",
-                "active", "true",
-                "minTemp", "15"));
-    }
-    */
 }

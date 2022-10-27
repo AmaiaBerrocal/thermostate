@@ -46,7 +46,7 @@ public class ScheduleDbRepo implements ScheduleRepo {
 
     @Override
     public Schedule getById(Integer id) {
-        String sql = "SELECT * FROM SCHEDULES WHERE ID = " + id ;
+        String sql = "SELECT * FROM SCHEDULES WHERE ID = " + id;
         List<Map<String, Object>> result = dbUtils.executeQuery(sql);
         if (result.isEmpty()) {
             return null;
