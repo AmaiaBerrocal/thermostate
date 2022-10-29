@@ -47,6 +47,6 @@ class UsersControllerTest {
         //when
         ValueResponse user = sut.login(new UserLoginRequest(name, pass));
         //then
-        assertThat(user.value()).startsWith("Bearer ");
+        assertThat(user.value().toString()).startsWith("Bearer ");
     }
 }

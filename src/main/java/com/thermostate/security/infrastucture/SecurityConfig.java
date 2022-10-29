@@ -43,7 +43,8 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.POST,"/login", "/user")
                 .permitAll()
                 // Our private endpoints
-                .anyRequest().authenticated();
+                .anyRequest()
+                .authenticated();
         // Add JWT token filter
         http.addFilterBefore(
             authenticationFilter,

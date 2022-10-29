@@ -1,4 +1,4 @@
 package com.thermostate.shared;
 
-public record ValueResponse(String value) {
+public record ValueResponse<T>(T value) {
 }

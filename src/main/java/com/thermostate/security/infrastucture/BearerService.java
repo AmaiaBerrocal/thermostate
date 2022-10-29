@@ -41,7 +41,7 @@ public class BearerService implements TokenService {
                 .claim("id", user.id())
                 .claim("sub", user.name())
                 .claim("email", user.email())
-                .setExpiration(expirationDate)
+                .setExpiration(null)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 

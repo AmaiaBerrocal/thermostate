@@ -4,14 +4,17 @@ import http.E2EResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class UsersTest {
     E2EDB e2edb;
     @BeforeEach
     public void setup() {
         e2edb = new E2EDB("jdbc:sqlite:./db/thermostate.db");
-        //e2edb.givenEmptyTable("USERS");
+        e2edb.givenEmptyTable("USERS");
     }
     @Test
     void should_create_a_user() {
@@ -36,20 +39,22 @@ class UsersTest {
     }
 
     @Test
-    void should_return_a_user_if_name_and_password_are_corrects() {
-        //createUser("Amaia", "pass", "lala@gmail.com");
+    void should_return_a_user_if_name_and_password_are_corrects() throws IOException {
+        createUser("Amaia", "pass", "lala@gmail.com");
         E2EResponse res = E2ERequest
-                .to("http://localhost:8080/login/")
+                .to("http://localhost:8080/login")
+                .withContentType("application/json")
                 .sendAPost(Map.of("name", "Amaia", "password", "pass"))
                 .assertThatResponseIsOk();
 
-        res.getReturned().body();
-        res.assertThatBodyContains(Map.of("name", "Amaia", "email", "lala@gmail.com"));
+        var responseBody = res.body();
+        assertThat(responseBody.get("value").toString()).startsWith("Bearer ");
     }
 
     void createUser(String name, String password, String email) {
         E2ERequest
-                .to("http://localhost:8080/user")
+                .to("http://127.0.0.1:8080/user")
+                //.withABearer(UsersTest::getBearer)
                 .withContentType("application/json;charset=UTF-8")
                 .sendAPost(Map.of("name", name, "password", password, "email", email))
                 .assertThatResponseIsOk();
