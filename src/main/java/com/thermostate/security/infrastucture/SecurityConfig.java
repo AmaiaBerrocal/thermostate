@@ -15,6 +15,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
@@ -28,7 +29,9 @@ public class SecurityConfig {
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         // Enable CORS and disable CSRF
-        http.cors().and().csrf().disable();
+        http.cors()
+                .and()
+                .csrf().disable();
         // Set session management to stateless
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -40,7 +43,7 @@ public class SecurityConfig {
                 });
         // Set permissions on endpoints
         http.authorizeRequests()// Our public endpoints
-                .antMatchers(HttpMethod.POST,"/login", "/user")
+                .antMatchers(HttpMethod.POST,"/login")
                 .permitAll()
                 // Our private endpoints
                 .anyRequest()
@@ -59,9 +62,10 @@ public class SecurityConfig {
                 new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
+        config.addAllowedOrigin("http://localhost:3000");
+        config.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT","OPTIONS","PATCH", "DELETE"));
+        config.setExposedHeaders(List.of("Authorization"));
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
