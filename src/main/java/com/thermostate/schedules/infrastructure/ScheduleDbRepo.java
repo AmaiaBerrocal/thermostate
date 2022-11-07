@@ -79,4 +79,10 @@ public class ScheduleDbRepo implements ScheduleRepo {
             buildScheduleFromMap(item)
         ).toList();
     }
+
+    @Override
+    public void deleteById(Integer id) {
+        String sql = "DELETE FROM SCHEDULES WHERE ID='" + id + "'";
+        dbUtils.executeUpdate(sql);
+    }
 }

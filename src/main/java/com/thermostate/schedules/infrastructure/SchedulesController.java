@@ -1,6 +1,7 @@
 package com.thermostate.schedules.infrastructure;
 
 import com.thermostate.schedules.application.CreateSchedule;
+import com.thermostate.schedules.application.DeleteSchedule;
 import com.thermostate.schedules.application.GetAllSchedules;
 import com.thermostate.schedules.application.GetScheduleById;
 import com.thermostate.schedules.model.Schedule;
@@ -21,10 +22,13 @@ public class SchedulesController {
 
     private final GetAllSchedules getAllSchedules;
 
-    public SchedulesController(CreateSchedule createSchedule, GetScheduleById getScheduleById, GetAllSchedules getAllSchedules) {
+    private final DeleteSchedule deleteSchedule;
+
+    public SchedulesController(CreateSchedule createSchedule, GetScheduleById getScheduleById, GetAllSchedules getAllSchedules, DeleteSchedule deleteSchedule) {
         this.createSchedule = createSchedule;
         this.getScheduleById = getScheduleById;
         this.getAllSchedules = getAllSchedules;
+        this.deleteSchedule = deleteSchedule;
     }
 
     @PostMapping("/schedule")
@@ -46,7 +50,14 @@ public class SchedulesController {
     @GetMapping("/schedules")
     @ResponseBody
     public ValueResponse<List<Schedule>> scheduleGetAll() {
+
         return new ValueResponse<>(getAllSchedules.execute());
+    }
+
+    @DeleteMapping("/schedule/{id}")
+    public void deleteById(@PathVariable Integer id) {
+
+        deleteSchedule.execute(id);
     }
 
     @ExceptionHandler(value = ClientError.class) //tb client error porque es el usuario el que mete mal los datos
