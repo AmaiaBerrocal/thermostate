@@ -53,7 +53,6 @@ public class SchedulesTest {
         E2EResponse res = E2ERequest
                 .to("http://localhost:8080/schedules")
                 .withABearer(HttpRequestsUtils::getBearer)
-                .withContentType("application/json;charset=UTF-8")
                 .sendAGet(Map.of())
                 .assertThatResponseIsOk();
         //Then
