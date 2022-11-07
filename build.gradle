@@ -24,11 +24,15 @@ repositories {
 apply from: "./e2eTests.gradle"
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springboot}"
+	implementation "org.springframework.boot:spring-boot-starter-web:${springboot}"
+	implementation "org.springframework.boot:spring-boot-starter-websocket:${springboot}"
+	implementation "org.springframework.boot:spring-boot-starter-security:${springboot}"
+	implementation "io.jsonwebtoken:jjwt-api:${jsonwebtoken}"
+	implementation "io.jsonwebtoken:jjwt-impl:${jsonwebtoken}"
+	implementation "io.jsonwebtoken:jjwt-jackson:${jsonwebtoken}"
 	implementation "org.xerial:sqlite-jdbc:${sqliteVersion}"
-	implementation group: 'com.google.guava', name: 'guava', version: "${guavaVersion}"
+  implementation group: 'com.google.guava', name: 'guava', version: "${guavaVersion}"
 	compileOnly "org.projectlombok:lombok:${lombok}"
 	developmentOnly "org.springframework.boot:spring-boot-devtools:${springboot}"
 	annotationProcessor "org.projectlombok:lombok:${lombok}"
@@ -37,8 +41,8 @@ dependencies {
 	testImplementation "org.junit.jupiter:junit-jupiter-api:${junit5version}"
 	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit5version}"
 	testImplementation group: 'org.assertj', name: 'assertj-core', version: "${assertJVersion}"
-	testImplementation 'com.github.inigodm:E2EHelper:0.1.0'
-	implementation group: 'net.datafaker', name: 'datafaker', version: '1.6.0'}
+	testImplementation "com.github.inigodm:E2EHelper:${e2eHelper}"
+	implementation group: 'net.datafaker', name: 'datafaker', version: "${faker}"}
 
 tasks.named('test') {
 	useJUnitPlatform()
