@@ -55,6 +55,12 @@ public class ScheduleDbRepo implements ScheduleRepo {
         return buildScheduleFromMap(res);
     }
 
+    /*
+    @Override
+    public void update(Schedule newSchedule) {
+        String sql = ""
+    }
+*/
     @NotNull
     private static Schedule buildScheduleFromMap(Map<String, Object> row) {
         return new Schedule((Integer) row.get("ID"),

@@ -6,6 +6,6 @@ public interface ScheduleRepo {
     void create(Schedule schedule);
     Schedule getById(Integer id);
     List<Schedule> getAll();
-    //update
-    void deleteById(Integer id);
+    void update(Integer id);
+    //delete
 }
