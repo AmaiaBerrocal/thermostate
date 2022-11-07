@@ -28,12 +28,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation "org.xerial:sqlite-jdbc:${sqliteVersion}"
-	implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	annotationProcessor 'org.projectlombok:lombok'
-	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-	testImplementation "org.springframework.boot:spring-boot-starter-test"
+	implementation group: 'com.google.guava', name: 'guava', version: "${guavaVersion}"
+	compileOnly "org.projectlombok:lombok:${lombok}"
+	developmentOnly "org.springframework.boot:spring-boot-devtools:${springboot}"
+	annotationProcessor "org.projectlombok:lombok:${lombok}"
+	providedRuntime "org.springframework.boot:spring-boot-starter-tomcat:${springboot}"
+	testImplementation "org.springframework.boot:spring-boot-starter-test:${springboot}"
 	testImplementation "org.junit.jupiter:junit-jupiter-api:${junit5version}"
 	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit5version}"
 	testImplementation group: 'org.assertj', name: 'assertj-core', version: "${assertJVersion}"
