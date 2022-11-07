@@ -4,7 +4,10 @@ import http.E2EResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class UsersTest {
     E2EDB e2edb;
@@ -36,19 +39,21 @@ class UsersTest {
     }
 
     @Test
-    void should_return_a_user_if_name_and_password_are_corrects() {
+    void should_return_a_user_if_name_and_password_are_corrects() throws IOException {
         createUser("Amaia", "pass", "lala@gmail.com");
         E2EResponse res = E2ERequest
-                .to("http://localhost:8080/login/Amaia/pass")
-                .sendAGet(Map.of())
+                .to("http://localhost:8080/login")
+                .withContentType("application/json")
+                .sendAPost(Map.of("name", "Amaia", "password", "pass"))
                 .assertThatResponseIsOk();
 
-        res.assertThatBodyContains(Map.of("name", "Amaia", "email", "lala@gmail.com"));
+        var responseBody = res.body();
+        assertThat(responseBody.get("value").toString()).startsWith("Bearer ");
     }
 
     void createUser(String name, String password, String email) {
         E2ERequest
-                .to("http://localhost:8080/user")
+                .to("http://127.0.0.1:8080/user")
                 .withContentType("application/json;charset=UTF-8")
                 .sendAPost(Map.of("name", name, "password", password, "email", email))
                 .assertThatResponseIsOk();

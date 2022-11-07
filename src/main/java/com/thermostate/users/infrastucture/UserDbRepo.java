@@ -58,7 +58,8 @@ public class UserDbRepo implements UserRepo {
 
     @NotNull
     private static User buildUserFromMap(Map<String, Object> row) {
-        return new User((String) row.get("NAME"),
+        return new User((Integer) row.get("ID"),
+                (String) row.get("NAME"),
                 (String) row.get("PASSWORD"),
                 (String) row.get("EMAIL"),
                 (String) row.get("SALT"));

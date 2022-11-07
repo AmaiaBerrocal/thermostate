@@ -1,6 +1,8 @@
 package com.thermostate.users.infrastucture;
 
+import com.thermostate.security.application.TokenService;
 import com.thermostate.shared.ClientError;
+import com.thermostate.shared.ValueResponse;
 import com.thermostate.users.application.CreateUser;
 import com.thermostate.users.application.GetUser;
 import com.thermostate.users.model.User;
@@ -9,14 +11,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin()
 public class UsersController {
     private final CreateUser createUser;
     private final GetUser getUser;
+    private final TokenService tokenService;
 
 
-    public UsersController(CreateUser createUser, GetUser getUser) {
+    public UsersController(CreateUser createUser, GetUser getUser, TokenService tokenService) {
         this.createUser = createUser;
         this.getUser = getUser;
+        this.tokenService = tokenService;
     }
 
     @PostMapping("/user")
@@ -30,10 +35,11 @@ public class UsersController {
         ex.printStackTrace();
     }
 
-    @GetMapping("/login/{name}/{hash}")
+    @PostMapping("/login")
     @ResponseBody
-    public User login(@PathVariable String name, @PathVariable String hash) {
-        return getUser.execute(name, hash);
+    public ValueResponse<String> login(@RequestBody UserLoginRequest request) {
+        User user =  getUser.execute(request.name, request.password);
+        return new ValueResponse<>(tokenService.generateToken(user));
     }
 }
 
@@ -43,4 +49,10 @@ class UserCreateRequest {
     String password;
     String name;
     String email;
+}
+
+@AllArgsConstructor
+class UserLoginRequest {
+    String name;
+    String password;
 }

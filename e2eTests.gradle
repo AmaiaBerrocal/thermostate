@@ -31,13 +31,13 @@ dependencies {
     e2eTestsImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.50"
     e2eTestsImplementation "org.junit.jupiter:junit-jupiter:${junit5version}"
     e2eTestsRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit5version}"
-    e2eTestsImplementation "org.springframework.boot:spring-boot-starter-test"
+    e2eTestsImplementation "org.springframework.boot:spring-boot-starter-test:${springboot}"
     e2eTestsImplementation group: "com.google.code.gson", name: "gson", version: "${gsonversion}"
     e2eTestsImplementation "org.assertj:assertj-core:${assertJVersion}"
     e2eTestsImplementation "org.mockito:mockito-core:${mockitoVersion}"
-    e2eTestsImplementation "com.github.inigodm:E2EHelper:master-SNAPSHOT"
+    e2eTestsImplementation "com.github.inigodm:E2EHelper:${e2eHelper}"
     e2eTestsImplementation group: "com.squareup.okhttp3", name: "okhttp", version: "${okhttp3}"
     e2eTestsImplementation "org.xerial:sqlite-jdbc:${sqliteVersion}"
     e2eTestsImplementation group: "org.junit.platform", name: "junit-platform-launcher", version: "1.8.2"
-
+    e2eTestsImplementation 'com.google.code.gson:gson:2.10'
 }
