@@ -63,7 +63,15 @@ public class SchedulesTest {
                 "active", "true",
                 "minTemp", "15"));*/
     }
+    //TODO
+   /* @Test
+    void should_delete_a_schedule() {
+        //given
+        createScheduleWithPetition();
+        //when
 
+        //then
+    }*/
     void createScheduleWithPetition() {
         E2ERequest
                 .to("http://127.0.0.1:8080/schedule")

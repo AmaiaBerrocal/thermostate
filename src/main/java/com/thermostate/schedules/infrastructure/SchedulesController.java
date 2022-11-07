@@ -50,11 +50,13 @@ public class SchedulesController {
     @GetMapping("/schedules")
     @ResponseBody
     public ValueResponse<List<Schedule>> scheduleGetAll() {
+
         return new ValueResponse<>(getAllSchedules.execute());
     }
 
     @DeleteMapping("/schedule/{id}")
     public void deleteById(@PathVariable Integer id) {
+
         deleteSchedule.execute(id);
     }
 

@@ -21,7 +21,7 @@ class GetScheduleByIdTest {
     }
 
     @Test
-    public void should_return_an_schedule() {
+    public void should_return_a_schedule() {
         //given
         Integer id = 8;
         //when
