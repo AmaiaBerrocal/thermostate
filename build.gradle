@@ -32,7 +32,7 @@ dependencies {
 	implementation "io.jsonwebtoken:jjwt-impl:${jsonwebtoken}"
 	implementation "io.jsonwebtoken:jjwt-jackson:${jsonwebtoken}"
 	implementation "org.xerial:sqlite-jdbc:${sqliteVersion}"
-	implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
+  implementation group: 'com.google.guava', name: 'guava', version: "${guavaVersion}"
 	compileOnly "org.projectlombok:lombok:${lombok}"
 	developmentOnly "org.springframework.boot:spring-boot-devtools:${springboot}"
 	annotationProcessor "org.projectlombok:lombok:${lombok}"

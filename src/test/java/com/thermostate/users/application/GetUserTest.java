@@ -1,5 +1,6 @@
 package com.thermostate.users.application;
 
+import com.google.common.eventbus.EventBus;
 import com.thermostate.shared.HashGenerator;
 import com.thermostate.users.model.User;
 import com.thermostate.users.model.UserRepo;
@@ -17,12 +18,14 @@ class GetUserTest {
     GetUser sut;
     UserRepo userRepo;
     HashGenerator hashGenerator;
+    EventBus eventBus;
 
     @BeforeEach
     void setup() {
         userRepo = mock(UserRepo.class);
         hashGenerator = mock(HashGenerator.class);
-        sut = new GetUser(userRepo, hashGenerator);
+        eventBus = mock(EventBus.class);
+        sut = new GetUser(userRepo, hashGenerator, eventBus);
     }
 
     @Test
