@@ -7,5 +7,5 @@ public interface ScheduleRepo {
     Schedule getById(Integer id);
     List<Schedule> getAll();
     //update
-    //delete
+    void deleteById(Integer id);
 }

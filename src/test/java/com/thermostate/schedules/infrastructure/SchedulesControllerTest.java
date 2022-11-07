@@ -22,7 +22,7 @@ public class SchedulesControllerTest {
         createSchedule = mock(CreateSchedule.class);
         getScheduleById = mock(GetScheduleById.class);
         getAllSchedules = mock(GetAllSchedules.class);
-        sut = new SchedulesController(createSchedule, getScheduleById, getAllSchedules);
+        sut = new SchedulesController(createSchedule, getScheduleById, getAllSchedules, deleteSchedule);
     }
 
     @Test
