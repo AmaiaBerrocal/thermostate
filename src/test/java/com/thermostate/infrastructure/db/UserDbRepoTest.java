@@ -3,6 +3,7 @@ package com.thermostate.infrastructure.db;
 import com.thermostate.shared.DbUtils;
 import com.thermostate.users.infrastucture.UserDbRepo;
 import com.thermostate.users.model.User;
+import com.thermostate.users.model.UserObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +35,7 @@ class UserDbRepoTest {
     public void user_should_be_insert() {
         //given
         UserDbRepo sut = new UserDbRepo(dbUtils);
-        User user = new User(null, "name","pass", "email@gmail.com", "hjkhk");
+        User user = UserObjectMother.randomUser();
         String sql = "INSERT INTO USERS (NAME, PASSWORD, EMAIL, SALT, CREATED_AT, ACTIVE) VALUES (" +
                 "'" + user.name() +
                 "','" + user.password() +

@@ -37,9 +37,9 @@ public class UsersController {
 
     @PostMapping("/login")
     @ResponseBody
-    public ValueResponse login(@RequestBody UserLoginRequest request) {
+    public ValueResponse<String> login(@RequestBody UserLoginRequest request) {
         User user =  getUser.execute(request.name, request.password);
-        return new ValueResponse(tokenService.generateToken(user));
+        return new ValueResponse<>(tokenService.generateToken(user));
     }
 }
 

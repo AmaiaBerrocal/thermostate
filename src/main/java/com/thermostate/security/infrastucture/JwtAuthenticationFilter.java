@@ -43,8 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private UsernamePasswordAuthenticationToken createToken(String authorizationHeader) {
-        String token = authorizationHeader.replace("Bearer ", "");
-        LogedInUser userPrincipal = tokenService.parseToken(token);
+        LogedInUser userPrincipal = tokenService.parseToken(authorizationHeader);
         return new UsernamePasswordAuthenticationToken(userPrincipal, userPrincipal, List.of());
     }
 }

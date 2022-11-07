@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 
 import static com.thermostate.shared.HttpRequestsUtils.createSingleUser;
-import static com.thermostate.shared.HttpRequestsUtils.getBearer;
 
 public class SchedulesTest {
     E2EDB e2edb;
@@ -64,15 +63,6 @@ public class SchedulesTest {
                 "timeTo", "20:16",
                 "active", "true",
                 "minTemp", "15"));*/
-    }
-
-    void createUser(String name, String password, String email) {
-        E2ERequest
-                .to("http://localhost:8080/user")
-                //.withABearer(UsersTest::getBearer)
-                .withContentType("application/json;charset=UTF-8")
-                .sendAPost(Map.of("name", name, "password", password, "email", email))
-                .assertThatResponseIsOk();
     }
 
     void createScheduleWithPetition() {

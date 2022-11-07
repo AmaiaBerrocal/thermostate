@@ -54,7 +54,6 @@ class UsersTest {
     void createUser(String name, String password, String email) {
         E2ERequest
                 .to("http://127.0.0.1:8080/user")
-                //.withABearer(UsersTest::getBearer)
                 .withContentType("application/json;charset=UTF-8")
                 .sendAPost(Map.of("name", name, "password", password, "email", email))
                 .assertThatResponseIsOk();

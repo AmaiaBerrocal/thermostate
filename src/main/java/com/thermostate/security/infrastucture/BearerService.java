@@ -49,7 +49,8 @@ public class BearerService implements TokenService {
     }
 
     @Override
-    public LogedInUser parseToken(String token) {
+    public LogedInUser parseToken(String bearer) {
+        String token = bearer.replace("Bearer ", "");
         byte[] secretBytes = JWT_SECRET.getBytes();
 
         Jws<Claims> jwsClaims = Jwts.parserBuilder()
