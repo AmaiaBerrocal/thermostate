@@ -45,10 +45,6 @@ public class SchedulesControllerTest {
     @Test
     public void should_call_application_layer_correctly_getting_all_schedules() {
         //given
-        List<Schedule> schedules= new ArrayList<Schedule>();
-        schedules.add(new Schedule(1, LocalDate.of(2020, 01, 03), LocalDate.of(2023, 03, 16), "08:00", "10:12", true, 15, LocalDate.of(2019, 01, 03)));
-        schedules.add(new Schedule(2, LocalDate.of(2021, 01, 03), LocalDate.of(2023, 03, 16), "08:00", "10:12", true, 15, LocalDate.of(2019, 01, 03)));
-        schedules.add(new Schedule(3, LocalDate.of(2023, 02, 03), LocalDate.of(2023, 03, 16), "08:00", "10:12", true, 15, LocalDate.of(2019, 01, 03)));
         //when
         sut.scheduleGetAll();
         //then
