@@ -31,7 +31,7 @@ public class UpdateSchedule {
                 && isValidTimeTo(timeTo)
                 && isValidActive(active)
                 && isValidMinTemp(minTemp))){
-            throw (new ClientError());
+            throw ClientError.becauseInvalidDataFromClient();
         }
     }
 

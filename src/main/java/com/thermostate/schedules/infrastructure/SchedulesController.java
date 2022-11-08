@@ -5,6 +5,7 @@ import com.thermostate.schedules.model.Schedule;
 import com.thermostate.shared.ClientError;
 import com.thermostate.shared.ValueResponse;
 import lombok.AllArgsConstructor;
+import lombok.ToString;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,11 @@ public class SchedulesController {
 
     private final UpdateSchedule updateSchedule;
 
-    public SchedulesController(CreateSchedule createSchedule, GetScheduleById getScheduleById, GetAllSchedules getAllSchedules, DeleteSchedule deleteSchedule, UpdateSchedule updateSchedule) {
+    public SchedulesController(CreateSchedule createSchedule,
+                               GetScheduleById getScheduleById,
+                               GetAllSchedules getAllSchedules,
+                               DeleteSchedule deleteSchedule,
+                               UpdateSchedule updateSchedule) {
         this.createSchedule = createSchedule;
         this.getScheduleById = getScheduleById;
         this.getAllSchedules = getAllSchedules;
@@ -33,6 +38,7 @@ public class SchedulesController {
 
     @PostMapping("/schedule")
     public void scheduleInsert(@RequestBody ScheduleCreateRequest scheduleCreateRequest) {
+        System.out.println("Insert schedule received " + scheduleCreateRequest);
         createSchedule.execute(scheduleCreateRequest.dateFrom,
                 scheduleCreateRequest.dateTo,
                 scheduleCreateRequest.timeFrom,
@@ -44,24 +50,25 @@ public class SchedulesController {
     @GetMapping("/schedule/{id}")
     @ResponseBody
     public ValueResponse<Schedule> scheduleGetById(@PathVariable Integer id) {
+        System.out.println("Get schedule received " + id);
         return new ValueResponse<>(getScheduleById.execute(id));
     }
 
     @GetMapping("/schedules")
     @ResponseBody
     public ValueResponse<List<Schedule>> scheduleGetAll() {
-
         return new ValueResponse<>(getAllSchedules.execute());
     }
 
     @DeleteMapping("/schedule/{id}")
     public void deleteById(@PathVariable Integer id) {
-
+        System.out.println("Delete schedule received " + id);
         deleteSchedule.execute(id);
     }
 
     @PutMapping("/schedule")
     public void scheduleUpdate(@RequestBody ScheduleUpdateRequest scheduleUpdateRequest) {
+        System.out.println("Update schedule received " + scheduleUpdateRequest);
         updateSchedule.execute(scheduleUpdateRequest.id,
                 scheduleUpdateRequest.dateFrom,
                 scheduleUpdateRequest.dateTo,
@@ -71,14 +78,16 @@ public class SchedulesController {
                 scheduleUpdateRequest.minTemp);
     }
 
-    @ExceptionHandler(value = ClientError.class) //tb client error porque es el usuario el que mete mal los datos
+    @ExceptionHandler(value = ClientError.class) //client error porque es el usuario el que mete mal los datos
     @ResponseStatus(value = HttpStatus.BAD_REQUEST) //porque he metido mal algún dato en la petición
     public void handleException(Exception ex) {
+        System.err.println("ERROR: " + ex.getMessage());
         ex.printStackTrace();
     }
 }
 
 @AllArgsConstructor
+@ToString
 class ScheduleCreateRequest {
     LocalDate dateFrom;
     LocalDate dateTo;
@@ -89,6 +98,7 @@ class ScheduleCreateRequest {
 }
 
 @AllArgsConstructor
+@ToString
 class ScheduleUpdateRequest {
     Integer id;
     LocalDate dateFrom;

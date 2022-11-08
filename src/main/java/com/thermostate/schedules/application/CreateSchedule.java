@@ -22,20 +22,30 @@ public class CreateSchedule {
         this.scheduleRepo = scheduleRepo;
     }
 
-    public void execute(LocalDate dateFrom, LocalDate dateTo, String timeFrom, String timeTo, Boolean active, Integer minTemp) {
+    public void execute(LocalDate dateFrom,
+                        LocalDate dateTo,
+                        String timeFrom,
+                        String timeTo,
+                        Boolean active,
+                        Integer minTemp) {
         checkData(dateFrom, dateTo, timeFrom, timeTo, active, minTemp);
         Schedule schedule = new Schedule(null,dateFrom, dateTo, timeFrom, timeTo, active, minTemp, null);
         scheduleRepo.create(schedule);
     }
 
-    private void checkData(LocalDate dateFrom, LocalDate dateTo, String timeFrom, String timeTo, Boolean active, Integer minTemp) {
+    private void checkData(LocalDate dateFrom,
+                           LocalDate dateTo,
+                           String timeFrom,
+                           String timeTo,
+                           Boolean active,
+                           Integer minTemp) {
         if (!(isValidDateFrom(dateFrom)
                 && isValidDateTo(dateTo)
                 && isValidTimeFrom(timeFrom)
                 && isValidTimeTo(timeTo)
                 && isValidActive(active)
                 && isValidMinTemp(minTemp))){
-            throw (new ClientError());
+            throw ClientError.becauseInvalidDataFromClient();
         }
     }
 

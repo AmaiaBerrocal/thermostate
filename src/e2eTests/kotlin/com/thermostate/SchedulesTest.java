@@ -1,3 +1,5 @@
+package com.thermostate;
+
 import com.thermostate.shared.HttpRequestsUtils;
 import db.E2EDB;
 import http.E2ERequest;

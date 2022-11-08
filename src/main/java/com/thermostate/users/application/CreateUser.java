@@ -31,7 +31,7 @@ public class CreateUser {
         if (!(isValidName(name)
                 && isValidPassword(password)
                 && isValidEmail(email))){
-            throw (new ClientError());
+            throw ClientError.becauseInvalidDataFromClient();
         }
     }
 
