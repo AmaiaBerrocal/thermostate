@@ -1,6 +1,5 @@
 package com.thermostate.schedules.application;
 
-import com.thermostate.schedules.infrastructure.ScheduleDbRepo;
 import com.thermostate.schedules.model.Schedule;
 import com.thermostate.schedules.model.ScheduleRepo;
 import com.thermostate.shared.ClientError;
@@ -13,32 +12,19 @@ import java.util.regex.Pattern;
 import static org.apache.logging.log4j.util.Strings.isNotEmpty;
 
 @Component
-public class CreateSchedule {
-
+public class UpdateSchedule {
     final ScheduleRepo scheduleRepo;
 
-    public CreateSchedule(ScheduleRepo scheduleRepo) {
-
+    public UpdateSchedule(ScheduleRepo scheduleRepo) {
         this.scheduleRepo = scheduleRepo;
     }
 
-    public void execute(LocalDate dateFrom,
-                        LocalDate dateTo,
-                        String timeFrom,
-                        String timeTo,
-                        Boolean active,
-                        Integer minTemp) {
+    public void execute(Integer id, LocalDate dateFrom, LocalDate dateTo, String timeFrom, String timeTo, Boolean active, Integer minTemp) {
         checkData(dateFrom, dateTo, timeFrom, timeTo, active, minTemp);
-        Schedule schedule = new Schedule(null,dateFrom, dateTo, timeFrom, timeTo, active, minTemp, null);
-        scheduleRepo.create(schedule);
+        Schedule schedule = new Schedule(id, dateFrom, dateTo, timeFrom, timeTo, active, minTemp, null);
+        scheduleRepo.update(schedule);
     }
-
-    private void checkData(LocalDate dateFrom,
-                           LocalDate dateTo,
-                           String timeFrom,
-                           String timeTo,
-                           Boolean active,
-                           Integer minTemp) {
+    private void checkData(LocalDate dateFrom, LocalDate dateTo, String timeFrom, String timeTo, Boolean active, Integer minTemp) {
         if (!(isValidDateFrom(dateFrom)
                 && isValidDateTo(dateTo)
                 && isValidTimeFrom(timeFrom)

@@ -1,16 +1,10 @@
 package com.thermostate.schedules.infrastructure;
 
-import com.thermostate.schedules.application.CreateSchedule;
-import com.thermostate.schedules.application.DeleteSchedule;
-import com.thermostate.schedules.application.GetAllSchedules;
-import com.thermostate.schedules.application.GetScheduleById;
-import com.thermostate.schedules.model.Schedule;
+import com.thermostate.schedules.application.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -19,8 +13,8 @@ public class SchedulesControllerTest {
     CreateSchedule createSchedule;
     GetScheduleById getScheduleById;
     GetAllSchedules getAllSchedules;
-
     DeleteSchedule deleteSchedule;
+    UpdateSchedule updateSchedule;
     SchedulesController sut;
 
     @BeforeEach
@@ -29,7 +23,8 @@ public class SchedulesControllerTest {
         getScheduleById = mock(GetScheduleById.class);
         getAllSchedules = mock(GetAllSchedules.class);
         deleteSchedule = mock(DeleteSchedule.class);
-        sut = new SchedulesController(createSchedule, getScheduleById, getAllSchedules, deleteSchedule);
+        updateSchedule = mock(UpdateSchedule.class);
+        sut = new SchedulesController(createSchedule, getScheduleById, getAllSchedules, deleteSchedule, updateSchedule);
     }
 
     @Test
@@ -69,5 +64,14 @@ public class SchedulesControllerTest {
         sut.deleteById(id);
         //then
         verify(deleteSchedule).execute(id);
+    }
+    @Test
+    public void should_call_application_layer_correctly_updating_schedule() {
+        //given
+        ScheduleUpdateRequest req = new ScheduleUpdateRequest(1, LocalDate.of(2020,01,03), LocalDate.of(2023,03,16), "08:00", "10:12", true, 15);
+        //when
+        sut.scheduleUpdate(req);
+        //then
+        verify(updateSchedule).execute(req.id, req.dateFrom, req.dateTo, req.timeFrom, req.timeTo, req.active, req.minTemp);
     }
 }

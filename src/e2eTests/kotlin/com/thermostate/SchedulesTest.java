@@ -1,3 +1,5 @@
+package com.thermostate;
+
 import com.thermostate.shared.HttpRequestsUtils;
 import db.E2EDB;
 import http.E2ERequest;
@@ -85,4 +87,7 @@ public class SchedulesTest {
                         "minTemp", "15"))
                 .assertThatResponseIsOk();
     }
+
+    //TODO
+    //void updateScheduleWithPetition() {}
 }

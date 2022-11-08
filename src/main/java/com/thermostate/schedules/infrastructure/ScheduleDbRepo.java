@@ -55,6 +55,22 @@ public class ScheduleDbRepo implements ScheduleRepo {
         return buildScheduleFromMap(res);
     }
 
+
+    @Override
+    public void update(Schedule schedule) {
+        String sql = "UPDATE SCHEDULES SET " +
+                "DATE_FROM = '" + schedule.dateFrom() + "', " +
+                "DATE_TO = '" + schedule.dateTo() + "', " +
+                "TIME_FROM = '" + schedule.timeFrom() + "', " +
+                "TIME_TO = '" + schedule.timeTo() + "', " +
+                "ACTIVE = '" + schedule.active() + "', " +
+                "MIN_TEMP = " + schedule.minTemp() + " " +
+                "WHERE ID = " + schedule.id();
+
+        System.out.println(sql);
+        dbUtils.executeUpdate(sql);
+    }
+
     @NotNull
     private static Schedule buildScheduleFromMap(Map<String, Object> row) {
         return new Schedule((Integer) row.get("ID"),
