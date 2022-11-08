@@ -1,16 +1,10 @@
 package com.thermostate.schedules.infrastructure;
 
-import com.thermostate.schedules.application.CreateSchedule;
-import com.thermostate.schedules.application.DeleteSchedule;
-import com.thermostate.schedules.application.GetAllSchedules;
-import com.thermostate.schedules.application.GetScheduleById;
-import com.thermostate.schedules.model.Schedule;
+import com.thermostate.schedules.application.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -21,6 +15,7 @@ public class SchedulesControllerTest {
     GetAllSchedules getAllSchedules;
 
     DeleteSchedule deleteSchedule;
+    UpdateSchedule updateSchedule;
     SchedulesController sut;
 
     @BeforeEach
@@ -29,7 +24,8 @@ public class SchedulesControllerTest {
         getScheduleById = mock(GetScheduleById.class);
         getAllSchedules = mock(GetAllSchedules.class);
         deleteSchedule = mock(DeleteSchedule.class);
-        sut = new SchedulesController(createSchedule, getScheduleById, getAllSchedules, deleteSchedule);
+        updateSchedule = mock(UpdateSchedule.class);
+        sut = new SchedulesController(createSchedule, getScheduleById, getAllSchedules, deleteSchedule, updateSchedule);
     }
 
     @Test

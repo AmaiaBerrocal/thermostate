@@ -1,9 +1,6 @@
 package com.thermostate.schedules.infrastructure;
 
-import com.thermostate.schedules.application.CreateSchedule;
-import com.thermostate.schedules.application.DeleteSchedule;
-import com.thermostate.schedules.application.GetAllSchedules;
-import com.thermostate.schedules.application.GetScheduleById;
+import com.thermostate.schedules.application.*;
 import com.thermostate.schedules.model.Schedule;
 import com.thermostate.shared.ClientError;
 import com.thermostate.shared.ValueResponse;
@@ -24,11 +21,14 @@ public class SchedulesController {
 
     private final DeleteSchedule deleteSchedule;
 
-    public SchedulesController(CreateSchedule createSchedule, GetScheduleById getScheduleById, GetAllSchedules getAllSchedules, DeleteSchedule deleteSchedule) {
+    private final UpdateSchedule updateSchedule;
+
+    public SchedulesController(CreateSchedule createSchedule, GetScheduleById getScheduleById, GetAllSchedules getAllSchedules, DeleteSchedule deleteSchedule, UpdateSchedule updateSchedule) {
         this.createSchedule = createSchedule;
         this.getScheduleById = getScheduleById;
         this.getAllSchedules = getAllSchedules;
         this.deleteSchedule = deleteSchedule;
+        this.updateSchedule = updateSchedule;
     }
 
     @PostMapping("/schedule")
@@ -60,6 +60,17 @@ public class SchedulesController {
         deleteSchedule.execute(id);
     }
 
+    @PutMapping("/schedule")
+    public void scheduleUpdate(@RequestBody ScheduleUpdateRequest scheduleUpdateRequest) {
+        updateSchedule.execute(scheduleUpdateRequest.id,
+                scheduleUpdateRequest.dateFrom,
+                scheduleUpdateRequest.dateTo,
+                scheduleUpdateRequest.timeFrom,
+                scheduleUpdateRequest.timeTo,
+                scheduleUpdateRequest.active,
+                scheduleUpdateRequest.minTemp);
+    }
+
     @ExceptionHandler(value = ClientError.class) //tb client error porque es el usuario el que mete mal los datos
     @ResponseStatus(value = HttpStatus.BAD_REQUEST) //porque he metido mal algún dato en la petición
     public void handleException(Exception ex) {
@@ -69,6 +80,17 @@ public class SchedulesController {
 
 @AllArgsConstructor
 class ScheduleCreateRequest {
+    LocalDate dateFrom;
+    LocalDate dateTo;
+    String timeFrom;
+    String timeTo;
+    Boolean active;
+    Integer minTemp;
+}
+
+@AllArgsConstructor
+class ScheduleUpdateRequest {
+    Integer id;
     LocalDate dateFrom;
     LocalDate dateTo;
     String timeFrom;
