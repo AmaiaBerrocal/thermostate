@@ -85,4 +85,7 @@ public class SchedulesTest {
                         "minTemp", "15"))
                 .assertThatResponseIsOk();
     }
+
+    //TODO
+    //void updateScheduleWithPetition() {}
 }

@@ -59,6 +59,15 @@ public class ScheduleDbRepoTest {
         verify(dbUtils).executeUpdate(sql);
     }
 
+    @Test
+    public void should_return_list_of_schedules(){
+        //given
+        String sql = "SELECT * FROM SCHEDULES";
+        //when
+        sut.getAll();
+        //then
+        verify(dbUtils).executeQuery(sql);
+    }
 
     @Test
     public void should_return_schedule_by_id() {
@@ -70,6 +79,25 @@ public class ScheduleDbRepoTest {
         //then
         verify(dbUtils).executeQuery(sql);
     }
+
+    @Test
+    public void should_update_an_existing_schedule() {
+        //given
+        Schedule schedule = new Schedule(1, LocalDate.of(2020, 01, 03), LocalDate.of(2023, 03, 16), "08:00", "10:12", true, 15, LocalDate.of(2019, 01, 03));
+        String sql = "UPDATE SCHEDULES SET " +
+                "DATE_FROM = '" + schedule.dateFrom() + "', " +
+                "DATE_TO = '" + schedule.dateTo() + "', " +
+                "TIME_FROM = '" + schedule.timeFrom() + "', " +
+                "TIME_TO = '" + schedule.timeTo() + "', " +
+                "ACTIVE = '" + schedule.active() + "', " +
+                "MIN_TEMP = " + schedule.minTemp() + " " +
+                "WHERE ID = " + schedule.id();
+        //when
+        sut.update(schedule);
+        //then
+        verify(dbUtils).executeUpdate(sql);
+    }
+
 
     @Test
     public void should_delete_schedule_by_id() {
