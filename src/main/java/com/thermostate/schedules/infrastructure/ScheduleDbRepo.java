@@ -38,7 +38,7 @@ public class ScheduleDbRepo implements ScheduleRepo {
                 "','" + schedule.dateTo() +
                 "','" + schedule.timeFrom() +
                 "','" + schedule.timeTo() +
-                "',true" +
+                "', 1" +
                 "," + schedule.minTemp() +
                 ", CURRENT_DATE)";
         dbUtils.executeUpdate(sql);
@@ -63,7 +63,7 @@ public class ScheduleDbRepo implements ScheduleRepo {
                 "DATE_TO = '" + schedule.dateTo() + "', " +
                 "TIME_FROM = '" + schedule.timeFrom() + "', " +
                 "TIME_TO = '" + schedule.timeTo() + "', " +
-                "ACTIVE = '" + schedule.active() + "', " +
+                "ACTIVE = '" + (schedule.active() ? 1 : 0) + "', " +
                 "MIN_TEMP = " + schedule.minTemp() + " " +
                 "WHERE ID = " + schedule.id();
 
@@ -73,12 +73,13 @@ public class ScheduleDbRepo implements ScheduleRepo {
 
     @NotNull
     private static Schedule buildScheduleFromMap(Map<String, Object> row) {
+        System.out.println(row);
         return new Schedule((Integer) row.get("ID"),
                 LocalDate.parse(row.get("DATE_FROM").toString()),
                 LocalDate.parse(row.get("DATE_TO").toString()),
                 (String) row.get("TIME_FROM"),
                 (String) row.get("TIME_TO"),
-                (Integer) row.get("ACTIVE") != 0,
+                ((Integer) row.get("ACTIVE")) == 1,
                 (Integer) row.get("MIN_TEMP"),
                 LocalDate.parse(row.get("CREATED_AT").toString().trim()));
     }
