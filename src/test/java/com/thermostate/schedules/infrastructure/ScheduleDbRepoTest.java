@@ -50,7 +50,7 @@ public class ScheduleDbRepoTest {
                 "','" + schedule.dateTo() +
                 "','" + schedule.timeFrom() +
                 "','" + schedule.timeTo() +
-                "',true" +
+                "', 1" +
                 "," + schedule.minTemp() +
                 ", CURRENT_DATE)";
         //when
@@ -89,7 +89,7 @@ public class ScheduleDbRepoTest {
                 "DATE_TO = '" + schedule.dateTo() + "', " +
                 "TIME_FROM = '" + schedule.timeFrom() + "', " +
                 "TIME_TO = '" + schedule.timeTo() + "', " +
-                "ACTIVE = '" + schedule.active() + "', " +
+                "ACTIVE = '1', " +
                 "MIN_TEMP = " + schedule.minTemp() + " " +
                 "WHERE ID = " + schedule.id();
         //when
