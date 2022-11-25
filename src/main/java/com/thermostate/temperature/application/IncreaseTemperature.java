@@ -13,7 +13,7 @@ public class IncreaseTemperature {
     }
 
     public void execute(Integer temp) {
-        Integer incrementTemp = temp + 100;
+        Integer incrementTemp = temperatureRepo.getTemp().temp() + temp;
         Temperature temperature = new Temperature(incrementTemp);
         temperatureRepo.updateTemp(temperature);
     }

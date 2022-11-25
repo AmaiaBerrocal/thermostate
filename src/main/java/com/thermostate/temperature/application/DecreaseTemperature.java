@@ -13,7 +13,7 @@ public class DecreaseTemperature {
     }
 
     public void execute(Integer temp) {
-        Integer decrementTemp = temp - 100;
+        Integer decrementTemp = temperatureRepo.getTemp().temp() - temp;
         Temperature temperature = new Temperature(decrementTemp);
         temperatureRepo.updateTemp(temperature);
     }

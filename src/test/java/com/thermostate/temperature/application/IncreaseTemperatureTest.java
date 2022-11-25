@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class IncreaseTemperatureTest {
     TemperatureRepo temperatureRepo;
@@ -21,12 +22,13 @@ public class IncreaseTemperatureTest {
     @Test
     public void should_increase_temperature_one_degree() {
         //given
+        Integer incrementTemp = 100;
         Integer temp = 1600;
-        Integer incrementTemp = temp + 100;
+        when(temperatureRepo.getTemp()).thenReturn(new Temperature(temp));
         //when
-        sut.execute(temp);
+        sut.execute(incrementTemp);
         //then
         Temperature temperature = new Temperature(incrementTemp);
-        verify(temperatureRepo).updateTemp(temperature);
+        verify(temperatureRepo).updateTemp(new Temperature(temp + incrementTemp));
     }
 }
