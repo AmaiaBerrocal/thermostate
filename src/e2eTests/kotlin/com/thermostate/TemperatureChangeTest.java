@@ -1,5 +1,7 @@
 package com.thermostate;
 
+import com.google.gson.Gson;
+import com.thermostate.temperature.model.Temperature;
 import db.E2EDB;
 import http.E2ERequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +11,7 @@ import java.util.Map;
 
 import static com.thermostate.shared.HttpRequestsUtils.createSingleUser;
 import static com.thermostate.shared.HttpRequestsUtils.getBearer;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class TemperatureChangeTest {
   E2EDB e2edb;
@@ -21,29 +24,39 @@ public class TemperatureChangeTest {
 
   @Test
   public void should_increase_temperature() {
+    var previousTemp = getActualTemperature();
     E2ERequest
-        .to("ttp://localhost:8080/temperature/increment")
+        .to("http://localhost:8080/temperature/increment")
         .withHeader("Authorization", getBearer())
         .withContentType("application/json;charset=UTF-8")
         .sendAPut(Map.of("temperature", 100))
         .assertThatResponseIsOk();
 
-    e2edb
-        .doQuery("SELECT * FROM TEMPERATURE'")
-        .assertThatNumberOfResults(1); //TODO check increasing with a 'get'?
+    assertThat(getActualTemperature()).isEqualTo(previousTemp + 100);
   }
 
   @Test
   public void should_decrease_temperature() {
+    var previousTemp = getActualTemperature();
     E2ERequest
-        .to("ttp://localhost:8080/temperature/decrease")
+        .to("http://localhost:8080/temperature/decrement")
         .withHeader("Authorization", getBearer())
         .withContentType("application/json;charset=UTF-8")
         .sendAPut(Map.of("temperature", 100))
         .assertThatResponseIsOk();
 
-    e2edb
-        .doQuery("SELECT * FROM TEMPERATURE'")
-        .assertThatNumberOfResults(1); //TODO check decreasing
+    assertThat(getActualTemperature()).isEqualTo(previousTemp - 100);
+  }
+
+  private Integer getActualTemperature() {
+    var response = E2ERequest
+        .to("http://localhost:8080/temperature")
+        .withHeader("Authorization", getBearer())
+        .withContentType("application/json;charset=UTF-8")
+        .sendAGet(Map.of());
+
+    var gson = new Gson();
+
+    return gson.fromJson(response.body().get("value").toString(), Temperature.class).temp();
   }
 }
