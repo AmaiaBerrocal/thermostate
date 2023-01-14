@@ -43,6 +43,7 @@ public class UsersController {
     @ResponseBody
     public ValueResponse<String> login(@RequestBody UserLoginRequest request) {
         User user =  getUser.execute(request.name, request.password);
+        if (user == null) throw ClientError.becauseInvalidDataFromClient();
         return new ValueResponse<>(tokenService.generateToken(user));
     }
 }
