@@ -18,7 +18,9 @@ public class UsersController {
     private final TokenService tokenService;
 
 
-    public UsersController(CreateUser createUser, GetUser getUser, TokenService tokenService) {
+    public UsersController(CreateUser createUser,
+                           GetUser getUser,
+                           TokenService tokenService) {
         this.createUser = createUser;
         this.getUser = getUser;
         this.tokenService = tokenService;
@@ -26,7 +28,9 @@ public class UsersController {
 
     @PostMapping("/user")
     public void userCreation(@RequestBody UserCreateRequest userCreateRequest) {
-        createUser.execute(userCreateRequest.name, userCreateRequest.password, userCreateRequest.email);
+        createUser.execute(userCreateRequest.name,
+                userCreateRequest.password,
+                userCreateRequest.email);
     }
 
     @ExceptionHandler(value = ClientError.class)
@@ -39,6 +43,7 @@ public class UsersController {
     @ResponseBody
     public ValueResponse<String> login(@RequestBody UserLoginRequest request) {
         User user =  getUser.execute(request.name, request.password);
+        if (user == null) throw ClientError.becauseInvalidDataFromClient();
         return new ValueResponse<>(tokenService.generateToken(user));
     }
 }

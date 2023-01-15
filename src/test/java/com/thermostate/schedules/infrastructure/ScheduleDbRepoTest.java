@@ -2,9 +2,6 @@ package com.thermostate.schedules.infrastructure;
 
 import com.thermostate.schedules.model.Schedule;
 import com.thermostate.shared.DbUtils;
-import com.thermostate.users.infrastucture.UserDbRepo;
-import com.thermostate.users.model.User;
-import com.thermostate.users.model.UserObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -83,7 +80,14 @@ public class ScheduleDbRepoTest {
     @Test
     public void should_update_an_existing_schedule() {
         //given
-        Schedule schedule = new Schedule(1, LocalDate.of(2020, 01, 03), LocalDate.of(2023, 03, 16), "08:00", "10:12", true, 15, LocalDate.of(2019, 01, 03));
+        Schedule schedule = new Schedule(1,
+                LocalDate.of(2020, 01, 03),
+                LocalDate.of(2023, 03, 16),
+                "08:00",
+                "10:12",
+                true,
+                15,
+                LocalDate.of(2019, 01, 03));
         String sql = "UPDATE SCHEDULES SET " +
                 "DATE_FROM = '" + schedule.dateFrom() + "', " +
                 "DATE_TO = '" + schedule.dateTo() + "', " +
