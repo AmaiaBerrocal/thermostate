@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import static org.apache.logging.log4j.util.Strings.isNotEmpty;
 
@@ -19,14 +20,13 @@ public class UpdateSchedule {
         this.scheduleRepo = scheduleRepo;
     }
 
-    public void execute(Integer id, LocalDate dateFrom, LocalDate dateTo, String timeFrom, String timeTo, Boolean active, Integer minTemp) {
-        checkData(dateFrom, dateTo, timeFrom, timeTo, active, minTemp);
-        Schedule schedule = new Schedule(id, dateFrom, dateTo, timeFrom, timeTo, active, minTemp, null);
+    public void execute(Integer id, String weekDays, String timeFrom, String timeTo, Boolean active, Integer minTemp) {
+        checkData(weekDays, timeFrom, timeTo, active, minTemp);
+        Schedule schedule = new Schedule(id, weekDays, timeFrom, timeTo, active, minTemp, null);
         scheduleRepo.update(schedule);
     }
-    private void checkData(LocalDate dateFrom, LocalDate dateTo, String timeFrom, String timeTo, Boolean active, Integer minTemp) {
-        if (!(isValidDateFrom(dateFrom)
-                && isValidDateTo(dateTo)
+    private void checkData(String weekDays, String timeFrom, String timeTo, Boolean active, Integer minTemp) {
+        if (!(isValidWeekDays(weekDays)
                 && isValidTimeFrom(timeFrom)
                 && isValidTimeTo(timeTo)
                 && isValidActive(active)
@@ -35,8 +35,11 @@ public class UpdateSchedule {
         }
     }
 
-    public boolean isValidDateFrom(LocalDate dateFrom) {
-        return dateFrom != null;
+    public boolean isValidWeekDays(String weekDays) {
+        return Stream.of(weekDays.split(","))
+            .filter(c -> !"LMXJV".contains(c) || c.length() != 1)
+            .findAny()
+            .isEmpty();
     }
 
     public boolean isValidDateTo(LocalDate dateTo) {

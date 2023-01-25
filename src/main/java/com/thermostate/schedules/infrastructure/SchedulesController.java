@@ -39,8 +39,8 @@ public class SchedulesController {
     @PostMapping("/schedule")
     public void scheduleInsert(@RequestBody ScheduleCreateRequest scheduleCreateRequest) {
         System.out.println("Insert schedule received " + scheduleCreateRequest);
-        createSchedule.execute(scheduleCreateRequest.dateFrom,
-                scheduleCreateRequest.dateTo,
+        createSchedule.execute(
+                scheduleCreateRequest.weekDays,
                 scheduleCreateRequest.timeFrom,
                 scheduleCreateRequest.timeTo,
                 scheduleCreateRequest.active,
@@ -70,8 +70,7 @@ public class SchedulesController {
     public void scheduleUpdate(@RequestBody ScheduleUpdateRequest scheduleUpdateRequest) {
         System.out.println("Update schedule received " + scheduleUpdateRequest);
         updateSchedule.execute(scheduleUpdateRequest.id,
-                scheduleUpdateRequest.dateFrom,
-                scheduleUpdateRequest.dateTo,
+                scheduleUpdateRequest.weekDays,
                 scheduleUpdateRequest.timeFrom,
                 scheduleUpdateRequest.timeTo,
                 scheduleUpdateRequest.active,
@@ -89,8 +88,7 @@ public class SchedulesController {
 @AllArgsConstructor
 @ToString
 class ScheduleCreateRequest {
-    LocalDate dateFrom;
-    LocalDate dateTo;
+    String weekDays;
     String timeFrom;
     String timeTo;
     Boolean active;
@@ -101,8 +99,7 @@ class ScheduleCreateRequest {
 @ToString
 class ScheduleUpdateRequest {
     Integer id;
-    LocalDate dateFrom;
-    LocalDate dateTo;
+    String weekDays;
     String timeFrom;
     String timeTo;
     Boolean active;

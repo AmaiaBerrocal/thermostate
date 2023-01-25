@@ -21,12 +21,12 @@ public class ScheduleDbRepoTest {
         sut = new ScheduleDbRepo(dbUtils);
     }
 
+
     @Test
-    public void schedule_table_should_be_create() throws SQLException {
+    public void table_should_be_created() throws SQLException {
         //given
         String sql = "CREATE TABLE IF NOT EXISTS SCHEDULES (ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "DATE_FROM DATE NOT NULL," +
-                "DATE_TO DATE NOT NULL," +
+                "WEEKDAYS TEXT NOT NULL," +
                 "TIME_FROM TEXT NOT NULL," +
                 "TIME_TO TEXT NOT NULL," +
                 "ACTIVE BOOLEAN," +
@@ -41,10 +41,9 @@ public class ScheduleDbRepoTest {
     @Test
     public void schedule_should_be_insert() {
         //given
-        Schedule schedule = new Schedule(1, LocalDate.of(2020, 01, 03), LocalDate.of(2023, 03, 16), "08:00", "10:12", true, 15, LocalDate.of(2019, 01, 03));
-        String sql = "INSERT INTO SCHEDULES (DATE_FROM, DATE_TO, TIME_FROM, TIME_TO, ACTIVE, MIN_TEMP, CREATED_AT) VALUES (" +
-                "'" + schedule.dateFrom() +
-                "','" + schedule.dateTo() +
+        Schedule schedule = new Schedule(1, "L,M", "08:00", "10:12", true, 15, LocalDate.of(2019, 01, 03));
+        String sql = "INSERT INTO SCHEDULES (WEEKDAYS, TIME_FROM, TIME_TO, ACTIVE, MIN_TEMP, CREATED_AT) VALUES (" +
+                "'" + schedule.weekDays() +
                 "','" + schedule.timeFrom() +
                 "','" + schedule.timeTo() +
                 "', 1" +
@@ -81,16 +80,14 @@ public class ScheduleDbRepoTest {
     public void should_update_an_existing_schedule() {
         //given
         Schedule schedule = new Schedule(1,
-                LocalDate.of(2020, 01, 03),
-                LocalDate.of(2023, 03, 16),
-                "08:00",
+                "L,M",
+            "08:00",
                 "10:12",
                 true,
                 15,
                 LocalDate.of(2019, 01, 03));
         String sql = "UPDATE SCHEDULES SET " +
-                "DATE_FROM = '" + schedule.dateFrom() + "', " +
-                "DATE_TO = '" + schedule.dateTo() + "', " +
+                "WEEKDAYS = '" + schedule.weekDays() + "', " +
                 "TIME_FROM = '" + schedule.timeFrom() + "', " +
                 "TIME_TO = '" + schedule.timeTo() + "', " +
                 "ACTIVE = '1', " +

@@ -21,8 +21,7 @@ public class ScheduleDbRepo implements ScheduleRepo {
 
     public void createScheduleTable() {
         String sql = "CREATE TABLE IF NOT EXISTS SCHEDULES (ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "DATE_FROM DATE NOT NULL," +
-                "DATE_TO DATE NOT NULL," +
+                "WEEKDAYS TEXT NOT NULL," +
                 "TIME_FROM TEXT NOT NULL," +
                 "TIME_TO TEXT NOT NULL," +
                 "ACTIVE BOOLEAN," +
@@ -33,9 +32,8 @@ public class ScheduleDbRepo implements ScheduleRepo {
 
     @Override
     public void create(Schedule schedule) {
-        String sql = "INSERT INTO SCHEDULES (DATE_FROM, DATE_TO, TIME_FROM, TIME_TO, ACTIVE, MIN_TEMP, CREATED_AT) VALUES (" +
-                "'" + schedule.dateFrom() +
-                "','" + schedule.dateTo() +
+        String sql = "INSERT INTO SCHEDULES (WEEKDAYS, TIME_FROM, TIME_TO, ACTIVE, MIN_TEMP, CREATED_AT) VALUES (" +
+                "'" + schedule.weekDays() +
                 "','" + schedule.timeFrom() +
                 "','" + schedule.timeTo() +
                 "', 1" +
@@ -59,8 +57,7 @@ public class ScheduleDbRepo implements ScheduleRepo {
     @Override
     public void update(Schedule schedule) {
         String sql = "UPDATE SCHEDULES SET " +
-                "DATE_FROM = '" + schedule.dateFrom() + "', " +
-                "DATE_TO = '" + schedule.dateTo() + "', " +
+                "WEEKDAYS = '" + schedule.weekDays() + "', " +
                 "TIME_FROM = '" + schedule.timeFrom() + "', " +
                 "TIME_TO = '" + schedule.timeTo() + "', " +
                 "ACTIVE = '" + (schedule.active() ? 1 : 0) + "', " +
@@ -75,8 +72,7 @@ public class ScheduleDbRepo implements ScheduleRepo {
     private static Schedule buildScheduleFromMap(Map<String, Object> row) {
         System.out.println(row);
         return new Schedule((Integer) row.get("ID"),
-                LocalDate.parse(row.get("DATE_FROM").toString()),
-                LocalDate.parse(row.get("DATE_TO").toString()),
+                (String) row.get("WEEKDAYS"),
                 (String) row.get("TIME_FROM"),
                 (String) row.get("TIME_TO"),
                 ((Integer) row.get("ACTIVE")) == 1,
