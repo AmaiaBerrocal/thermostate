@@ -26,7 +26,7 @@ class UpdateScheduleTest {
     public void should_update_schedule_if_data_are_correct() {
         //given
         Integer id = 1;
-        String weekDays = "L,M,X";
+        String weekDays = "L,M,X,J,V,S,D";
         String timeFrom = "19:00";
         String timeTo = "23:59";
         Boolean active = true;

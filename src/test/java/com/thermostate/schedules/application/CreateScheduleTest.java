@@ -27,7 +27,7 @@ public class CreateScheduleTest {
     @Test
     public void should_create_schedule_if_data_are_correct() {
         //given
-        String weekDays = "L,M,X,J";
+        String weekDays = "L,M,X,J,V,S,D";
         var schedule = givenScheduleForDays(weekDays);
         //when
         sut.execute(weekDays, schedule.timeFrom(), schedule.timeTo(), schedule.active(), schedule.minTemp());

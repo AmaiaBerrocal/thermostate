@@ -37,13 +37,9 @@ public class UpdateSchedule {
 
     public boolean isValidWeekDays(String weekDays) {
         return Stream.of(weekDays.split(","))
-            .filter(c -> !"LMXJV".contains(c) || c.length() != 1)
+            .filter(c -> !"LMXJVSD".contains(c) || c.length() != 1)
             .findAny()
             .isEmpty();
-    }
-
-    public boolean isValidDateTo(LocalDate dateTo) {
-        return dateTo != null;
     }
 
     public boolean isValidTimeFrom(String timeFrom) {
