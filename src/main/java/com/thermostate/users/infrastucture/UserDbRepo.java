@@ -47,7 +47,7 @@ public class UserDbRepo implements UserRepo {
     }
     
     public User getByName(String name) {
-        String sql = "SELECT * FROM USERS WHERE NAME = '" + name + "'";
+        String sql = "SELECT * FROM USERS WHERE UPPER(NAME) = '" + name.toUpperCase() + "'";
         List<Map<String, Object>> result = dbUtils.executeQuery(sql);
         if (result.isEmpty()) {
             return null;
