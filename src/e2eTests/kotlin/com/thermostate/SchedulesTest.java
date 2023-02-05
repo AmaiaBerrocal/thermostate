@@ -1,5 +1,6 @@
 package com.thermostate;
 
+import com.thermostate.schedules.infrastructure.ScheduleDbRepo;
 import com.thermostate.shared.HttpRequestsUtils;
 import db.E2EDB;
 import http.E2ERequest;
@@ -25,8 +26,8 @@ public class SchedulesTest {
     void should_create_an_schedule() {
         createScheduleWithPetition();
         e2edb
-                .doQuery("SELECT * FROM SCHEDULES WHERE DATE_FROM = '2022-01-02'")
-                .assertThatExistAnEntryWithFields(Map.of("date_to", "2023-03-04"));
+                .doQuery("SELECT * FROM SCHEDULES WHERE TIME_TO = '20:16'")
+                .assertThatExistAnEntryWithFields(Map.of("weekDays", "L,M,X"));
     }
 
     @Test
@@ -35,8 +36,7 @@ public class SchedulesTest {
                 .to("http://localhost:8080/schedule")
                 .withABearer(HttpRequestsUtils::getBearer)
                 .withContentType("application/json;charset=UTF-8")
-                .sendAPost(Map.of("dateFrom", "2022-01-02",
-                        "dateTo", "",
+                .sendAPost(Map.of("weekDays", "L,M,F",
                         "timeFrom", "16:00",
                         "timeTo", "20:16",
                         "active", "true",
@@ -79,8 +79,7 @@ public class SchedulesTest {
                 .to("http://127.0.0.1:8080/schedule")
                 .withABearer(HttpRequestsUtils::getBearer)
                 .withContentType("application/json;charset=UTF-8")
-                .sendAPost(Map.of("dateFrom", "2022-01-02",
-                        "dateTo", "2023-03-04",
+                .sendAPost(Map.of("weekDays", "L,M,X",
                         "timeFrom", "16:00",
                         "timeTo", "20:16",
                         "active", "true",

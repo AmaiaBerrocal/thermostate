@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import static org.apache.logging.log4j.util.Strings.isNotEmpty;
 
@@ -22,25 +23,22 @@ public class CreateSchedule {
         this.scheduleRepo = scheduleRepo;
     }
 
-    public void execute(LocalDate dateFrom,
-                        LocalDate dateTo,
+    public void execute(String weekDays,
                         String timeFrom,
                         String timeTo,
                         Boolean active,
                         Integer minTemp) {
-        checkData(dateFrom, dateTo, timeFrom, timeTo, active, minTemp);
-        Schedule schedule = new Schedule(null,dateFrom, dateTo, timeFrom, timeTo, active, minTemp, null);
+        checkData(weekDays, timeFrom, timeTo, active, minTemp);
+        Schedule schedule = new Schedule(null,weekDays, timeFrom, timeTo, active, minTemp, null);
         scheduleRepo.create(schedule);
     }
 
-    private void checkData(LocalDate dateFrom,
-                           LocalDate dateTo,
+    private void checkData(String weekDays,
                            String timeFrom,
                            String timeTo,
                            Boolean active,
                            Integer minTemp) {
-        if (!(isValidDateFrom(dateFrom)
-                && isValidDateTo(dateTo)
+        if (!(isValidWeekDays(weekDays)
                 && isValidTimeFrom(timeFrom)
                 && isValidTimeTo(timeTo)
                 && isValidActive(active)
@@ -49,8 +47,11 @@ public class CreateSchedule {
         }
     }
 
-    public boolean isValidDateFrom(LocalDate dateFrom) {
-        return dateFrom != null;
+    public boolean isValidWeekDays(String weekDays) {
+        return Stream.of(weekDays.split(","))
+            .filter(c -> !"LMXJVSD".contains(c) || c.length() != 1)
+            .findAny()
+            .isEmpty();
     }
 
     public boolean isValidDateTo(LocalDate dateTo) {

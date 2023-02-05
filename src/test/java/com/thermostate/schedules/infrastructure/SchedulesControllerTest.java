@@ -30,11 +30,11 @@ public class SchedulesControllerTest {
     @Test
     public void should_call_application_layer_correctly_creating_schedule() {
         //given
-        ScheduleCreateRequest req = new ScheduleCreateRequest(LocalDate.of(2020,01,03), LocalDate.of(2023,03,16), "08:00", "10:12", true, 15);
+        ScheduleCreateRequest req = new ScheduleCreateRequest("L,M", "08:00", "10:12", true, 15);
         //when
         sut.scheduleInsert(req);
         //then
-        verify(createSchedule).execute(req.dateFrom, req.dateTo, req.timeFrom, req.timeTo, req.active, req.minTemp);
+        verify(createSchedule).execute(req.weekDays, req.timeFrom, req.timeTo, req.active, req.minTemp);
     }
 
     @Test
@@ -68,10 +68,10 @@ public class SchedulesControllerTest {
     @Test
     public void should_call_application_layer_correctly_updating_schedule() {
         //given
-        ScheduleUpdateRequest req = new ScheduleUpdateRequest(1, LocalDate.of(2020,01,03), LocalDate.of(2023,03,16), "08:00", "10:12", true, 15);
+        ScheduleUpdateRequest req = new ScheduleUpdateRequest(1, "L,M", "08:00", "10:12", true, 15);
         //when
         sut.scheduleUpdate(req);
         //then
-        verify(updateSchedule).execute(req.id, req.dateFrom, req.dateTo, req.timeFrom, req.timeTo, req.active, req.minTemp);
+        verify(updateSchedule).execute(req.id, req.weekDays, req.timeFrom, req.timeTo, req.active, req.minTemp);
     }
 }
