@@ -10,7 +10,7 @@ import java.io.*;
 public class RoomTemperatureFileRepo implements RoomTemperatureRepo {
     // this is the file in which my sensor writes the temperature that it measures
     final static String ROOM_TEMPERATURE_FILE = "/sys/bus/w1/devices/28-0415a4ddf9ff/w1_slave";
-    
+
     @Override
     public RoomTemperature getTemp() {
         return new RoomTemperature(read());
