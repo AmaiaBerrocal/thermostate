@@ -17,7 +17,7 @@ public class DbUtils {
     private Connection createConnection() {
         Connection con = null;
         try{
-            con = DriverManager.getConnection(properties.getUrl());
+            con = DriverManager.getConnection(properties.getDbUrl());
             if (con == null){
                 throw new RuntimeException("Not able to connect to database.");
             }

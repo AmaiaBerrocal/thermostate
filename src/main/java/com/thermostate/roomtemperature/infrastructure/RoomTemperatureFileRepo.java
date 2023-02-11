@@ -2,6 +2,8 @@ package com.thermostate.roomtemperature.infrastructure;
 
 import com.thermostate.roomtemperature.model.RoomTemperature;
 import com.thermostate.roomtemperature.model.RoomTemperatureRepo;
+import com.thermostate.shared.PropertiesLoader;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -9,7 +11,11 @@ import java.io.*;
 @Component
 public class RoomTemperatureFileRepo implements RoomTemperatureRepo {
     // this is the file in which my sensor writes the temperature that it measures
-    final static String ROOM_TEMPERATURE_FILE = "/sys/bus/w1/devices/28-0415a4ddf9ff/w1_slave";
+    final PropertiesLoader properties;
+
+    public RoomTemperatureFileRepo(final PropertiesLoader properties) {
+        this.properties = properties;
+    }
 
     @Override
     public RoomTemperature getTemp() {
@@ -17,19 +23,24 @@ public class RoomTemperatureFileRepo implements RoomTemperatureRepo {
     }
 
     public String read() {
-        String res = "";
+        String res = readRoomTemperatureFromFile();
+        return transformReaded(res);
+    }
+
+    @Nullable
+    private String readRoomTemperatureFromFile() {
+        String roomTemperatureFile = properties.getRoomTemp().get("file");
+        String markOnFile = properties.getRoomTemp().get("temp_mark_in_file");
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(
-                ROOM_TEMPERATURE_FILE)))){
-
-            res = br.lines()
-                    .filter((line) -> line.contains("t="))
-                    .map((line) -> line.substring(line.indexOf("t=") + 2))
-                    .findFirst().get();
-
+                roomTemperatureFile)))){
+            return br.lines()
+                .filter((line) -> line.contains(markOnFile))
+                .map((line) -> line.substring(line.indexOf(markOnFile) + 2))
+                .findFirst().get();
         } catch (IOException e) {
             System.out.println("ERROR: " + e.getMessage());
         }
-        return transformReaded(res);
+        return "";
     }
 
     /** Temperature must be divided by 1000 because of the format in which is readed

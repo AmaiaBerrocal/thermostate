@@ -7,14 +7,14 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-class ConfiguratorTest {
+class SchedulingConfiguratorTest {
     GetRoomTemperature getRoomTemperature;
-    Configurator sut;
+    SchedulingConfigurator sut;
 
     @BeforeEach
     public void setup() {
         getRoomTemperature = mock(GetRoomTemperature.class);
-        sut = new Configurator(getRoomTemperature);
+        sut = new SchedulingConfigurator(getRoomTemperature);
     }
 
     @Test
