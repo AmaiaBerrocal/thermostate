@@ -3,4 +3,4 @@
 set -e
 cd "$(dirname "${BASH_SOURCE[0]}")"/..
 
-./gradlew bootRun --args=--spring.profiles.active=dev
+./gradlew bootRun --args=--spring.profiles.active=dev $@

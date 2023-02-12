@@ -38,7 +38,7 @@ public class RoomTemperatureFileRepo implements RoomTemperatureRepo {
                 .map((line) -> line.substring(line.indexOf(markOnFile) + 2))
                 .findFirst().get();
         } catch (IOException e) {
-            System.out.println("ERROR: " + e.getMessage());
+            System.err.println("ERROR: " + e.getMessage());
         }
         return "";
     }

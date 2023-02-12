@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 @Component
-@ConfigurationProperties(prefix="thermostat")
+@ConfigurationProperties(prefix="thermostate")
 @Getter
 @Setter
 public class PropertiesLoader {

@@ -39,8 +39,8 @@ public class CreateSchedule {
                            Boolean active,
                            Integer minTemp) {
         if (!(isValidWeekDays(weekDays)
-                && isValidTimeFrom(timeFrom)
-                && isValidTimeTo(timeTo)
+                && isValidTime(timeFrom)
+                && isValidTime(timeTo)
                 && isValidActive(active)
                 && isValidMinTemp(minTemp))){
             throw ClientError.becauseInvalidDataFromClient();
@@ -58,22 +58,13 @@ public class CreateSchedule {
         return dateTo != null;
     }
 
-    public boolean isValidTimeFrom(String timeFrom) {
+    public boolean isValidTime(String timeFrom) {
         if (timeFrom == null) {
             return false;
         }
         Pattern timePattern = Pattern.compile("[0-2][0-9]:[0-5][0-9]");
         Matcher mat = timePattern.matcher(timeFrom);
         return isNotEmpty(timeFrom) || mat.matches();
-    }
-
-    public boolean isValidTimeTo(String timeTo) {
-        if (timeTo == null) {
-            return false;
-        }
-        Pattern timePattern = Pattern.compile("[0-2][0-9]:[0-5][0-9]");
-        Matcher mat = timePattern.matcher(timeTo);
-        return isNotEmpty(timeTo) && mat.matches();
     }
 
     public boolean isValidActive(Boolean active) {
