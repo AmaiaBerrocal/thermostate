@@ -7,16 +7,15 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 @Configuration
 @EnableScheduling
-public class Configurator {
+public class SchedulingConfigurator {
     GetRoomTemperature getRoomTemperature;
 
-    public Configurator(GetRoomTemperature getRoomTemperature) {
+    public SchedulingConfigurator(GetRoomTemperature getRoomTemperature) {
         this.getRoomTemperature = getRoomTemperature;
     }
 
     @Scheduled(fixedDelay = 5000)
     public void scheduleFixedDelayTask() {
-        System.out.println("estoy en lanzamiento de evento programado");
         getRoomTemperature.execute();
     }
 }

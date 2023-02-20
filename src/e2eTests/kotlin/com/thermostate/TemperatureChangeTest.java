@@ -17,7 +17,7 @@ public class TemperatureChangeTest {
   E2EDB e2edb;
   @BeforeEach
   public void setup() {
-    e2edb = new E2EDB("jdbc:sqlite:./db/thermostate.db");
+    e2edb = new E2EDB("jdbc:sqlite:./assets/thermostate.db");
     e2edb.givenEmptyTable("USERS");
     createSingleUser(e2edb);
   }

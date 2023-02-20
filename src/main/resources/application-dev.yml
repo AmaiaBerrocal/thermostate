@@ -1,0 +1,5 @@
+thermostate:
+  dbUrl: "jdbc:sqlite:./assets/thermostate.db"
+  roomTemp:
+    file: "./assets/w1_slave"
+    temp_mark_in_file: "t="

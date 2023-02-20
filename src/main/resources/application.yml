@@ -1,3 +1,0 @@
-db:
-  #url siempre es jdbc:subprotocol:subname donde subname es la ruta y nombre de mi archivo
-  url: "jdbc:sqlite:./db/thermostate.db"
