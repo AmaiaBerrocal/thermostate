@@ -1,4 +1,4 @@
-package com.thermostate.events.listeners;
+package com.thermostate.temperature.infrastructure;
 
 import com.google.common.eventbus.Subscribe;
 import com.thermostate.temperature.model.Temperature;
@@ -6,6 +6,6 @@ import com.thermostate.temperature.model.Temperature;
 public class LCDTemperatureChangedListener {
   @Subscribe
   public void lcdTemperatureChanged(Temperature temperature) {
-    
+    System.out.println("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
   }
 }
