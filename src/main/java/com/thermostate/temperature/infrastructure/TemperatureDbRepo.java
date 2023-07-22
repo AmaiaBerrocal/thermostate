@@ -46,6 +46,5 @@ public class TemperatureDbRepo implements TemperatureRepo {
         String sql = "UPDATE TEMPERATURE SET " +
                 "TEMP = " + temperature.temp();
         dbUtils.executeUpdate(sql);
-        eventBus.post(temperature);
     }
 }

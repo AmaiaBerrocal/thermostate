@@ -61,6 +61,5 @@ public class TemperatureDbRepoTest {
         sut.updateTemp(temperature);
         //then
         verify(dbUtils).executeUpdate(sql);
-        verify(eventBus).post(temperature);
     }
 }

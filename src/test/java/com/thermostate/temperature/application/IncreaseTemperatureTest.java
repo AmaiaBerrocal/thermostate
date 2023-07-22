@@ -1,5 +1,6 @@
 package com.thermostate.temperature.application;
 
+import com.google.common.eventbus.EventBus;
 import com.thermostate.temperature.model.Temperature;
 import com.thermostate.temperature.model.TemperatureRepo;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,11 +13,14 @@ import static org.mockito.Mockito.when;
 public class IncreaseTemperatureTest {
     TemperatureRepo temperatureRepo;
     IncreaseTemperature sut;
+    EventBus eventBus;
+
 
     @BeforeEach
     public void setup() {
+        eventBus = mock(EventBus.class);
         temperatureRepo = mock(TemperatureRepo.class);
-        sut = new IncreaseTemperature(temperatureRepo);
+        sut = new IncreaseTemperature(temperatureRepo, eventBus);
     }
 
     @Test
@@ -30,5 +34,6 @@ public class IncreaseTemperatureTest {
         //then
         Temperature temperature = new Temperature(incrementTemp);
         verify(temperatureRepo).updateTemp(new Temperature(temp + incrementTemp));
+        verify(eventBus).post(new Temperature(incrementTemp + temp));
     }
 }
