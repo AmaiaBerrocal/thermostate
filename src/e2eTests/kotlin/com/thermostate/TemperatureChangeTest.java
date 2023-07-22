@@ -15,10 +15,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TemperatureChangeTest {
   E2EDB e2edb;
+  DBAsserter dbAsserter = new DBAsserter();
   @BeforeEach
   public void setup() {
     e2edb = new E2EDB("jdbc:sqlite:./assets/thermostate.db");
+    dbAsserter.assertTableExist("USERS");
+    dbAsserter.assertTableExist("TEMPERATURE");
+    e2edb.givenEmptyTable("TEMPERATURE");
     e2edb.givenEmptyTable("USERS");
+    dbAsserter.update("INSERT INTO TEMPERATURE (ID, TEMP) VALUES (1,1600)");
     createSingleUser(e2edb);
   }
 
