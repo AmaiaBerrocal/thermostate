@@ -21,50 +21,7 @@ public class UpdateSchedule {
     }
 
     public void execute(Integer id, String weekDays, String timeFrom, String timeTo, Boolean active, Integer minTemp) {
-        checkData(weekDays, timeFrom, timeTo, active, minTemp);
         Schedule schedule = new Schedule(id, weekDays, timeFrom, timeTo, active, minTemp, null);
         scheduleRepo.update(schedule);
-    }
-    private void checkData(String weekDays, String timeFrom, String timeTo, Boolean active, Integer minTemp) {
-        if (!(isValidWeekDays(weekDays)
-                && isValidTimeFrom(timeFrom)
-                && isValidTimeTo(timeTo)
-                && isValidActive(active)
-                && isValidMinTemp(minTemp))){
-            throw ClientError.becauseInvalidDataFromClient();
-        }
-    }
-
-    public boolean isValidWeekDays(String weekDays) {
-        return Stream.of(weekDays.split(","))
-            .filter(c -> !"LMXJVSD".contains(c) || c.length() != 1)
-            .findAny()
-            .isEmpty();
-    }
-
-    public boolean isValidTimeFrom(String timeFrom) {
-        if (timeFrom == null) {
-            return false;
-        }
-        Pattern timePattern = Pattern.compile("[0-2][0-9]:[0-5][0-9]");
-        Matcher mat = timePattern.matcher(timeFrom);
-        return isNotEmpty(timeFrom) || mat.matches();
-    }
-
-    public boolean isValidTimeTo(String timeTo) {
-        if (timeTo == null) {
-            return false;
-        }
-        Pattern timePattern = Pattern.compile("[0-2][0-9]:[0-5][0-9]");
-        Matcher mat = timePattern.matcher(timeTo);
-        return isNotEmpty(timeTo) && mat.matches();
-    }
-
-    public boolean isValidActive(Boolean active) {
-        return active != null;
-    }
-
-    public boolean isValidMinTemp(Integer minTemp) {
-        return minTemp != null && minTemp > 0;
     }
 }

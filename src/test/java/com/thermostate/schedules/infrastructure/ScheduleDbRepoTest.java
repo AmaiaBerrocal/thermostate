@@ -43,11 +43,11 @@ public class ScheduleDbRepoTest {
         //given
         Schedule schedule = new Schedule(1, "L,M", "08:00", "10:12", true, 15, LocalDate.of(2019, 01, 03));
         String sql = "INSERT INTO SCHEDULES (WEEKDAYS, TIME_FROM, TIME_TO, ACTIVE, MIN_TEMP, CREATED_AT) VALUES (" +
-                "'" + schedule.weekDays() +
-                "','" + schedule.timeFrom() +
-                "','" + schedule.timeTo() +
+                "'" + schedule.weekDays +
+                "','" + schedule.timeFrom +
+                "','" + schedule.timeTo +
                 "', 1" +
-                "," + schedule.minTemp() +
+                "," + schedule.minTemp +
                 ", CURRENT_DATE)";
         //when
         sut.create(schedule);
@@ -87,12 +87,12 @@ public class ScheduleDbRepoTest {
                 15,
                 LocalDate.of(2019, 01, 03));
         String sql = "UPDATE SCHEDULES SET " +
-                "WEEKDAYS = '" + schedule.weekDays() + "', " +
-                "TIME_FROM = '" + schedule.timeFrom() + "', " +
-                "TIME_TO = '" + schedule.timeTo() + "', " +
+                "WEEKDAYS = '" + schedule.weekDays + "', " +
+                "TIME_FROM = '" + schedule.timeFrom + "', " +
+                "TIME_TO = '" + schedule.timeTo + "', " +
                 "ACTIVE = '1', " +
-                "MIN_TEMP = " + schedule.minTemp() + " " +
-                "WHERE ID = " + schedule.id();
+                "MIN_TEMP = " + schedule.minTemp + " " +
+                "WHERE ID = " + schedule.id;
         //when
         sut.update(schedule);
         //then

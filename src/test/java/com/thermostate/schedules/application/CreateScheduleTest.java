@@ -30,18 +30,17 @@ public class CreateScheduleTest {
         String weekDays = "L,M,X,J,V,S,D";
         var schedule = givenScheduleForDays(weekDays);
         //when
-        sut.execute(weekDays, schedule.timeFrom(), schedule.timeTo(), schedule.active(), schedule.minTemp());
+        sut.execute(weekDays, schedule.timeFrom, schedule.timeTo, schedule.active, schedule.minTemp);
         //then
         then(scheduleRepo).should().create(
-            new Schedule(null, weekDays, schedule.timeFrom(), schedule.timeTo(), schedule.active(), schedule.minTemp(), null));
+            new Schedule(null, weekDays, schedule.timeFrom, schedule.timeTo, schedule.active, schedule.minTemp, null));
     }
 
     @Test
     public void should_not_create_schedule_if_weekdays_is_incorrect() {
         String weekDays = "L,M,XJ";
-        var schedule = givenScheduleForDays(weekDays);
         thenThrownBy( () ->
-            sut.execute(weekDays, schedule.timeFrom(), schedule.timeTo(), schedule.active(), schedule.minTemp()))
+                givenScheduleForDays(weekDays))
             .isInstanceOf(ClientError.class);
         then(scheduleRepo).shouldHaveNoInteractions();
     }
@@ -49,45 +48,40 @@ public class CreateScheduleTest {
     @Test
     public void should_not_create_schedule_if_weekDays_is_incorrect_because_incorrect_day() {
         String weekDays = "L,M,X,F";
-        var schedule = givenScheduleForDays(weekDays);
         thenThrownBy( () ->
-            sut.execute(weekDays, schedule.timeFrom(), schedule.timeTo(), schedule.active(), schedule.minTemp()))
+            givenScheduleForDays(weekDays))
             .isInstanceOf(ClientError.class);
         then(scheduleRepo).shouldHaveNoInteractions();
     }
 
     @Test
     public void should_not_create_schedule_if_timefrom_is_incorrect() {
-        var schedule = givenScheduleWithTimes(null, "23:59");
         thenThrownBy( () ->
-            sut.execute(schedule.weekDays(), schedule.timeFrom(), schedule.timeTo(), schedule.active(), schedule.minTemp()))
+                givenScheduleWithTimes(null, "23:59"))
             .isInstanceOf(ClientError.class);
         then(scheduleRepo).shouldHaveNoInteractions();
     }
 
     @Test
     public void should_not_create_schedule_if_timeto_is_incorrect() {
-        var schedule = givenScheduleWithTimes("00:00", null);
         thenThrownBy( () ->
-            sut.execute(schedule.weekDays(), schedule.timeFrom(), schedule.timeTo(), schedule.active(), schedule.minTemp()))
+                givenScheduleWithTimes("00:00", null))
             .isInstanceOf(ClientError.class);
         then(scheduleRepo).shouldHaveNoInteractions();
     }
 
     @Test
     public void should_not_create_schedule_if_activate_is_incorrect() {
-        var schedule = givenScheduleWithActivation(null);
         thenThrownBy( () ->
-            sut.execute(schedule.weekDays(), schedule.timeFrom(), schedule.timeTo(), schedule.active(), schedule.minTemp()))
+                givenScheduleWithActivation(null))
             .isInstanceOf(ClientError.class);
         then(scheduleRepo).shouldHaveNoInteractions();
     }
 
     @Test
     public void should_not_create_schedule_if_mintemp_is_incorrect() {
-        var schedule = givenScheduleWithMinTemp(null);
         thenThrownBy( () ->
-            sut.execute(schedule.weekDays(), schedule.timeFrom(), schedule.timeTo(), schedule.active(), schedule.minTemp()))
+                givenScheduleWithMinTemp(null))
             .isInstanceOf(ClientError.class);
         then(scheduleRepo).shouldHaveNoInteractions();
     }

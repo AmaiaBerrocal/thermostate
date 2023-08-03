@@ -33,11 +33,11 @@ public class ScheduleDbRepo implements ScheduleRepo {
     @Override
     public void create(Schedule schedule) {
         String sql = "INSERT INTO SCHEDULES (WEEKDAYS, TIME_FROM, TIME_TO, ACTIVE, MIN_TEMP, CREATED_AT) VALUES (" +
-                "'" + schedule.weekDays() +
-                "','" + schedule.timeFrom() +
-                "','" + schedule.timeTo() +
+                "'" + schedule.weekDays +
+                "','" + schedule.timeFrom +
+                "','" + schedule.timeTo +
                 "', 1" +
-                "," + schedule.minTemp() +
+                "," + schedule.minTemp +
                 ", CURRENT_DATE)";
         dbUtils.executeUpdate(sql);
     }
@@ -57,12 +57,12 @@ public class ScheduleDbRepo implements ScheduleRepo {
     @Override
     public void update(Schedule schedule) {
         String sql = "UPDATE SCHEDULES SET " +
-                "WEEKDAYS = '" + schedule.weekDays() + "', " +
-                "TIME_FROM = '" + schedule.timeFrom() + "', " +
-                "TIME_TO = '" + schedule.timeTo() + "', " +
-                "ACTIVE = '" + (schedule.active() ? 1 : 0) + "', " +
-                "MIN_TEMP = " + schedule.minTemp() + " " +
-                "WHERE ID = " + schedule.id();
+                "WEEKDAYS = '" + schedule.weekDays + "', " +
+                "TIME_FROM = '" + schedule.timeFrom + "', " +
+                "TIME_TO = '" + schedule.timeTo + "', " +
+                "ACTIVE = '" + (schedule.active ? 1 : 0) + "', " +
+                "MIN_TEMP = " + schedule.minTemp + " " +
+                "WHERE ID = " + schedule.id;
 
         System.out.println(sql);
         dbUtils.executeUpdate(sql);
@@ -88,9 +88,7 @@ public class ScheduleDbRepo implements ScheduleRepo {
             return null;
         }
 
-        return result.stream().map((item) ->
-            buildScheduleFromMap(item)
-        ).toList();
+        return result.stream().map(ScheduleDbRepo::buildScheduleFromMap).toList();
     }
 
     @Override
