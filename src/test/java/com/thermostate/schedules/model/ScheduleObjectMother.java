@@ -1,4 +1,4 @@
-package com.thermostate.schedules.model;;
+package com.thermostate.schedules.model;
 
 import net.datafaker.Faker;
 

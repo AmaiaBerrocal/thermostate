@@ -1,14 +1,18 @@
 plugins {
 	id 'org.springframework.boot' version "${springboot}"
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'io.spring.dependency-management' version '1.1.3'
 	id 'java'
 	id 'war'
-	id 'org.jetbrains.kotlin.jvm' version '1.6.21'
+	id 'org.jetbrains.kotlin.jvm' version "1.9.20"
 }
 
 group = 'com.amaia'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+java {
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
+}
+assert System.properties["java.specification.version"] == "17" || "18" || "19" || "20" || "21"
 
 configurations {
 	compileOnly {
@@ -21,7 +25,7 @@ repositories {
 	maven { url 'https://jitpack.io' }
 }
 
-apply from: "./e2eTests.gradle"
+apply from: './e2eTests.gradle'
 
 dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springboot}"
@@ -40,10 +44,11 @@ dependencies {
 	testImplementation "org.springframework.boot:spring-boot-starter-test:${springboot}"
 	testImplementation "org.junit.jupiter:junit-jupiter-api:${junit5version}"
 	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit5version}"
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher:${junit5version}")
 	testImplementation group: 'org.assertj', name: 'assertj-core', version: "${assertJVersion}"
 	testImplementation "com.github.inigodm:E2EHelper:${e2eHelper}"
 	implementation group: 'net.datafaker', name: 'datafaker', version: "${faker}"}
 
-tasks.named('test') {
+test {
 	useJUnitPlatform()
 }
