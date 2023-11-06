@@ -37,7 +37,7 @@ public class BearerService implements TokenService {
         Key key = Keys.hmacShaKeyFor(JWT_SECRET.getBytes());
 
         String compactTokenString = Jwts.builder()
-                .claim("jti", UUID.randomUUID())
+                .claim("jti", UUID.randomUUID().toString())
                 .claim("id", user.id())
                 .claim("sub", user.name())
                 .claim("email", user.email())
@@ -53,7 +53,7 @@ public class BearerService implements TokenService {
         String token = bearer.replace("Bearer ", "");
         byte[] secretBytes = JWT_SECRET.getBytes();
 
-        Jws<Claims> jwsClaims = Jwts.parserBuilder()
+        Jws<Claims> jwsClaims = Jwts.parser()
                 .setSigningKey(secretBytes)
                 .build()
                 .parseClaimsJws(token);
