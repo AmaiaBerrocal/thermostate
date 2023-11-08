@@ -30,8 +30,7 @@ task e2eTests(type: Test) {
 dependencies {
     e2eTestsImplementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.20"
     e2eTestsImplementation "org.junit.jupiter:junit-jupiter:${junit5version}"
-    e2eTestsRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit5version}"
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.9.3")
+    e2eTestsImplementation "org.junit.platform:junit-platform-launcher:1.9.3"
     e2eTestsImplementation "org.springframework.boot:spring-boot-starter-test:${springboot}"
     e2eTestsImplementation group: "com.google.code.gson", name: "gson", version: "${gsonversion}"
     e2eTestsImplementation "org.assertj:assertj-core:${assertJVersion}"

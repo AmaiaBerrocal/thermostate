@@ -26,7 +26,7 @@ class TemperatureControllerTest {
 
     @Test
     void should_call_application_layer_correctly_increasing_temp() {
-        //given
+        //givenDomainEventSubscriber
         TempUpdateRequest req = new TempUpdateRequest(15);
         //when
         sut.tempIncrement(req);
@@ -41,6 +41,6 @@ class TemperatureControllerTest {
         //when
         sut.tempDecrement(req);
         //then
-        verify(decreaseTemperature).execute(TemperatureChange.create(req.temperature));
+        verify(decreaseTemperature).execute(TemperatureChange.create(-req.temperature));
     }
 }

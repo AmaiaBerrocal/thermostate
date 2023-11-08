@@ -62,6 +62,6 @@ public class TemperatureChangeTest {
 
     var gson = new Gson();
 
-    return gson.fromJson(response.body().get("value").toString(), Temperature.class).temp();
+    return gson.fromJson(response.body().get("value").toString(), Temperature.class).getTemp();
   }
 }

@@ -1,6 +1,6 @@
 package com.thermostate.temperature.application;
 
-import com.google.common.eventbus.EventBus;
+import com.thermostate.shared.events.EventBus;
 import com.thermostate.temperature.model.Temperature;
 import com.thermostate.temperature.model.TemperatureChange;
 import com.thermostate.temperature.model.TemperatureRepo;
@@ -20,6 +20,6 @@ public class DecreaseTemperature {
         Temperature temperature = temperatureRepo.getTemp();
         temperature.change(temp);
         temperatureRepo.updateTemp(temperature);
-        eventBus.post(temperature);
+        eventBus.publish(temperature.pullDomainEvents());
     }
 }
