@@ -44,7 +44,7 @@ public class TemperatureDbRepo implements TemperatureRepo {
     @Override
     public void updateTemp(Temperature temperature) {
         String sql = "UPDATE TEMPERATURE SET " +
-                "TEMP = " + temperature.temp();
+                "TEMP = " + temperature.getTemp();
         dbUtils.executeUpdate(sql);
     }
 }

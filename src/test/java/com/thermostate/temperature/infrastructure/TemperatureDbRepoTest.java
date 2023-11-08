@@ -49,14 +49,14 @@ public class TemperatureDbRepoTest {
         Temperature temp = sut.getTemp();
         //then
         verify(dbUtils).executeQuery(sql);
-        assertThat(temp.temp()).isEqualTo(42);
+        assertThat(temp.getTemp()).isEqualTo(42);
     }
 
     @Test
     public void should_update_a_temperature() {
         //given
         Temperature temperature = new Temperature(42);
-        String sql = "UPDATE TEMPERATURE SET TEMP = " + temperature.temp();
+        String sql = "UPDATE TEMPERATURE SET TEMP = " + temperature.getTemp();
         //when
         sut.updateTemp(temperature);
         //then

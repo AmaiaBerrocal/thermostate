@@ -1,24 +1,25 @@
 package com.thermostate.temperature.application;
 
-import com.google.common.eventbus.EventBus;
+import com.thermostate.shared.events.SpringApplicationEventBus;
 import com.thermostate.temperature.model.Temperature;
+import com.thermostate.temperature.model.TemperatureChange;
 import com.thermostate.temperature.model.TemperatureRepo;
 import org.springframework.stereotype.Component;
 
 @Component
 public class IncreaseTemperature {
     final TemperatureRepo temperatureRepo;
-    final EventBus eventBus;
+    final SpringApplicationEventBus eventBus;
 
-    public IncreaseTemperature(TemperatureRepo temperatureRepo, EventBus eventBus) {
+    public IncreaseTemperature(TemperatureRepo temperatureRepo, SpringApplicationEventBus eventBus) {
         this.temperatureRepo = temperatureRepo;
         this.eventBus = eventBus;
     }
 
-    public void execute(Integer temp) {
-        Integer incrementTemp = temperatureRepo.getTemp().temp() + temp;
-        Temperature temperature = new Temperature(incrementTemp);
+    public void execute(TemperatureChange temp) {
+        Temperature temperature = temperatureRepo.getTemp();
+        temperature.change(temp);
         temperatureRepo.updateTemp(temperature);
-        eventBus.post(temperature);
+        eventBus.publish(temperature.pullDomainEvents());
     }
 }

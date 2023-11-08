@@ -2,6 +2,7 @@ package com.thermostate.temperature.application;
 
 import com.google.common.eventbus.EventBus;
 import com.thermostate.temperature.model.Temperature;
+import com.thermostate.temperature.model.TemperatureChange;
 import com.thermostate.temperature.model.TemperatureRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,9 +30,8 @@ public class DecreaseTemperaruteTest {
         Integer temp = 1600;
         when(temperatureRepo.getTemp()).thenReturn(new Temperature(temp));
         //when
-        sut.execute(decrementTemp);
+        sut.execute(TemperatureChange.create(decrementTemp));
         //then
-        Temperature temperature = new Temperature(decrementTemp);
         verify(temperatureRepo).updateTemp(new Temperature(temp - decrementTemp));
 
         verify(eventBus).post(new Temperature(temp - decrementTemp));
