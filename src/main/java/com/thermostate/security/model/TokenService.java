@@ -1,4 +1,4 @@
-package com.thermostate.security.application;
+package com.thermostate.security.model;
 
 import com.thermostate.security.model.LogedInUser;
 import com.thermostate.users.model.User;

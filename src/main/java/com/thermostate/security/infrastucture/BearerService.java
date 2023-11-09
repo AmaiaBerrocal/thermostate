@@ -1,6 +1,6 @@
 package com.thermostate.security.infrastucture;
 
-import com.thermostate.security.application.TokenService;
+import com.thermostate.security.model.TokenService;
 import com.thermostate.security.model.LogedInUser;
 import com.thermostate.users.model.User;
 import io.jsonwebtoken.Claims;
