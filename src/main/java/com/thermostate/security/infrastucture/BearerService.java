@@ -38,9 +38,9 @@ public class BearerService implements TokenService {
 
         String compactTokenString = Jwts.builder()
                 .claim("jti", UUID.randomUUID().toString())
-                .claim("id", user.id())
-                .claim("sub", user.name())
-                .claim("email", user.email())
+                .claim("id", user.getId())
+                .claim("sub", user.getName())
+                .claim("email", user.getEmail())
                 .setExpiration(null)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();

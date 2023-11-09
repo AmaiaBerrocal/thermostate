@@ -1,5 +1,24 @@
 package com.thermostate.users.model;
 
-public record User(Integer id, String name, String password, String email, String salt) {}
-//clase java con los atributos que se pasan como arg en este constructor, y que lleva implicito
-// el getter de cada atributo y el equals(), tratando como iguales dos objetos con idénticos atributos.
+import com.thermostate.shared.HashGenerator;
+import com.thermostate.shared.events.AggregateRoot;
+import com.thermostate.users.model.event.UserLoggedIn;
+import com.thermostate.users.model.event.UserLoginFailure;
+import lombok.Getter;
+
+@Getter
+public class User extends AggregateRoot {
+    private Integer id;
+    private String name;
+    private String password;
+    private String email;
+    private String salt;
+
+    public User(Integer id, String name, String password, String email, String salt) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.salt = salt;
+    }
+}

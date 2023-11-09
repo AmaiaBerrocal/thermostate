@@ -36,10 +36,10 @@ public class UserDbRepo implements UserRepo {
     @Override
     public void create(User user) {
         String sql = "INSERT INTO USERS (NAME, PASSWORD, EMAIL, SALT, CREATED_AT, ACTIVE) VALUES (" +
-                "'" + user.name() +
-                "','" + user.password() +
-                "','" + user.email() +
-                "','" + user.salt() +
+                "'" + user.getName() +
+                "','" + user.getPassword() +
+                "','" + user.getEmail() +
+                "','" + user.getSalt() +
                 "', CURRENT_TIMESTAMP," +
                 " true)";
 
