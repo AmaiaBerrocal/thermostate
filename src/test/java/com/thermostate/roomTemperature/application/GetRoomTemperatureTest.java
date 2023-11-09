@@ -1,9 +1,9 @@
 package com.thermostate.roomTemperature.application;
 
-import com.google.common.eventbus.EventBus;
 import com.thermostate.roomtemperature.application.GetRoomTemperature;
 import com.thermostate.roomtemperature.model.RoomTemperature;
 import com.thermostate.roomtemperature.model.RoomTemperatureRepo;
+import com.thermostate.shared.events.EventBus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +19,7 @@ public class GetRoomTemperatureTest {
     public void setup() {
         roomTemperatureRepo = mock(RoomTemperatureRepo.class);
         eventBus = mock(EventBus.class);
-        sut = new GetRoomTemperature(roomTemperatureRepo, eventBus);
+        sut = new GetRoomTemperature(roomTemperatureRepo);
     }
 
     @Test
@@ -30,6 +30,6 @@ public class GetRoomTemperatureTest {
         RoomTemperature actual = sut.execute();
 
         assertThat(actual).isEqualTo(temperature);
-        verify(eventBus).post(temperature);
+        //verify(eventBus).post(temperature);
     }
 }

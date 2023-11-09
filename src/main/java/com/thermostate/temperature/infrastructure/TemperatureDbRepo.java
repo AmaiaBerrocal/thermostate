@@ -1,6 +1,5 @@
 package com.thermostate.temperature.infrastructure;
 
-import com.google.common.eventbus.EventBus;
 import com.thermostate.shared.DbUtils;
 import com.thermostate.temperature.model.Temperature;
 import com.thermostate.temperature.model.TemperatureRepo;
@@ -13,11 +12,9 @@ import java.util.Map;
 @Component
 public class TemperatureDbRepo implements TemperatureRepo {
     final DbUtils dbUtils;
-    final EventBus eventBus;
 
-    public TemperatureDbRepo(DbUtils dbUtils, final EventBus eventBus) {
+    public TemperatureDbRepo(DbUtils dbUtils) {
         this.dbUtils = dbUtils;
-        this.eventBus = eventBus;
     }
 
     public void createTemperatureTable() {

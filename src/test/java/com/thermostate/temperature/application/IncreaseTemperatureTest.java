@@ -1,6 +1,5 @@
 package com.thermostate.temperature.application;
 
-import com.google.common.eventbus.EventBus;
 import com.thermostate.shared.events.SpringApplicationEventBus;
 import com.thermostate.temperature.model.Temperature;
 import com.thermostate.temperature.model.TemperatureChange;
