@@ -21,4 +21,15 @@ public class User extends AggregateRoot {
         this.email = email;
         this.salt = salt;
     }
+
+    public boolean checkIfAuthenticated(String pass) {
+        String loginUserHash = HashGenerator.generate(pass, salt);
+        if (loginUserHash.equals(password)) {
+            record(new UserLoggedIn(name));
+            return true;
+        } else {
+            record(new UserLoginFailure(name));
+            return false;
+        }
+    }
 }

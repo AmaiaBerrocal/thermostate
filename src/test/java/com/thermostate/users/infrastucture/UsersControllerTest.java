@@ -1,10 +1,10 @@
 package com.thermostate.users.infrastucture;
 
-import com.thermostate.security.application.TokenService;
+import com.thermostate.security.model.TokenService;
 import com.thermostate.security.infrastucture.BearerService;
 import com.thermostate.shared.ValueResponse;
 import com.thermostate.users.application.CreateUser;
-import com.thermostate.users.application.GetUser;
+import com.thermostate.users.application.LoginUser;
 import com.thermostate.users.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,16 +15,16 @@ import static org.mockito.Mockito.*;
 
 class UsersControllerTest {
     CreateUser createUser;
-    GetUser getUser;
+    LoginUser loginUser;
     TokenService tokenService;
     UsersController sut;
 
     @BeforeEach
     public void setup() {
         createUser = mock(CreateUser.class);
-        getUser = mock(GetUser.class);
+        loginUser = mock(LoginUser.class);
         tokenService = new BearerService();
-        sut = new UsersController(createUser, getUser, tokenService);
+        sut = new UsersController(createUser, loginUser, tokenService);
     }
 
     @Test
@@ -38,12 +38,12 @@ class UsersControllerTest {
     }
 
     @Test
-    public void should_return_an_User_if_name_and_hash_are_in_DDBB() {
+    public void should_return_a_bearer_if_name_and_hash_are_in_DDBB() {
         //given
-        User expected = randomUser();
         String name = "nombre";
         String pass = "contraseña";
-        when(getUser.execute(name, pass)).thenReturn(expected);
+
+        when(loginUser.execute(name, pass)).thenReturn(null);
         //when
         ValueResponse user = sut.login(new UserLoginRequest(name, pass));
         //then
