@@ -3,3 +3,5 @@ thermostate:
   roomTemp:
     file: "/sys/bus/w1/devices/28-0415a4ddf9ff/w1_slave"
     temp_mark_in_file: "t="
+  externalTemp:
+    url: "http://wttr.in/01003?format=%t"
