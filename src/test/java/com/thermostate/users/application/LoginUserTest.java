@@ -1,7 +1,9 @@
 package com.thermostate.users.application;
 
+import com.thermostate.security.infrastucture.BearerService;
 import com.thermostate.security.model.TokenService;
 import com.thermostate.shared.ClientError;
+import com.thermostate.shared.HashGenerator;
 import com.thermostate.shared.events.EventBus;
 import com.thermostate.users.model.User;
 import com.thermostate.users.model.UserRepo;
@@ -25,6 +27,7 @@ class LoginUserTest {
     void setup() {
         userRepo = mock(UserRepo.class);
         eventBus = mock(EventBus.class);
+        tokenService = mock(BearerService.class);
         sut = new LoginUser(userRepo, eventBus, tokenService);
     }
 
@@ -37,7 +40,7 @@ class LoginUserTest {
     @Test
     public void should_return_null_if_hashes_are_different() {
         //given
-        User user = randomUser();
+        User user = randomUser("pass");
         when(userRepo.getByName(any())).thenReturn(user);
         //when
         assertThatThrownBy(() -> sut.execute(user.getName(), "random")).isInstanceOf(ClientError.class);
@@ -47,11 +50,12 @@ class LoginUserTest {
     @Test
     public void should_return_user_if_exists_with_that_password() {
         //given
-        User user = randomUser();
+        User user = randomUser("pass");
         when(userRepo.getByName(any())).thenReturn(user);
+        when(tokenService.generateToken(user)).thenReturn("token");
         //when
-        var result = sut.execute(user.getName(), user.getPassword());
+        var result = sut.execute(user.getName(), "pass");
         //then
-        assertThat(result).isEqualTo(user);
+        assertThat(result).isEqualTo("token");
     }
 }
