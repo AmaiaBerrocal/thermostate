@@ -11,18 +11,16 @@ import org.springframework.stereotype.Component;
 public class CreateUser {
     final UserRepo userRepo;
     final RandomStringGenerator randomStringGenerator;
-    final HashGenerator hashGenerator;
 
-    public CreateUser(UserRepo userRepo, RandomStringGenerator randomStringGenerator, HashGenerator hashGenerator) {
+    public CreateUser(UserRepo userRepo, RandomStringGenerator randomStringGenerator) {
         this.userRepo = userRepo;
         this.randomStringGenerator = randomStringGenerator;
-        this.hashGenerator = hashGenerator;
     }
 
     public void execute(String name, String password, String email) {
         checkData(name, password, email);
         String salt = randomStringGenerator.generate();
-        String hash = hashGenerator.generate(password, salt);
+        String hash = HashGenerator.generate(password, salt);
         User user = new User(null, name, hash, email, salt);
         userRepo.create(user);
     }

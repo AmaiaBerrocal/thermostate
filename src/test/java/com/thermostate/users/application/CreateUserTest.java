@@ -14,15 +14,13 @@ import static org.mockito.Mockito.*;
 class CreateUserTest {
     UserRepo userRepo;
     RandomStringGenerator randomStringGenerator;
-    HashGenerator hashGenerator;
     CreateUser sut;
 
     @BeforeEach
     public void setup() {
         userRepo = mock(UserRepo.class);
         randomStringGenerator = mock(RandomStringGenerator.class);
-        hashGenerator = mock(HashGenerator.class);
-        sut = new CreateUser(userRepo, randomStringGenerator, hashGenerator);
+        sut = new CreateUser(userRepo, randomStringGenerator);
     }
 
     @Test
@@ -34,7 +32,6 @@ class CreateUserTest {
         String salt = "salt";
         String hash = "lkjdalsjdwa";
         when(randomStringGenerator.generate()).thenReturn(salt);
-        when(hashGenerator.generate(password, salt)).thenReturn(hash);
         //when
         sut.execute(name, password,email);
         //then
@@ -50,7 +47,6 @@ class CreateUserTest {
         String salt = "salt";
         String hash = "lkjdalsjdwa";
         when(randomStringGenerator.generate()).thenReturn(salt);
-        when(hashGenerator.generate(password, salt)).thenReturn(hash);
         //when
         assertThatThrownBy( () -> {
             sut.execute(name, password,email);
@@ -69,7 +65,6 @@ class CreateUserTest {
         String salt = "salt";
         String hash = "lkjdalsjdwa";
         when(randomStringGenerator.generate()).thenReturn(salt);
-        when(hashGenerator.generate(password, salt)).thenReturn(hash);
         //when
         assertThatThrownBy( () -> {
                     sut.execute(name, password,email);
@@ -88,7 +83,6 @@ class CreateUserTest {
         String salt = "salt";
         String hash = "lkjdalsjdwa";
         when(randomStringGenerator.generate()).thenReturn(salt);
-        when(hashGenerator.generate(password, salt)).thenReturn(hash);
         //when
         assertThatThrownBy( () -> {
                     sut.execute(name, password,email);
