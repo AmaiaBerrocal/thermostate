@@ -18,8 +18,7 @@ public class DecreaseTemperature {
 
     public void execute(TemperatureChange temp) {
         Temperature temperature = temperatureRepo.getTemp();
-        temperature.change(temp);
-        temperatureRepo.updateTemp(temperature);
-        eventBus.publish(temperature.pullDomainEvents());
+        temperature.change(temp, temperatureRepo);
+        temperature.publishEventsIn(eventBus);
     }
 }

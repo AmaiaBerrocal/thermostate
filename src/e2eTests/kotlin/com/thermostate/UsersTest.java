@@ -53,7 +53,7 @@ class UsersTest {
         E2EResponse res = E2ERequest
                 .to("http://localhost:8080/login")
                 .withContentType("application/json")
-                .sendAPost(Map.of("name", "inigo", "password", "pass"))
+                .sendAPost(Map.of("name", "INIGO", "password", "pass"))
                 .assertThatResponseIsOk();
 
         var responseBody = res.body();

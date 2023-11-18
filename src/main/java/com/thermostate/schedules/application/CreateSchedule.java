@@ -1,26 +1,21 @@
 package com.thermostate.schedules.application;
 
-import com.thermostate.schedules.infrastructure.ScheduleDbRepo;
 import com.thermostate.schedules.model.Schedule;
 import com.thermostate.schedules.model.ScheduleRepo;
-import com.thermostate.shared.ClientError;
+import com.thermostate.shared.events.EventBus;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Stream;
-
-import static org.apache.logging.log4j.util.Strings.isNotEmpty;
 
 @Component
 public class CreateSchedule {
 
     final ScheduleRepo scheduleRepo;
+    final EventBus eventBus;
 
-    public CreateSchedule(ScheduleRepo scheduleRepo) {
+    public CreateSchedule(ScheduleRepo scheduleRepo, EventBus eventBus) {
 
         this.scheduleRepo = scheduleRepo;
+        this.eventBus = eventBus;
     }
 
     public void execute(String weekDays,
@@ -29,6 +24,7 @@ public class CreateSchedule {
                         Boolean active,
                         Integer minTemp) {
         Schedule schedule = new Schedule(null,weekDays, timeFrom, timeTo, active, minTemp, null);
-        scheduleRepo.create(schedule);
+        schedule.createIn(scheduleRepo);
+        schedule.publishEventsIn(eventBus);
     }
 }

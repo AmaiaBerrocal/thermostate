@@ -4,6 +4,7 @@ import com.thermostate.shared.events.SpringApplicationEventBus;
 import com.thermostate.temperature.model.Temperature;
 import com.thermostate.temperature.model.TemperatureChange;
 import com.thermostate.temperature.model.TemperatureRepo;
+import com.thermostate.temperature.model.event.TargetTemperatureChanged;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -33,9 +34,8 @@ public class IncreaseTemperatureTest {
         //given
         Integer incrementTemp = 100;
         Integer temp = 1600;
-        var expected = new Temperature(temp);
-        expected.change(TemperatureChange.create(incrementTemp));
-        var events = expected.pullDomainEvents();
+        var expected = new Temperature(1700);
+        var events = List.of(new TargetTemperatureChanged(incrementTemp));
         when(temperatureRepo.getTemp()).thenReturn(new Temperature(temp));
         //when
         sut.execute(TemperatureChange.create(incrementTemp));

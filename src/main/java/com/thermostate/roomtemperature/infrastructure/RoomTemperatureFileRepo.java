@@ -19,7 +19,7 @@ public class RoomTemperatureFileRepo implements RoomTemperatureRepo {
 
     @Override
     public RoomTemperature getTemp() {
-        return new RoomTemperature(read());
+        return RoomTemperature.create(read());
     }
 
     public String read() {

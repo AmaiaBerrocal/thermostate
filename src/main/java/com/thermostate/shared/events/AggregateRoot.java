@@ -15,6 +15,10 @@ public abstract class AggregateRoot {
         return events;
     }
 
+    final public void publishEventsIn(EventBus eventBus) {
+        eventBus.publish(pullDomainEvents());
+    }
+
     final protected void record(DomainEvent event) {
         domainEvents.add(event);
     }

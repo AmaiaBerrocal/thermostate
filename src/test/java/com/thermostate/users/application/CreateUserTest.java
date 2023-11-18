@@ -1,9 +1,8 @@
 package com.thermostate.users.application;
 
 import com.thermostate.shared.ClientError;
-import com.thermostate.shared.HashGenerator;
 import com.thermostate.shared.RandomStringGenerator;
-import com.thermostate.users.model.User;
+import com.thermostate.shared.events.EventBus;
 import com.thermostate.users.model.UserRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,12 +14,14 @@ class CreateUserTest {
     UserRepo userRepo;
     RandomStringGenerator randomStringGenerator;
     CreateUser sut;
+    EventBus eventBus;
 
     @BeforeEach
     public void setup() {
+        eventBus = mock(EventBus.class);
         userRepo = mock(UserRepo.class);
         randomStringGenerator = mock(RandomStringGenerator.class);
-        sut = new CreateUser(userRepo, randomStringGenerator);
+        sut = new CreateUser(userRepo, eventBus, randomStringGenerator);
     }
 
     @Test
@@ -64,7 +65,7 @@ class CreateUserTest {
         String email = "hahah@gmail.com";
         String salt = "salt";
         String hash = "lkjdalsjdwa";
-        when(randomStringGenerator.generate()).thenReturn(salt);
+        when(randomStringGenerator.generate()).thenReturn(null);
         //when
         assertThatThrownBy( () -> {
                     sut.execute(name, password,email);

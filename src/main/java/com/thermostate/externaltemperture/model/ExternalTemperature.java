@@ -1,3 +1,11 @@
 package com.thermostate.externaltemperture.model;
 
-public record ExternalTemperature(String temp) { }
+import com.thermostate.shared.events.AggregateRoot;
+
+public class ExternalTemperature extends AggregateRoot {
+    public final String temp;
+
+    public ExternalTemperature(String temp) {
+        this.temp = temp;
+    }
+}

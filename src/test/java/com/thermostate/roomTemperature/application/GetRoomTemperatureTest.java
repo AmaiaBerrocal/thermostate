@@ -19,12 +19,12 @@ public class GetRoomTemperatureTest {
     public void setup() {
         roomTemperatureRepo = mock(RoomTemperatureRepo.class);
         eventBus = mock(EventBus.class);
-        sut = new GetRoomTemperature(roomTemperatureRepo);
+        sut = new GetRoomTemperature(roomTemperatureRepo, eventBus);
     }
 
     @Test
     void should_post_an_event_correctly() {
-        RoomTemperature temperature = new RoomTemperature("15278");
+        RoomTemperature temperature = RoomTemperature.create("15278");
         when(roomTemperatureRepo.getTemp()).thenReturn(temperature);
 
         RoomTemperature actual = sut.execute();

@@ -10,9 +10,11 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class GetRoomTemperature {
   final RoomTemperatureRepo temperatureRepo;
+  final EventBus eventBus;
 
   public RoomTemperature execute() {
     RoomTemperature temperature = temperatureRepo.getTemp();
+    temperature.publishEventsIn(eventBus);
     return temperature;
   }
 }

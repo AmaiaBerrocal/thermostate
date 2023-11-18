@@ -10,8 +10,9 @@ public class Temperature extends AggregateRoot {
         this.temp = temp;
     }
 
-    public void change(TemperatureChange temperatureChange) {
+    public void change(TemperatureChange temperatureChange, TemperatureRepo temperatureRepo) {
         this.temp += temperatureChange.change();
+        temperatureRepo.updateTemp(this);
         record(TargetTemperatureChanged.as(temperatureChange.change()));
     }
 

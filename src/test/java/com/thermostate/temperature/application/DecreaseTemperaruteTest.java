@@ -32,11 +32,10 @@ public class DecreaseTemperaruteTest {
     @Test
     public void should_decrease_temperature_one_degree() {
         //given
-        Integer decrementTemp = 100;
+        Integer decrementTemp = -100;
         Integer temp = 1600;
-        var expected = new Temperature(temp);
-        expected.change(TemperatureChange.create(decrementTemp));
-        var events = expected.pullDomainEvents();
+        var expected = new Temperature(1500);
+        var events = List.of(new TargetTemperatureChanged(decrementTemp));
         when(temperatureRepo.getTemp()).thenReturn(new Temperature(temp));
         //when
         sut.execute(TemperatureChange.create(decrementTemp));

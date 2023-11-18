@@ -1,7 +1,9 @@
 package com.thermostate.users.model;
 
+import com.thermostate.shared.ClientError;
 import com.thermostate.shared.HashGenerator;
 import com.thermostate.shared.events.AggregateRoot;
+import com.thermostate.users.model.event.UserCreated;
 import com.thermostate.users.model.event.UserLoggedIn;
 import com.thermostate.users.model.event.UserLoginFailure;
 import lombok.Getter;
@@ -20,10 +22,21 @@ public class User extends AggregateRoot {
         this.password = password;
         this.email = email;
         this.salt = salt;
+        checkData(name, password, email);
+    }
+
+    public User(String name, String password, String email, String salt) {
+        checkData(name, password, email);
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.salt = salt;
     }
 
     public boolean checkIfAuthenticated(String pass) {
         String loginUserHash = HashGenerator.generate(pass, salt);
+        System.out.println("pass" + pass + " calculated " + loginUserHash);
+        System.out.println("password" + pass + " calculated " + loginUserHash);
         if (loginUserHash.equals(password)) {
             record(new UserLoggedIn(name));
             return true;
@@ -31,5 +44,39 @@ public class User extends AggregateRoot {
             record(new UserLoginFailure(name));
             return false;
         }
+    }
+
+    public static User with(String name, String password, String email, String salt) {
+        if (null == password) throw ClientError.becauseInvalidDataFromClient();
+        return new User(name, HashGenerator.generate(password, salt), email, salt);
+    }
+
+    public void checkData(String name, String password, String email) {
+        if (!(isValidName(name)
+                && isValidPassword(password)
+                && isValidEmail(email))){
+            throw ClientError.becauseInvalidDataFromClient();
+        }
+    }
+
+    public boolean isValidName(String name) {
+        return isNotEmpty(name);
+    }
+
+    public boolean isValidPassword(String password) {
+        return isNotEmpty(password);
+    }
+
+    public boolean isValidEmail(String email) {
+        return isNotEmpty(email) && email.contains("@");
+    }
+
+    private static boolean isNotEmpty(String value) {
+        return value != null && !value.isEmpty();
+    }
+
+    public void create(UserRepo userRepo) {
+        userRepo.create(this);
+        this.record(new UserCreated(name));
     }
 }

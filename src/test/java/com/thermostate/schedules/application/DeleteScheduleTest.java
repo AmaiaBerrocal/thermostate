@@ -1,6 +1,7 @@
 package com.thermostate.schedules.application;
 
 import com.thermostate.schedules.model.ScheduleRepo;
+import com.thermostate.shared.events.EventBus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,11 +11,12 @@ import static org.mockito.Mockito.verify;
 public class DeleteScheduleTest {
     ScheduleRepo scheduleRepo;
     DeleteSchedule sut;
-
+    EventBus eventBus;
     @BeforeEach
     public void setup() {
         scheduleRepo = mock(ScheduleRepo.class);
-        sut = new DeleteSchedule(scheduleRepo);
+        eventBus = mock(EventBus.class);
+        sut = new DeleteSchedule(scheduleRepo, eventBus);
     }
 
     @Test
