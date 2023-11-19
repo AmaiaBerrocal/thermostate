@@ -1,11 +1,11 @@
 package com.thermostate.users.model;
 
 import com.thermostate.shared.ClientError;
-import com.thermostate.shared.HashGenerator;
 import com.thermostate.shared.events.AggregateRoot;
 import com.thermostate.users.model.event.UserCreated;
 import com.thermostate.users.model.event.UserLoggedIn;
 import com.thermostate.users.model.event.UserLoginFailure;
+import com.thermostate.users.model.service.HashGenerator;
 import lombok.Getter;
 
 @Getter

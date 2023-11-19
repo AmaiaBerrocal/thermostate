@@ -1,5 +1,6 @@
 package com.thermostate.shared;
 
+import com.thermostate.users.model.service.RandomStringGenerator;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

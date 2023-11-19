@@ -1,4 +1,4 @@
-package com.thermostate.shared;
+package com.thermostate.users.model.service;
 
 import org.springframework.stereotype.Component;
 

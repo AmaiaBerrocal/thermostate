@@ -1,6 +1,6 @@
 package com.thermostate.users.model;
 
-import com.thermostate.shared.HashGenerator;
+import com.thermostate.users.model.service.HashGenerator;
 import net.datafaker.Faker;
 
 public class UserObjectMother{

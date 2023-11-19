@@ -1,7 +1,6 @@
 package com.thermostate.users.application;
 
-import com.thermostate.shared.HashGenerator;
-import com.thermostate.shared.RandomStringGenerator;
+import com.thermostate.users.model.service.RandomStringGenerator;
 import com.thermostate.shared.events.EventBus;
 import com.thermostate.users.model.User;
 import com.thermostate.users.model.UserRepo;
