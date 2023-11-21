@@ -3,6 +3,7 @@ package com.thermostate.schedules.application;
 import com.thermostate.schedules.model.Schedule;
 import com.thermostate.schedules.model.ScheduleRepo;
 import com.thermostate.shared.ClientError;
+import com.thermostate.shared.events.EventBus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,11 +18,13 @@ import static org.mockito.Mockito.*;
 public class CreateScheduleTest {
     ScheduleRepo scheduleRepo;
     CreateSchedule sut;
+    EventBus eventBus;
 
     @BeforeEach
     public void setup() {
+        eventBus = mock(EventBus.class);
         scheduleRepo = mock(ScheduleRepo.class);
-        sut = new CreateSchedule(scheduleRepo);
+        sut = new CreateSchedule(scheduleRepo, eventBus);
     }
 
     @Test

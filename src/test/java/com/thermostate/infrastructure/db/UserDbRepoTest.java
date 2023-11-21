@@ -35,12 +35,12 @@ class UserDbRepoTest {
     public void user_should_be_insert() {
         //given
         UserDbRepo sut = new UserDbRepo(dbUtils);
-        User user = UserObjectMother.randomUser();
+        User user = UserObjectMother.randomUser("pass");
         String sql = "INSERT INTO USERS (NAME, PASSWORD, EMAIL, SALT, CREATED_AT, ACTIVE) VALUES (" +
-                "'" + user.name() +
-                "','" + user.password() +
-                "','" + user.email() +
-                "','" + user.salt() +
+                "'" + user.getName() +
+                "','" + user.getPassword() +
+                "','" + user.getEmail() +
+                "','" + user.getSalt() +
                 "', CURRENT_TIMESTAMP," +
                 " true)";
         //when

@@ -1,8 +1,8 @@
 package com.thermostate.roomtemperature.application;
 
-import com.google.common.eventbus.EventBus;
 import com.thermostate.roomtemperature.model.RoomTemperature;
 import com.thermostate.roomtemperature.model.RoomTemperatureRepo;
+import com.thermostate.shared.events.EventBus;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,7 @@ public class GetRoomTemperature {
 
   public RoomTemperature execute() {
     RoomTemperature temperature = temperatureRepo.getTemp();
-    eventBus.post(temperature);
+    temperature.publishEventsIn(eventBus);
     return temperature;
   }
 }

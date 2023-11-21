@@ -1,7 +1,9 @@
 package com.thermostate.users.application;
 
-import com.google.common.eventbus.EventBus;
-import com.thermostate.shared.HashGenerator;
+import com.thermostate.security.infrastucture.BearerService;
+import com.thermostate.security.model.TokenService;
+import com.thermostate.shared.ClientError;
+import com.thermostate.shared.events.EventBus;
 import com.thermostate.users.model.User;
 import com.thermostate.users.model.UserRepo;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,55 +11,50 @@ import org.junit.jupiter.api.Test;
 
 import static com.thermostate.users.model.UserObjectMother.randomUser;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class GetUserTest {
-    GetUser sut;
+class LoginUserTest {
+    LoginUser sut;
     UserRepo userRepo;
-    HashGenerator hashGenerator;
+    TokenService tokenService;
     EventBus eventBus;
 
     @BeforeEach
     void setup() {
         userRepo = mock(UserRepo.class);
-        hashGenerator = mock(HashGenerator.class);
         eventBus = mock(EventBus.class);
-        sut = new GetUser(userRepo, hashGenerator, eventBus);
+        tokenService = mock(BearerService.class);
+        sut = new LoginUser(userRepo, eventBus, tokenService);
     }
 
     @Test
     public void should_return_null_if_user_does_not_exist() {
-        //given
         //when
-        User result = sut.execute("d", "a");
-        //then
-        assertNull(result);
+        assertThatThrownBy(() -> sut.execute("any", "a")).isInstanceOf(ClientError.class);
     }
 
     @Test
     public void should_return_null_if_hashes_are_different() {
         //given
-        User user = randomUser();
+        User user = randomUser("pass");
         when(userRepo.getByName(any())).thenReturn(user);
-        when(hashGenerator.generate(any(), any())).thenReturn(user.password() + "3");
         //when
-        User result = sut.execute(user.name(), "a");
-        //then
-        assertNull(result);
+        assertThatThrownBy(() -> sut.execute(user.getName(), "random")).isInstanceOf(ClientError.class);
+
     }
 
     @Test
     public void should_return_user_if_exists_with_that_password() {
         //given
-        User user = randomUser();
+        User user = randomUser("pass");
         when(userRepo.getByName(any())).thenReturn(user);
-        when(hashGenerator.generate(any(), any())).thenReturn(user.password());
+        when(tokenService.generateToken(user)).thenReturn("token");
         //when
-        User result = sut.execute(user.name(), "a");
+        var result = sut.execute(user.getName(), "pass");
         //then
-        assertThat(result).isEqualTo(user);
+        assertThat(result).isEqualTo("token");
     }
 }

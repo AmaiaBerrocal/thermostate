@@ -6,6 +6,7 @@ import com.thermostate.temperature.application.DecreaseTemperature;
 import com.thermostate.temperature.application.GetTemperature;
 import com.thermostate.temperature.application.IncreaseTemperature;
 import com.thermostate.temperature.model.Temperature;
+import com.thermostate.temperature.model.TemperatureChange;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,12 +30,12 @@ public class TemperatureController {
 
     @PutMapping("/temperature/increment")
     public void tempIncrement (@RequestBody TempUpdateRequest tempUpdateRequest) {
-        increaseTemperature.execute(tempUpdateRequest.temperature);
+        increaseTemperature.execute(TemperatureChange.create(tempUpdateRequest.temperature));
     }
 
     @PutMapping("/temperature/decrement")
     public void tempDecrement (@RequestBody TempUpdateRequest tempUpdateRequest) {
-        decreaseTemperature.execute(tempUpdateRequest.temperature);
+        decreaseTemperature.execute(TemperatureChange.create(-tempUpdateRequest.temperature));
     }
 
     @GetMapping("/temperature")

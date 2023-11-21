@@ -1,7 +1,8 @@
 package com.thermostate.temperature.application;
 
-import com.google.common.eventbus.EventBus;
+import com.thermostate.shared.events.EventBus;
 import com.thermostate.temperature.model.Temperature;
+import com.thermostate.temperature.model.TemperatureChange;
 import com.thermostate.temperature.model.TemperatureRepo;
 import org.springframework.stereotype.Component;
 
@@ -15,10 +16,9 @@ public class DecreaseTemperature {
         this.eventBus = eventBus;
     }
 
-    public void execute(Integer temp) {
-        Integer decrementTemp = temperatureRepo.getTemp().temp() - temp;
-        Temperature temperature = new Temperature(decrementTemp);
-        temperatureRepo.updateTemp(temperature);
-        eventBus.post(temperature);
+    public void execute(TemperatureChange temp) {
+        Temperature temperature = temperatureRepo.getTemp();
+        temperature.change(temp, temperatureRepo);
+        temperature.publishEventsIn(eventBus);
     }
 }

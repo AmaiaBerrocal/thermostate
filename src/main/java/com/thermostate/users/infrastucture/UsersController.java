@@ -1,10 +1,10 @@
 package com.thermostate.users.infrastucture;
 
-import com.thermostate.security.application.TokenService;
+import com.thermostate.security.model.TokenService;
 import com.thermostate.shared.ClientError;
 import com.thermostate.shared.ValueResponse;
 import com.thermostate.users.application.CreateUser;
-import com.thermostate.users.application.GetUser;
+import com.thermostate.users.application.LoginUser;
 import com.thermostate.users.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin()
 public class UsersController {
     private final CreateUser createUser;
-    private final GetUser getUser;
+    private final LoginUser loginUser;
     private final TokenService tokenService;
 
 
     public UsersController(CreateUser createUser,
-                           GetUser getUser,
+                           LoginUser loginUser,
                            TokenService tokenService) {
         this.createUser = createUser;
-        this.getUser = getUser;
+        this.loginUser = loginUser;
         this.tokenService = tokenService;
     }
 
@@ -33,19 +33,19 @@ public class UsersController {
                 userCreateRequest.email);
     }
 
+    @PostMapping("/login")
+    @ResponseBody
+    public ValueResponse<String> login(@RequestBody UserLoginRequest request) {
+        String bearer =  loginUser.execute(request.name, request.password);
+        return new ValueResponse<>(bearer);
+    }
+
     @ExceptionHandler(value = ClientError.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public void handleException(Exception ex) {
         ex.printStackTrace();
     }
 
-    @PostMapping("/login")
-    @ResponseBody
-    public ValueResponse<String> login(@RequestBody UserLoginRequest request) {
-        User user =  getUser.execute(request.name, request.password);
-        if (user == null) throw ClientError.becauseInvalidDataFromClient();
-        return new ValueResponse<>(tokenService.generateToken(user));
-    }
 }
 
 @AllArgsConstructor

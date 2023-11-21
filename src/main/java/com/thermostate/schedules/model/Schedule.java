@@ -1,6 +1,10 @@
 package com.thermostate.schedules.model;
 
+import com.thermostate.schedules.model.events.ScheduleCreated;
+import com.thermostate.schedules.model.events.ScheduleDeleted;
+import com.thermostate.schedules.model.events.ScheduleUpdated;
 import com.thermostate.shared.ClientError;
+import com.thermostate.shared.events.AggregateRoot;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
@@ -11,14 +15,14 @@ import java.util.stream.Stream;
 import static org.apache.logging.log4j.util.Strings.isNotEmpty;
 
 @EqualsAndHashCode
-public class Schedule {
+public class Schedule extends AggregateRoot {
     public final Integer id;
-    public final String weekDays;
-    public final String timeFrom;
-    public final String timeTo;
-    public final Boolean active;
-    public final Integer minTemp;
-    public final LocalDate createdAt;
+    public String weekDays;
+    public String timeFrom;
+    public String timeTo;
+    public Boolean active;
+    public Integer minTemp;
+    public LocalDate createdAt;
 
     public Schedule(Integer id, String weekDays, String timeFrom, String timeTo, Boolean active, Integer minTemp, LocalDate createdAt) {
         this.id = id;
@@ -29,6 +33,10 @@ public class Schedule {
         this.minTemp = minTemp;
         this.createdAt = createdAt;
         checkData();
+    }
+
+    public Schedule(Integer id) {
+        this.id = id;
     }
 
     private void checkData() {
@@ -67,5 +75,20 @@ public class Schedule {
 
     public boolean isValidMinTemp(Integer minTemp) {
         return minTemp != null && minTemp > 0;
+    }
+
+    public void createIn(ScheduleRepo scheduleRepo) {
+        scheduleRepo.create(this);
+        record(new ScheduleCreated(id));
+    }
+
+    public void update(ScheduleRepo scheduleRepo) {
+        scheduleRepo.update(this);
+        record(new ScheduleUpdated(id));
+    }
+
+    public void delete(ScheduleRepo scheduleRepo) {
+        scheduleRepo.deleteById(id);
+        record(new ScheduleDeleted(id));
     }
 }

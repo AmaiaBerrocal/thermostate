@@ -1,11 +1,13 @@
 package com.thermostate.temperature.infrastructure;
 
-import com.google.common.eventbus.Subscribe;
-import com.thermostate.temperature.model.Temperature;
+import com.thermostate.temperature.model.event.TargetTemperatureChanged;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DesiredTemperatureChangedListener {
-  @Subscribe
-  public void lcdTemperatureChanged(Temperature temperature) {
+  @EventListener
+  public void lcdTemperatureChanged(TargetTemperatureChanged temperature) {
     System.out.println("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
   }
 }

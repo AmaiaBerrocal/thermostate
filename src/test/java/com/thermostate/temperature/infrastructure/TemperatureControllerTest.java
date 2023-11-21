@@ -3,6 +3,7 @@ package com.thermostate.temperature.infrastructure;
 import com.thermostate.temperature.application.DecreaseTemperature;
 import com.thermostate.temperature.application.GetTemperature;
 import com.thermostate.temperature.application.IncreaseTemperature;
+import com.thermostate.temperature.model.TemperatureChange;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,12 +26,12 @@ class TemperatureControllerTest {
 
     @Test
     void should_call_application_layer_correctly_increasing_temp() {
-        //given
+        //givenDomainEventSubscriber
         TempUpdateRequest req = new TempUpdateRequest(15);
         //when
         sut.tempIncrement(req);
         //then
-        verify(increaseTemperature).execute(req.temperature);
+        verify(increaseTemperature).execute(TemperatureChange.create(req.temperature));
     }
 
     @Test
@@ -40,6 +41,6 @@ class TemperatureControllerTest {
         //when
         sut.tempDecrement(req);
         //then
-        verify(decreaseTemperature).execute(req.temperature);
+        verify(decreaseTemperature).execute(TemperatureChange.create(-req.temperature));
     }
 }

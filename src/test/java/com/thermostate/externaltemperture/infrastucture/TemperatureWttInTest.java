@@ -30,7 +30,7 @@ class TemperatureWttInTest {
 
     var response = sut.obtainExternalTemperature();
 
-    assertThat(response.temp()).isEqualTo("9");
+    assertThat(response.temp).isEqualTo("9");
   }
 
 }

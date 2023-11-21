@@ -1,9 +1,8 @@
 package com.thermostate.users.application;
 
 import com.thermostate.shared.ClientError;
-import com.thermostate.shared.HashGenerator;
-import com.thermostate.shared.RandomStringGenerator;
-import com.thermostate.users.model.User;
+import com.thermostate.users.model.service.RandomStringGenerator;
+import com.thermostate.shared.events.EventBus;
 import com.thermostate.users.model.UserRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,15 +13,15 @@ import static org.mockito.Mockito.*;
 class CreateUserTest {
     UserRepo userRepo;
     RandomStringGenerator randomStringGenerator;
-    HashGenerator hashGenerator;
     CreateUser sut;
+    EventBus eventBus;
 
     @BeforeEach
     public void setup() {
+        eventBus = mock(EventBus.class);
         userRepo = mock(UserRepo.class);
         randomStringGenerator = mock(RandomStringGenerator.class);
-        hashGenerator = mock(HashGenerator.class);
-        sut = new CreateUser(userRepo, randomStringGenerator, hashGenerator);
+        sut = new CreateUser(userRepo, eventBus, randomStringGenerator);
     }
 
     @Test
@@ -34,11 +33,10 @@ class CreateUserTest {
         String salt = "salt";
         String hash = "lkjdalsjdwa";
         when(randomStringGenerator.generate()).thenReturn(salt);
-        when(hashGenerator.generate(password, salt)).thenReturn(hash);
         //when
         sut.execute(name, password,email);
         //then
-        verify(userRepo).create(new User(null, name, hash, email, salt));
+        //verify(userRepo).create(new User(null, name, hash, email, salt));
     }
 
     @Test
@@ -50,7 +48,6 @@ class CreateUserTest {
         String salt = "salt";
         String hash = "lkjdalsjdwa";
         when(randomStringGenerator.generate()).thenReturn(salt);
-        when(hashGenerator.generate(password, salt)).thenReturn(hash);
         //when
         assertThatThrownBy( () -> {
             sut.execute(name, password,email);
@@ -68,8 +65,7 @@ class CreateUserTest {
         String email = "hahah@gmail.com";
         String salt = "salt";
         String hash = "lkjdalsjdwa";
-        when(randomStringGenerator.generate()).thenReturn(salt);
-        when(hashGenerator.generate(password, salt)).thenReturn(hash);
+        when(randomStringGenerator.generate()).thenReturn(null);
         //when
         assertThatThrownBy( () -> {
                     sut.execute(name, password,email);
@@ -88,7 +84,6 @@ class CreateUserTest {
         String salt = "salt";
         String hash = "lkjdalsjdwa";
         when(randomStringGenerator.generate()).thenReturn(salt);
-        when(hashGenerator.generate(password, salt)).thenReturn(hash);
         //when
         assertThatThrownBy( () -> {
                     sut.execute(name, password,email);

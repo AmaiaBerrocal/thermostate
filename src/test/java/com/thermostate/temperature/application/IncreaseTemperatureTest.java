@@ -1,11 +1,17 @@
 package com.thermostate.temperature.application;
 
-import com.google.common.eventbus.EventBus;
+import com.thermostate.shared.events.SpringApplicationEventBus;
 import com.thermostate.temperature.model.Temperature;
+import com.thermostate.temperature.model.TemperatureChange;
 import com.thermostate.temperature.model.TemperatureRepo;
+import com.thermostate.temperature.model.event.TargetTemperatureChanged;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -13,12 +19,12 @@ import static org.mockito.Mockito.when;
 public class IncreaseTemperatureTest {
     TemperatureRepo temperatureRepo;
     IncreaseTemperature sut;
-    EventBus eventBus;
+    SpringApplicationEventBus eventBus;
 
 
     @BeforeEach
     public void setup() {
-        eventBus = mock(EventBus.class);
+        eventBus = mock(SpringApplicationEventBus.class);
         temperatureRepo = mock(TemperatureRepo.class);
         sut = new IncreaseTemperature(temperatureRepo, eventBus);
     }
@@ -28,12 +34,18 @@ public class IncreaseTemperatureTest {
         //given
         Integer incrementTemp = 100;
         Integer temp = 1600;
+        var expected = new Temperature(1700);
+        var events = List.of(new TargetTemperatureChanged(incrementTemp));
         when(temperatureRepo.getTemp()).thenReturn(new Temperature(temp));
         //when
-        sut.execute(incrementTemp);
+        sut.execute(TemperatureChange.create(incrementTemp));
         //then
-        Temperature temperature = new Temperature(incrementTemp);
-        verify(temperatureRepo).updateTemp(new Temperature(temp + incrementTemp));
-        verify(eventBus).post(new Temperature(incrementTemp + temp));
+        var captor = ArgumentCaptor.forClass(Temperature.class);
+        verify(temperatureRepo).updateTemp(captor.capture());
+        assertThat(captor.getValue()).usingRecursiveComparison().isEqualTo(expected);
+        var eventCaptor = ArgumentCaptor.forClass(List.class);
+        verify(eventBus).publish(eventCaptor.capture());
+        assertThat(eventCaptor.getValue())
+                .usingRecursiveFieldByFieldElementComparatorOnFields("amount").isEqualTo(events);
     }
 }
