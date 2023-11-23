@@ -3,7 +3,7 @@ package com.thermostate.roomtemperature.model;
 import com.thermostate.shared.events.AggregateRoot;
 
 public class RoomTemperature extends AggregateRoot {
-    private final String temp;
+    public final String temp;
 
     private RoomTemperature(String temp) {
         this.temp = temp;
