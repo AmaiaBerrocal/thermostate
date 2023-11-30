@@ -1,6 +1,6 @@
 package com.thermostate.users.model.event;
 
-import com.thermostate.shared.events.DomainEvent;
+import com.thermostate.shared.events.domain.DomainEvent;
 
 import java.io.Serializable;
 import java.util.HashMap;

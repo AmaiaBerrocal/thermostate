@@ -1,12 +1,13 @@
 package com.thermostate.schedules.model.events;
 
-import com.thermostate.shared.events.DomainEvent;
+import com.thermostate.shared.events.domain.DomainEvent;
+import com.thermostate.shared.events.domain.ScheduleEvent;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class ScheduleDeleted extends DomainEvent {
+public class ScheduleDeleted extends ScheduleEvent {
 
     Integer id;
     public ScheduleDeleted(Integer id) {

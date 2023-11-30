@@ -1,4 +1,4 @@
-package com.thermostate.externaltemperture.model;
+package com.thermostate.externaltemperature.model;
 
 public interface ExternalTemperatureRepo {
   ExternalTemperature obtainExternalTemperature();

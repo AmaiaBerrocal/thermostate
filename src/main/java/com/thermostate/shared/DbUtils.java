@@ -38,7 +38,6 @@ public class DbUtils {
     }
 
     public List<Map<String, Object>> executeQuery(String sql) {
-        System.out.println(sql);
         try(Connection con = createConnection();
             Statement stms = con.createStatement()) {
             ResultSet result = stms.executeQuery(sql);

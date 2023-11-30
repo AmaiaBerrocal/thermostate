@@ -1,8 +1,7 @@
 package com.thermostate.shared;
 
-import com.thermostate.externaltemperture.application.GetExternalTemperature;
+import com.thermostate.externaltemperature.application.GetExternalTemperature;
 import com.thermostate.roomtemperature.application.GetRoomTemperature;
-import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;

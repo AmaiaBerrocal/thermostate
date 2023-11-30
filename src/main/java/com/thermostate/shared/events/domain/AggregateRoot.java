@@ -1,4 +1,7 @@
-package com.thermostate.shared.events;
+package com.thermostate.shared.events.domain;
+
+import com.thermostate.schedules.model.events.EventBus;
+import com.thermostate.shared.events.infrastructure.CustomEventBus;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,16 +10,14 @@ import java.util.List;
 public abstract class AggregateRoot {
     private List<DomainEvent> domainEvents = new ArrayList<>();
 
-    final public List<DomainEvent> pullDomainEvents() {
+    private List<DomainEvent> pullDomainEvents() {
         List<DomainEvent> events = domainEvents;
-
         domainEvents = Collections.emptyList();
-
         return events;
     }
 
     final public void publishEventsIn(EventBus eventBus) {
-        eventBus.publish(pullDomainEvents());
+        pullDomainEvents().forEach(eventBus::emit);
     }
 
     final protected void record(DomainEvent event) {

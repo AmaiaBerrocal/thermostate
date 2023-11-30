@@ -1,6 +1,6 @@
 package com.thermostate.temperature.application;
 
-import com.thermostate.shared.events.SpringApplicationEventBus;
+import com.thermostate.schedules.model.events.EventBus;
 import com.thermostate.temperature.model.Temperature;
 import com.thermostate.temperature.model.TemperatureChange;
 import com.thermostate.temperature.model.TemperatureRepo;
@@ -19,12 +19,12 @@ import static org.mockito.Mockito.when;
 public class IncreaseTemperatureTest {
     TemperatureRepo temperatureRepo;
     IncreaseTemperature sut;
-    SpringApplicationEventBus eventBus;
+    EventBus eventBus;
 
 
     @BeforeEach
     public void setup() {
-        eventBus = mock(SpringApplicationEventBus.class);
+        eventBus = mock(EventBus.class);
         temperatureRepo = mock(TemperatureRepo.class);
         sut = new IncreaseTemperature(temperatureRepo, eventBus);
     }
@@ -35,7 +35,7 @@ public class IncreaseTemperatureTest {
         Integer incrementTemp = 100;
         Integer temp = 1600;
         var expected = new Temperature(1700);
-        var events = List.of(new TargetTemperatureChanged(incrementTemp));
+        var events =new TargetTemperatureChanged(incrementTemp);
         when(temperatureRepo.getTemp()).thenReturn(new Temperature(temp));
         //when
         sut.execute(TemperatureChange.create(incrementTemp));
@@ -43,9 +43,8 @@ public class IncreaseTemperatureTest {
         var captor = ArgumentCaptor.forClass(Temperature.class);
         verify(temperatureRepo).updateTemp(captor.capture());
         assertThat(captor.getValue()).usingRecursiveComparison().isEqualTo(expected);
-        var eventCaptor = ArgumentCaptor.forClass(List.class);
-        verify(eventBus).publish(eventCaptor.capture());
-        assertThat(eventCaptor.getValue())
-                .usingRecursiveFieldByFieldElementComparatorOnFields("amount").isEqualTo(events);
+        var eventCaptor = ArgumentCaptor.forClass(TargetTemperatureChanged.class);
+        verify(eventBus).emit(eventCaptor.capture());
+        assertThat(eventCaptor.getValue().amount).isEqualTo(incrementTemp);
     }
 }

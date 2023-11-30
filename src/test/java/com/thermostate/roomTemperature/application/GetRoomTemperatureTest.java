@@ -3,7 +3,7 @@ package com.thermostate.roomTemperature.application;
 import com.thermostate.roomtemperature.application.GetRoomTemperature;
 import com.thermostate.roomtemperature.model.RoomTemperature;
 import com.thermostate.roomtemperature.model.RoomTemperatureRepo;
-import com.thermostate.shared.events.EventBus;
+import com.thermostate.schedules.model.events.EventBus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

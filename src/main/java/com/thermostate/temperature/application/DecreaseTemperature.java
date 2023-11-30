@@ -1,6 +1,6 @@
 package com.thermostate.temperature.application;
 
-import com.thermostate.shared.events.EventBus;
+import com.thermostate.schedules.model.events.EventBus;
 import com.thermostate.temperature.model.Temperature;
 import com.thermostate.temperature.model.TemperatureChange;
 import com.thermostate.temperature.model.TemperatureRepo;

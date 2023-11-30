@@ -1,7 +1,7 @@
-package com.thermostate.externaltemperture.infrastucture;
+package com.thermostate.externaltemperature.infrastucture;
 
-import com.thermostate.externaltemperture.model.ExternalTemperature;
-import com.thermostate.externaltemperture.model.ExternalTemperatureRepo;
+import com.thermostate.externaltemperature.model.ExternalTemperature;
+import com.thermostate.externaltemperature.model.ExternalTemperatureRepo;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
