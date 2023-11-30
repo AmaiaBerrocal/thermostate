@@ -4,10 +4,12 @@ import com.thermostate.shared.events.domain.DomainEvent;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class UserLoginFailure extends DomainEvent {
     public final String name;
     public UserLoginFailure(String name) {
+        super(UUID.randomUUID().toString());
         this.name = name;
     }
 

@@ -1,4 +1,4 @@
-package com.thermostate.externaltemperature.model;
+package com.thermostate.externaltemperature.model.events;
 
 import com.thermostate.shared.events.domain.DomainEvent;
 import com.thermostate.shared.events.domain.TemperatureEvent;
