@@ -35,8 +35,6 @@ public class User extends AggregateRoot {
 
     public boolean checkIfAuthenticated(String pass) {
         String loginUserHash = HashGenerator.generate(pass, salt);
-        System.out.println("pass" + pass + " calculated " + loginUserHash);
-        System.out.println("password" + pass + " calculated " + loginUserHash);
         if (loginUserHash.equals(password)) {
             record(new UserLoggedIn(name));
             return true;

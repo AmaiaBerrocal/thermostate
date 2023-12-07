@@ -32,7 +32,6 @@ public class BearerService implements TokenService {
             return null;
         }
         Instant expirationTime = Instant.now().plus(1, ChronoUnit.HOURS);
-        Date expirationDate = Date.from(expirationTime);
 
         Key key = Keys.hmacShaKeyFor(JWT_SECRET.getBytes());
 
