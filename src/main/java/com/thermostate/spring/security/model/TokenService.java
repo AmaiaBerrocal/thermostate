@@ -1,6 +1,5 @@
-package com.thermostate.security.model;
+package com.thermostate.spring.security.model;
 
-import com.thermostate.security.model.LogedInUser;
 import com.thermostate.users.model.User;
 
 public interface TokenService {

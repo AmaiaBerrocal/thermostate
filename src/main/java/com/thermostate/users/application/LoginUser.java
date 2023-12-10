@@ -1,7 +1,7 @@
 package com.thermostate.users.application;
 
 import com.thermostate.schedules.model.events.EventBus;
-import com.thermostate.security.model.TokenService;
+import com.thermostate.spring.security.model.TokenService;
 import com.thermostate.shared.ClientError;
 import com.thermostate.users.model.User;
 import com.thermostate.users.model.UserRepo;

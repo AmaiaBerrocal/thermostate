@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 import static org.apache.logging.log4j.util.Strings.isNotEmpty;
 
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class Schedule extends AggregateRoot {
     public final Integer id;
     public String weekDays;
