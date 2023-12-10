@@ -1,4 +1,4 @@
-package com.thermostate.security.infrastucture.listeners;
+package com.thermostate.spring.security.infrastucture.listeners;
 import com.thermostate.users.model.event.UserLoggedIn;
 import com.thermostate.users.model.event.UserLoginFailure;
 import org.springframework.context.event.EventListener;

@@ -1,24 +1,26 @@
-package com.thermostate.security.infrastucture;
+package com.thermostate.spring.security.infrastucture;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+@Configuration
 public class SecurityConfig {
     private final JwtAuthenticationFilter authenticationFilter;
 
@@ -28,36 +30,33 @@ public class SecurityConfig {
 
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
-        // Enable CORS and disable CSRF
-        http.cors()
-                .and()
-                .csrf().disable();
+        // Enable CORS with our configuration and disable CSRF
+        http.cors(cors -> cors.configurationSource(corsSource()));
+        http.csrf(AbstractHttpConfigurer::disable);
         // Set session management to stateless
-        http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and();
+        http.sessionManagement(sessionManagement ->
+                sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         // Set unauthorized requests exception handler
-        http.exceptionHandling().authenticationEntryPoint(
-                (request, response, ex) -> {
-                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
-                });
+        http.exceptionHandling(handling ->
+                handling.authenticationEntryPoint((request, response, ex) ->
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage())
+                ));
         // Set permissions on endpoints
-        http.authorizeRequests()// Our public endpoints
-                .antMatchers(HttpMethod.POST,"/login")
-                .permitAll()
-                // Our private endpoints
-                .anyRequest()
-                .authenticated();
+        http.authorizeHttpRequests(auth -> {
+            auth// Our public endpoints
+                .requestMatchers(HttpMethod.POST,"/login").permitAll()
+                .requestMatchers("/**").authenticated();
+                // The rest of them will be private
+        });
         // Add JWT token filter
-        http.addFilterBefore(
+        http.addFilterAfter(
             authenticationFilter,
             UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
     // Used by spring security if CORS is enabled.
-    @Bean
-    public CorsFilter corsFilter() {
+    public CorsConfigurationSource corsSource() {
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
@@ -67,7 +66,7 @@ public class SecurityConfig {
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE","OPTIONS","PATCH"));
         config.setExposedHeaders(List.of("Authorization"));
         source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
+        return source;
     }
 
     @Bean

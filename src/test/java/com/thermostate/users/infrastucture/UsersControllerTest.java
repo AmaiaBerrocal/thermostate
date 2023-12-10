@@ -1,15 +1,13 @@
 package com.thermostate.users.infrastucture;
 
-import com.thermostate.security.model.TokenService;
-import com.thermostate.security.infrastucture.BearerService;
+import com.thermostate.spring.security.model.TokenService;
+import com.thermostate.spring.security.infrastucture.BearerService;
 import com.thermostate.shared.ValueResponse;
 import com.thermostate.users.application.CreateUser;
 import com.thermostate.users.application.LoginUser;
-import com.thermostate.users.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.thermostate.users.model.UserObjectMother.randomUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

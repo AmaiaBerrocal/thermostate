@@ -1,11 +1,10 @@
 package com.thermostate.users.infrastucture;
 
-import com.thermostate.security.model.TokenService;
+import com.thermostate.spring.security.model.TokenService;
 import com.thermostate.shared.ClientError;
 import com.thermostate.shared.ValueResponse;
 import com.thermostate.users.application.CreateUser;
 import com.thermostate.users.application.LoginUser;
-import com.thermostate.users.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

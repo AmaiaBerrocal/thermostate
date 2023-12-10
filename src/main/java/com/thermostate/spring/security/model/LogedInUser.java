@@ -1,4 +1,4 @@
-package com.thermostate.security.model;
+package com.thermostate.spring.security.model;
 
 import lombok.AllArgsConstructor;
 
