@@ -1,5 +1,6 @@
 package com.thermostate.users.application;
 
+import com.thermostate.schedules.model.events.EventBus;
 import com.thermostate.spring.security.infrastucture.BearerService;
 import com.thermostate.spring.security.model.TokenService;
 import com.thermostate.shared.ClientError;
