@@ -1,8 +1,8 @@
 package com.thermostate.users.application;
 
+import com.thermostate.schedules.model.events.EventBus;
 import com.thermostate.shared.ClientError;
 import com.thermostate.users.model.service.RandomStringGenerator;
-import com.thermostate.shared.events.EventBus;
 import com.thermostate.users.model.UserRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

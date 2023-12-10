@@ -1,4 +1,4 @@
-package com.thermostate.shared.events;
+package com.thermostate.shared.events.domain;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

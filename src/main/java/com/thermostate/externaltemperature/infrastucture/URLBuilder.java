@@ -1,4 +1,4 @@
-package com.thermostate.externaltemperture.infrastucture;
+package com.thermostate.externaltemperature.infrastucture;
 
 import com.thermostate.shared.PropertiesLoader;
 import org.jetbrains.annotations.NotNull;

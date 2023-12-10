@@ -1,4 +1,4 @@
-package com.thermostate.externaltemperture.infrastucture;
+package com.thermostate.externaltemperature.infrastucture;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,7 +7,6 @@ import org.mockito.Mock;
 import java.io.IOException;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 

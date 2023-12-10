@@ -1,6 +1,6 @@
 package com.thermostate.shared;
 
-import com.thermostate.externaltemperture.application.GetExternalTemperature;
+import com.thermostate.externaltemperature.application.GetExternalTemperature;
 import com.thermostate.roomtemperature.application.GetRoomTemperature;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

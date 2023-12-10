@@ -2,7 +2,7 @@ package com.thermostate.schedules.application;
 
 import com.thermostate.schedules.model.Schedule;
 import com.thermostate.schedules.model.ScheduleRepo;
-import com.thermostate.shared.events.EventBus;
+import com.thermostate.schedules.model.events.EventBus;
 import org.springframework.stereotype.Component;
 
 @Component

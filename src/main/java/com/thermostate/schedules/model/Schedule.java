@@ -4,7 +4,7 @@ import com.thermostate.schedules.model.events.ScheduleCreated;
 import com.thermostate.schedules.model.events.ScheduleDeleted;
 import com.thermostate.schedules.model.events.ScheduleUpdated;
 import com.thermostate.shared.ClientError;
-import com.thermostate.shared.events.AggregateRoot;
+import com.thermostate.shared.events.domain.AggregateRoot;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;

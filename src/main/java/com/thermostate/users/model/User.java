@@ -1,7 +1,7 @@
 package com.thermostate.users.model;
 
 import com.thermostate.shared.ClientError;
-import com.thermostate.shared.events.AggregateRoot;
+import com.thermostate.shared.events.domain.AggregateRoot;
 import com.thermostate.users.model.event.UserCreated;
 import com.thermostate.users.model.event.UserLoggedIn;
 import com.thermostate.users.model.event.UserLoginFailure;
@@ -11,10 +11,10 @@ import lombok.Getter;
 @Getter
 public class User extends AggregateRoot {
     private Integer id;
-    private String name;
-    private String password;
-    private String email;
-    private String salt;
+    private final String name;
+    private final String password;
+    private final String email;
+    private final String salt;
 
     public User(Integer id, String name, String password, String email, String salt) {
         this.id = id;

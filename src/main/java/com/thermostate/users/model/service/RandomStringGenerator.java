@@ -11,7 +11,7 @@ public class RandomStringGenerator {
         String randomString = "";
         for (int i = 0; i < randomStringLength; i++) {
             Random r = new Random();
-            int index = (int)r.nextInt(cache.length());
+            int index = r.nextInt(cache.length());
             char randomChar = cache.charAt(index);
             randomString += randomChar;
         }

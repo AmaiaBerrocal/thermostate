@@ -1,13 +1,14 @@
 package com.thermostate.temperature.model.event;
 
-import com.thermostate.shared.events.DomainEvent;
+import com.thermostate.shared.events.domain.DomainEvent;
+import com.thermostate.shared.events.domain.TemperatureEvent;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class TargetTemperatureChanged extends DomainEvent {
-    private Integer amount;
+public class TargetTemperatureChanged extends TemperatureEvent {
+    public final Integer amount;
 
     public TargetTemperatureChanged(Integer amount) {
         super(UUID.randomUUID().toString());

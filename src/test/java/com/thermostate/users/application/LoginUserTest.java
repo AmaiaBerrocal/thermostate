@@ -1,9 +1,9 @@
 package com.thermostate.users.application;
 
+import com.thermostate.schedules.model.events.EventBus;
 import com.thermostate.security.infrastucture.BearerService;
 import com.thermostate.security.model.TokenService;
 import com.thermostate.shared.ClientError;
-import com.thermostate.shared.events.EventBus;
 import com.thermostate.users.model.User;
 import com.thermostate.users.model.UserRepo;
 import org.junit.jupiter.api.BeforeEach;

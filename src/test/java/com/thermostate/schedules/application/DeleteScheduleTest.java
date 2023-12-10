@@ -1,7 +1,7 @@
 package com.thermostate.schedules.application;
 
 import com.thermostate.schedules.model.ScheduleRepo;
-import com.thermostate.shared.events.EventBus;
+import com.thermostate.schedules.model.events.EventBus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

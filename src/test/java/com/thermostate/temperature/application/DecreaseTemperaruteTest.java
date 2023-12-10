@@ -1,6 +1,6 @@
 package com.thermostate.temperature.application;
 
-import com.thermostate.shared.events.EventBus;
+import com.thermostate.schedules.model.events.EventBus;
 import com.thermostate.temperature.model.Temperature;
 import com.thermostate.temperature.model.TemperatureChange;
 import com.thermostate.temperature.model.TemperatureRepo;
@@ -12,7 +12,6 @@ import org.mockito.ArgumentCaptor;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -35,7 +34,6 @@ public class DecreaseTemperaruteTest {
         Integer decrementTemp = -100;
         Integer temp = 1600;
         var expected = new Temperature(1500);
-        var events = List.of(new TargetTemperatureChanged(decrementTemp));
         when(temperatureRepo.getTemp()).thenReturn(new Temperature(temp));
         //when
         sut.execute(TemperatureChange.create(decrementTemp));
@@ -43,9 +41,8 @@ public class DecreaseTemperaruteTest {
         var captor = ArgumentCaptor.forClass(Temperature.class);
         verify(temperatureRepo).updateTemp(captor.capture());
         assertThat(captor.getValue()).usingRecursiveComparison().isEqualTo(expected);
-        var eventCaptor = ArgumentCaptor.forClass(List.class);
-        verify(eventBus).publish(eventCaptor.capture());
-        assertThat(eventCaptor.getValue())
-                .usingRecursiveFieldByFieldElementComparatorOnFields("amount").isEqualTo(events);
+        var eventCaptor = ArgumentCaptor.forClass(TargetTemperatureChanged.class);
+        verify(eventBus).emit(eventCaptor.capture());
+        assertThat(eventCaptor.getValue().amount).isEqualTo(decrementTemp);
     }
 }

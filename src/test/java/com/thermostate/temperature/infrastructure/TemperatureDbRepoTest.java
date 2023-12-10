@@ -1,7 +1,6 @@
 package com.thermostate.temperature.infrastructure;
 
 import com.thermostate.shared.DbUtils;
-import com.thermostate.shared.events.EventBus;
 import com.thermostate.temperature.model.Temperature;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

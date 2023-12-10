@@ -1,17 +1,18 @@
 package com.thermostate.roomtemperature.model.events;
 
-import com.thermostate.shared.events.DomainEvent;
+import com.thermostate.shared.events.domain.DomainEvent;
+import com.thermostate.shared.events.domain.TemperatureEvent;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class RoomTemperatureReaded extends DomainEvent {
+public class RoomTemperatureReaded extends TemperatureEvent {
 
-    Integer id;
-    public RoomTemperatureReaded(Integer id) {
+    Double temp;
+    public RoomTemperatureReaded(Double temp) {
         super(UUID.randomUUID().toString());
-        this.id = id;
+        this.temp = temp;
     }
     @Override
     public String eventName() {
