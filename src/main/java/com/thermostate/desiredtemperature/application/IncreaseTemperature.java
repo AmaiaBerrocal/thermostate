@@ -1,17 +1,17 @@
-package com.thermostate.temperature.application;
+package com.thermostate.desiredtemperature.application;
 
 import com.thermostate.schedules.model.events.EventBus;
-import com.thermostate.temperature.model.Temperature;
-import com.thermostate.temperature.model.TemperatureChange;
-import com.thermostate.temperature.model.TemperatureRepo;
+import com.thermostate.desiredtemperature.model.Temperature;
+import com.thermostate.desiredtemperature.model.TemperatureChange;
+import com.thermostate.desiredtemperature.model.TemperatureRepo;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DecreaseTemperature {
+public class IncreaseTemperature {
     final TemperatureRepo temperatureRepo;
-
     final EventBus eventBus;
-    public DecreaseTemperature(TemperatureRepo temperatureRepo, EventBus eventBus) {
+
+    public IncreaseTemperature(TemperatureRepo temperatureRepo, EventBus eventBus) {
         this.temperatureRepo = temperatureRepo;
         this.eventBus = eventBus;
     }

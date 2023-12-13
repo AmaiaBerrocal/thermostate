@@ -1,7 +1,7 @@
-package com.thermostate.temperature.infrastructure;
+package com.thermostate.desiredtemperature.infrastructure;
 
 import com.thermostate.shared.DbUtils;
-import com.thermostate.temperature.model.Temperature;
+import com.thermostate.desiredtemperature.model.Temperature;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,14 +12,14 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-public class TemperatureDbRepoTest {
+public class DesiredTemperatureDbRepoTest {
     DbUtils dbUtils;
-    TemperatureDbRepo sut;
+    DesiredTemperatureDbRepo sut;
 
     @BeforeEach
     public void setup() {
         dbUtils = mock(DbUtils.class);
-        sut = new TemperatureDbRepo(dbUtils);
+        sut = new DesiredTemperatureDbRepo(dbUtils);
     }
 
     @Test

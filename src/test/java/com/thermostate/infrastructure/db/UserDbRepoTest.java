@@ -1,59 +1,41 @@
 package com.thermostate.infrastructure.db;
 
-import com.thermostate.shared.DbUtils;
-import com.thermostate.users.infrastucture.UserDbRepo;
+import com.thermostate.users.infrastucture.data.UserJpa;
+import com.thermostate.users.infrastucture.data.UserJpaRepo;
+import com.thermostate.users.infrastucture.data.Users;
 import com.thermostate.users.model.User;
 import com.thermostate.users.model.UserObjectMother;
+import com.thermostate.users.model.UserRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 
-import java.sql.SQLException;
-
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 class UserDbRepoTest {
 
-    DbUtils dbUtils;
+    Users userRepo;
 
     @BeforeEach
     public void setup() {
-        dbUtils = mock(DbUtils.class);
-    }
-
-    @Test
-    public void users_table_should_be_create() throws SQLException {
-        //given
-        UserDbRepo sut = new UserDbRepo(dbUtils);
-        //when
-        sut.createUserTable();
-        //then
-        verify(dbUtils).executeUpdate(sql);
+        userRepo = mock(Users.class);
     }
 
     @Test
     public void user_should_be_insert() {
         //given
-        UserDbRepo sut = new UserDbRepo(dbUtils);
+        UserRepo sut = new UserJpaRepo(userRepo);
         User user = UserObjectMother.randomUser("pass");
-        String sql = "INSERT INTO USERS (NAME, PASSWORD, EMAIL, SALT, CREATED_AT, ACTIVE) VALUES (" +
-                "'" + user.getName() +
-                "','" + user.getPassword() +
-                "','" + user.getEmail() +
-                "','" + user.getSalt() +
-                "', CURRENT_TIMESTAMP," +
-                " true)";
         //when
         sut.create(user);
         //then
-        verify(dbUtils).executeUpdate(sql);
+        ArgumentCaptor<UserJpa> captor = ArgumentCaptor.forClass(UserJpa.class);
+        verify(userRepo).save(captor.capture());
+        assertThat(UserJpa.fromDomain(user))
+                .usingRecursiveComparison()
+                .isEqualTo(captor.getValue());
     }
-
-    String sql = "CREATE TABLE IF NOT EXISTS USERS (ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-            "NAME TEXT UNIQUE NOT NULL," +
-            "PASSWORD VARCHAR NOT NULL," +
-            "SALT TEXT NOT NULL," +
-            "EMAIL TEXT UNIQUE NOT NULL," +
-            "CREATED_AT DATE," +
-            "ACTIVE BOOLEAN);";
 }

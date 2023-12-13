@@ -1,8 +1,8 @@
-package com.thermostate.temperature.infrastructure;
+package com.thermostate.desiredtemperature.infrastructure;
 
 import com.thermostate.shared.DbUtils;
-import com.thermostate.temperature.model.Temperature;
-import com.thermostate.temperature.model.TemperatureRepo;
+import com.thermostate.desiredtemperature.model.Temperature;
+import com.thermostate.desiredtemperature.model.TemperatureRepo;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class TemperatureDbRepo implements TemperatureRepo {
+public class DesiredTemperatureDbRepo implements TemperatureRepo {
     final DbUtils dbUtils;
 
-    public TemperatureDbRepo(DbUtils dbUtils) {
+    public DesiredTemperatureDbRepo(DbUtils dbUtils) {
         this.dbUtils = dbUtils;
     }
 

@@ -8,15 +8,17 @@ import com.thermostate.users.model.event.UserLoginFailure;
 import com.thermostate.users.model.service.HashGenerator;
 import lombok.Getter;
 
+import java.util.UUID;
+
 @Getter
 public class User extends AggregateRoot {
-    private Integer id;
+    private UUID id;
     private final String name;
     private final String password;
     private final String email;
     private final String salt;
 
-    public User(Integer id, String name, String password, String email, String salt) {
+    public User(UUID id, String name, String password, String email, String salt) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -44,9 +46,9 @@ public class User extends AggregateRoot {
         }
     }
 
-    public static User with(String name, String password, String email, String salt) {
+    public static User with(UUID uuid, String name, String password, String email, String salt) {
         if (null == password) throw ClientError.becauseInvalidDataFromClient();
-        return new User(name, HashGenerator.generate(password, salt), email, salt);
+        return new User(uuid, name, HashGenerator.generate(password, salt), email, salt);
     }
 
     public void checkData(String name, String password, String email) {

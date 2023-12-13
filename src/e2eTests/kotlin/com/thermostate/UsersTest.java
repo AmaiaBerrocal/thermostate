@@ -19,7 +19,7 @@ class UsersTest {
     DBAsserter dbAsserter = new DBAsserter();
     @BeforeEach
     public void setup() {
-        e2edb = new E2EDB("jdbc:sqlite:./assets/thermostate.db");
+        e2edb = new E2EDB("jdbc:sqlite:./assets/thermostatez.db");
         dbAsserter.assertTableExist("USERS");
         e2edb.givenEmptyTable("USERS");
         createSingleUser(e2edb);

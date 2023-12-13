@@ -1,7 +1,7 @@
 package com.thermostate;
 
 import com.google.gson.Gson;
-import com.thermostate.temperature.model.Temperature;
+import com.thermostate.desiredtemperature.model.Temperature;
 import db.E2EDB;
 import http.E2ERequest;
 import org.junit.jupiter.api.BeforeEach;

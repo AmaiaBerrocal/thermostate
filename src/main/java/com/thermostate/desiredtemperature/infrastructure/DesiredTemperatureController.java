@@ -1,12 +1,12 @@
-package com.thermostate.temperature.infrastructure;
+package com.thermostate.desiredtemperature.infrastructure;
 
 import com.thermostate.shared.ClientError;
 import com.thermostate.shared.ValueResponse;
-import com.thermostate.temperature.application.DecreaseTemperature;
-import com.thermostate.temperature.application.GetTemperature;
-import com.thermostate.temperature.application.IncreaseTemperature;
-import com.thermostate.temperature.model.Temperature;
-import com.thermostate.temperature.model.TemperatureChange;
+import com.thermostate.desiredtemperature.application.DecreaseTemperature;
+import com.thermostate.desiredtemperature.application.GetTemperature;
+import com.thermostate.desiredtemperature.application.IncreaseTemperature;
+import com.thermostate.desiredtemperature.model.Temperature;
+import com.thermostate.desiredtemperature.model.TemperatureChange;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-public class TemperatureController {
+public class DesiredTemperatureController {
     private final IncreaseTemperature increaseTemperature;
     private final DecreaseTemperature decreaseTemperature;
     private final GetTemperature getTemperature;
 
-    public TemperatureController(IncreaseTemperature increaseTemperature,
-                                 DecreaseTemperature decreaseTemperature, final GetTemperature getTemperature) {
+    public DesiredTemperatureController(IncreaseTemperature increaseTemperature,
+                                        DecreaseTemperature decreaseTemperature, final GetTemperature getTemperature) {
         this.increaseTemperature = increaseTemperature;
         this.decreaseTemperature = decreaseTemperature;
         this.getTemperature = getTemperature;

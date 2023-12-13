@@ -6,6 +6,8 @@ import com.thermostate.users.model.User;
 import com.thermostate.users.model.UserRepo;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class CreateUser {
     final UserRepo userRepo;
@@ -18,8 +20,8 @@ public class CreateUser {
         this.randomStringGenerator = randomStringGenerator;
     }
 
-    public void execute(String name, String password, String email) {
-        User user = User.with(name, password, email, randomStringGenerator.generate());
+    public void execute(UUID uuid, String name, String password, String email) {
+        User user = User.with(uuid, name, password, email, randomStringGenerator.generate());
         user.create(userRepo);
         user.publishEventsIn(eventBus);
     }

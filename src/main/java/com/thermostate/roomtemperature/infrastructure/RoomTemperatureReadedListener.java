@@ -1,7 +1,7 @@
 package com.thermostate.roomtemperature.infrastructure;
 
 import com.google.common.eventbus.Subscribe;
-import com.thermostate.temperature.model.Temperature;
+import com.thermostate.desiredtemperature.model.Temperature;
 
 public class RoomTemperatureReadedListener {
   @Subscribe

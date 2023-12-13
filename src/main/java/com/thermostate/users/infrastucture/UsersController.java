@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @CrossOrigin()
 public class UsersController {
@@ -27,7 +29,9 @@ public class UsersController {
 
     @PostMapping("/user")
     public void userCreation(@RequestBody UserCreateRequest userCreateRequest) {
-        createUser.execute(userCreateRequest.name,
+        createUser.execute(
+                UUID.randomUUID(),
+                userCreateRequest.name,
                 userCreateRequest.password,
                 userCreateRequest.email);
     }

@@ -1,9 +1,9 @@
-package com.thermostate.temperature.infrastructure;
+package com.thermostate.desiredtemperature.infrastructure;
 
-import com.thermostate.temperature.application.DecreaseTemperature;
-import com.thermostate.temperature.application.GetTemperature;
-import com.thermostate.temperature.application.IncreaseTemperature;
-import com.thermostate.temperature.model.TemperatureChange;
+import com.thermostate.desiredtemperature.application.DecreaseTemperature;
+import com.thermostate.desiredtemperature.application.GetTemperature;
+import com.thermostate.desiredtemperature.application.IncreaseTemperature;
+import com.thermostate.desiredtemperature.model.TemperatureChange;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,14 +14,14 @@ class TemperatureControllerTest {
     IncreaseTemperature increaseTemperature;
     DecreaseTemperature decreaseTemperature;
     GetTemperature getTemperature;
-    TemperatureController sut;
+    DesiredTemperatureController sut;
 
     @BeforeEach
     public void setup() {
         increaseTemperature = mock(IncreaseTemperature.class);
         decreaseTemperature = mock(DecreaseTemperature.class);
         getTemperature = mock(GetTemperature.class);
-        sut = new TemperatureController(increaseTemperature, decreaseTemperature, getTemperature);
+        sut = new DesiredTemperatureController(increaseTemperature, decreaseTemperature, getTemperature);
     }
 
     @Test

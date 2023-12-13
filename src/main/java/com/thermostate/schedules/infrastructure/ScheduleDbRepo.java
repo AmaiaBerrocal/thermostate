@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 
-@Component
+//Component
 public class ScheduleDbRepo implements ScheduleRepo {
     final DbUtils dbUtils;
 

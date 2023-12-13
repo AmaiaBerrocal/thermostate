@@ -1,7 +1,7 @@
-package com.thermostate.temperature.application;
+package com.thermostate.desiredtemperature.application;
 
-import com.thermostate.temperature.model.Temperature;
-import com.thermostate.temperature.model.TemperatureRepo;
+import com.thermostate.desiredtemperature.model.Temperature;
+import com.thermostate.desiredtemperature.model.TemperatureRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
