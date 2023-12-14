@@ -35,6 +35,11 @@ public class User extends AggregateRoot {
         this.salt = salt;
     }
 
+    public void create(UserRepo userRepo) {
+        userRepo.create(this);
+        this.record(new UserCreated(name));
+    }
+
     public boolean checkIfAuthenticated(String pass) {
         String loginUserHash = HashGenerator.generate(pass, salt);
         if (loginUserHash.equals(password)) {
@@ -51,7 +56,7 @@ public class User extends AggregateRoot {
         return new User(uuid, name, HashGenerator.generate(password, salt), email, salt);
     }
 
-    public void checkData(String name, String password, String email) {
+    private void checkData(String name, String password, String email) {
         if (!(isValidName(name)
                 && isValidPassword(password)
                 && isValidEmail(email))){
@@ -59,24 +64,19 @@ public class User extends AggregateRoot {
         }
     }
 
-    public boolean isValidName(String name) {
+    private boolean isValidName(String name) {
         return isNotEmpty(name);
     }
 
-    public boolean isValidPassword(String password) {
+    private boolean isValidPassword(String password) {
         return isNotEmpty(password);
     }
 
-    public boolean isValidEmail(String email) {
+    private boolean isValidEmail(String email) {
         return isNotEmpty(email) && email.contains("@");
     }
 
     private static boolean isNotEmpty(String value) {
         return value != null && !value.isEmpty();
-    }
-
-    public void create(UserRepo userRepo) {
-        userRepo.create(this);
-        this.record(new UserCreated(name));
     }
 }

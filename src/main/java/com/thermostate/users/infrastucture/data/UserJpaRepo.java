@@ -20,7 +20,7 @@ public class UserJpaRepo implements UserRepo {
 
     @Override
     public User getByName(String name) {
-        return repo.findByName(name).map(UserJpa::toDomain)
+        return repo.findByNameIgnoreCase(name).map(UserJpa::toDomain)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
 }

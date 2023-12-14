@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class UserJpa {
     @Id
-    private UUID uuid;
+    private String uuid;
     @Column
     private String name;
     @Column
@@ -28,10 +28,10 @@ public class UserJpa {
     private Boolean active;
 
     public static UserJpa fromDomain(User user) {
-        return new UserJpa(user.getId(), user.getName(), user.getPassword(), user.getSalt(), user.getEmail(), true);
+        return new UserJpa(user.getId().toString(), user.getName(), user.getPassword(), user.getSalt(), user.getEmail(), true);
     }
 
     public User toDomain() {
-        return new User(this.uuid, this.name, this.password, this.email, this.salt);
+        return new User(UUID.fromString(this.uuid), this.name, this.password, this.email, this.salt);
     }
 }
