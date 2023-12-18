@@ -1,14 +1,11 @@
-package com.thermostate.schedules.infrastructure;
+package com.thermostate.schedules.infrastructure.data;
 
 import com.thermostate.schedules.model.Schedule;
 import com.thermostate.schedules.model.ScheduleRepo;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 
 @Component

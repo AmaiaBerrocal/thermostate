@@ -1,6 +1,5 @@
 package com.thermostate;
 
-import com.thermostate.schedules.infrastructure.ScheduleDbRepo;
 import com.thermostate.shared.HttpRequestsUtils;
 import db.E2EDB;
 import http.E2ERequest;
@@ -58,12 +57,12 @@ public class SchedulesTest {
                 .sendAGet(Map.of())
                 .assertThatResponseIsOk();
         //Then
-        /*res.assertThatBodyContains(Map.of("dateFrom", "2022-01-02",
+        res.assertThatBodyContains(Map.of("dateFrom", "2022-01-02",
                 "dateTo", "2023-03-04",
                 "timeFrom", "16:00",
                 "timeTo", "20:16",
                 "active", "true",
-                "minTemp", "15"));*/
+                "minTemp", "15"));
     }
     //TODO
    /* @Test

@@ -1,4 +1,4 @@
-package com.thermostate.schedules.infrastructure;
+package com.thermostate.schedules.infrastructure.data;
 
 import com.thermostate.schedules.model.Schedule;
 import jakarta.persistence.*;
