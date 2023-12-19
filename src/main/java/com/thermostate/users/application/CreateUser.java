@@ -1,6 +1,7 @@
 package com.thermostate.users.application;
 
 import com.thermostate.schedules.model.events.EventBus;
+import com.thermostate.users.model.service.HashGenerator;
 import com.thermostate.users.model.service.RandomStringGenerator;
 import com.thermostate.users.model.User;
 import com.thermostate.users.model.UserRepo;
@@ -21,7 +22,8 @@ public class CreateUser {
     }
 
     public void execute(UUID uuid, String name, String password, String email) {
-        User user = User.with(uuid, name, password, email, randomStringGenerator.generate());
+        String salt = randomStringGenerator.generate();
+        User user = User.with(uuid, name, HashGenerator.generate(password, salt), email, salt);
         user.create(userRepo);
         user.publishEventsIn(eventBus);
     }

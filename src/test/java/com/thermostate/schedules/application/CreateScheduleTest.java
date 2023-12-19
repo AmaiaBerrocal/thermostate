@@ -7,6 +7,8 @@ import com.thermostate.shared.ClientError;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static com.thermostate.schedules.model.ScheduleObjectMother.givenScheduleForDays;
 import static com.thermostate.schedules.model.ScheduleObjectMother.givenScheduleWithActivation;
 import static com.thermostate.schedules.model.ScheduleObjectMother.givenScheduleWithMinTemp;
@@ -36,7 +38,7 @@ public class CreateScheduleTest {
         sut.execute(weekDays, schedule.timeFrom, schedule.timeTo, schedule.active, schedule.minTemp);
         //then
         then(scheduleRepo).should().create(
-            new Schedule(null, weekDays, schedule.timeFrom, schedule.timeTo, schedule.active, schedule.minTemp, null));
+            new Schedule(null, weekDays, schedule.timeFrom, schedule.timeTo, schedule.active, schedule.minTemp, LocalDate.now()));
     }
 
     @Test

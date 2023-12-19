@@ -10,7 +10,7 @@ public class UserObjectMother{
     public static User randomUser(String pass){
         Faker faker = new Faker();
         var salt = faker.howIMetYourMother().highFive();
-        return new User(
+        return User.with(
                 UUID.randomUUID(),
                 faker.starWars().character(),
                 HashGenerator.generate(pass, salt),

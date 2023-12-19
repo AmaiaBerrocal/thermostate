@@ -18,21 +18,13 @@ public class User extends AggregateRoot {
     private final String email;
     private final String salt;
 
-    public User(UUID id, String name, String password, String email, String salt) {
+    private User(UUID id, String name, String password, String email, String salt) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;
         this.salt = salt;
         checkData(name, password, email);
-    }
-
-    public User(String name, String password, String email, String salt) {
-        checkData(name, password, email);
-        this.name = name;
-        this.password = password;
-        this.email = email;
-        this.salt = salt;
     }
 
     public void create(UserRepo userRepo) {
@@ -53,7 +45,7 @@ public class User extends AggregateRoot {
 
     public static User with(UUID uuid, String name, String password, String email, String salt) {
         if (null == password) throw ClientError.becauseInvalidDataFromClient();
-        return new User(uuid, name, HashGenerator.generate(password, salt), email, salt);
+        return new User(uuid, name, password, email, salt);
     }
 
     private void checkData(String name, String password, String email) {

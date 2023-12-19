@@ -33,29 +33,4 @@ public class DbUtils {
             throw new RuntimeException("Unable to execute " + sql, e);
         }
     }
-
-    public List<Map<String, Object>> executeQuery(String sql) {
-        System.out.println(sql);
-        try(Connection con = createConnection();
-            Statement stms = con.createStatement()) {
-            ResultSet result = stms.executeQuery(sql);
-            return resultToList(result);
-        } catch (Exception e) {
-            throw new RuntimeException("Error ejecutando la sql: " + sql, e);
-        }
-    }
-
-    public List<Map<String, Object>> resultToList(ResultSet result) throws SQLException {
-        List<Map<String, Object>> resultList = new ArrayList<>();
-        while (result.next()) {
-            ResultSetMetaData md = result.getMetaData();
-            Map<String, Object> row = new HashMap<>();
-            int columns = md.getColumnCount();
-            for (int i = 1; i <= columns; i++) {
-                row.put(md.getColumnName(i), result.getObject(i));
-            }
-            resultList.add(row);
-        }
-        return resultList;
-    }
 }

@@ -32,6 +32,6 @@ public class UserJpa {
     }
 
     public User toDomain() {
-        return new User(UUID.fromString(this.uuid), this.name, this.password, this.email, this.salt);
+        return User.with(UUID.fromString(this.uuid), this.name, this.password, this.email, this.salt);
     }
 }

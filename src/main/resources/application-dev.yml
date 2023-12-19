@@ -7,7 +7,7 @@ thermostate:
     url: "https://wttr.in/01003?format=%t"
 spring:
   datasource:
-    url: "jdbc:sqlite:./assets/thermostatez.db"
+    url: "jdbc:sqlite:./assets/thermostate.db"
   jpa:
     database-platform: org.hibernate.community.dialect.SQLiteDialect
     show-sql: true

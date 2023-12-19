@@ -15,7 +15,7 @@ public class SchedulesTest {
     E2EDB e2edb;
     @BeforeEach
     public void setup() {
-        e2edb = new E2EDB("jdbc:sqlite:./assets/thermostatez.db");
+        e2edb = new E2EDB("jdbc:sqlite:./assets/thermostate.db");
         e2edb.givenEmptyTable("SCHEDULES");
         e2edb.givenEmptyTable("USERS");
         createSingleUser(e2edb);
@@ -25,7 +25,7 @@ public class SchedulesTest {
     void should_create_an_schedule() {
         createScheduleWithPetition();
         e2edb
-                .doQuery("SELECT * FROM SCHEDULES WHERE TIME_TO = '20:16'")
+                .doQuery("SELECT * FROM SCHEDULES")
                 .assertThatExistAnEntryWithFields(Map.of("weekDays", "L,M,X"));
     }
 
@@ -57,12 +57,11 @@ public class SchedulesTest {
                 .sendAGet(Map.of())
                 .assertThatResponseIsOk();
         //Then
-        res.assertThatBodyContains(Map.of("dateFrom", "2022-01-02",
-                "dateTo", "2023-03-04",
+        res.assertThatBodyContains(Map.of("weekdays", "L,M,X",
                 "timeFrom", "16:00",
                 "timeTo", "20:16",
                 "active", "true",
-                "minTemp", "15"));
+                "minTemp", "15.0"));
     }
     //TODO
    /* @Test
