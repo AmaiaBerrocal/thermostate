@@ -1,4 +1,4 @@
-package com.thermostate.temperature.model;
+package com.thermostate.desiredtemperature.model;
 
 public interface TemperatureRepo {
     Temperature getTemp();

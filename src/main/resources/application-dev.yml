@@ -5,3 +5,21 @@ thermostate:
     temp_mark_in_file: "t="
   externalTemp:
     url: "https://wttr.in/01003?format=%t"
+spring:
+  datasource:
+    url: "jdbc:sqlite:./assets/thermostate.db"
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+      format-sql: true
+    properties:
+      hibernate:
+        format-sql: true
+        ddl-auto: create-drop
+    generate-ddl: true
+
+logging:
+  level:
+    org.springframework.security: TRACE

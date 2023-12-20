@@ -1,7 +1,7 @@
-package com.thermostate.temperature.model;
+package com.thermostate.desiredtemperature.model;
 
 import com.thermostate.shared.events.domain.AggregateRoot;
-import com.thermostate.temperature.model.event.TargetTemperatureChanged;
+import com.thermostate.desiredtemperature.model.event.TargetTemperatureChanged;
 
 public class Temperature extends AggregateRoot {
     private Integer temp;

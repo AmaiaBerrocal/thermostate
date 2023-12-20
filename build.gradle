@@ -32,6 +32,8 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-web:${springboot}"
 	implementation "org.springframework.boot:spring-boot-starter-websocket:${springboot}"
 	implementation "org.springframework.boot:spring-boot-starter-security:${springboot}"
+	//implementation "org.springframework.boot:spring-boot-starter-autoconfigure:${springboot}"
+	implementation "org.hibernate.orm:hibernate-community-dialects:${hibernateDialects}"
 	implementation "org.springframework.data:spring-data-jpa:${springboot}"
 	implementation "io.jsonwebtoken:jjwt-api:${jsonwebtoken}"
 	implementation "io.jsonwebtoken:jjwt-impl:${jsonwebtoken}"

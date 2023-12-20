@@ -1,7 +1,7 @@
 package com.thermostate;
 
 import com.google.gson.Gson;
-import com.thermostate.temperature.model.Temperature;
+import com.thermostate.desiredtemperature.model.Temperature;
 import db.E2EDB;
 import http.E2ERequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,11 +19,9 @@ public class TemperatureChangeTest {
   @BeforeEach
   public void setup() {
     e2edb = new E2EDB("jdbc:sqlite:./assets/thermostate.db");
-    dbAsserter.assertTableExist("USERS");
-    dbAsserter.assertTableExist("TEMPERATURE");
     e2edb.givenEmptyTable("TEMPERATURE");
     e2edb.givenEmptyTable("USERS");
-    dbAsserter.update("INSERT INTO TEMPERATURE (ID, TEMP) VALUES (1,1600)");
+    dbAsserter.update("INSERT INTO TEMPERATURE (ID, TEMPerature) VALUES (1,1600)");
     createSingleUser(e2edb);
   }
 

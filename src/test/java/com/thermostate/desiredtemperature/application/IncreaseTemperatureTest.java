@@ -1,15 +1,13 @@
-package com.thermostate.temperature.application;
+package com.thermostate.desiredtemperature.application;
 
 import com.thermostate.schedules.model.events.EventBus;
-import com.thermostate.temperature.model.Temperature;
-import com.thermostate.temperature.model.TemperatureChange;
-import com.thermostate.temperature.model.TemperatureRepo;
-import com.thermostate.temperature.model.event.TargetTemperatureChanged;
+import com.thermostate.desiredtemperature.model.Temperature;
+import com.thermostate.desiredtemperature.model.TemperatureChange;
+import com.thermostate.desiredtemperature.model.TemperatureRepo;
+import com.thermostate.desiredtemperature.model.event.TargetTemperatureChanged;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;

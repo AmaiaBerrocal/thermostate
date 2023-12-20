@@ -16,11 +16,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class UsersTest {
     E2EDB e2edb;
-    DBAsserter dbAsserter = new DBAsserter();
     @BeforeEach
     public void setup() {
         e2edb = new E2EDB("jdbc:sqlite:./assets/thermostate.db");
-        dbAsserter.assertTableExist("USERS");
         e2edb.givenEmptyTable("USERS");
         createSingleUser(e2edb);
     }

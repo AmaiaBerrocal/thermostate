@@ -7,6 +7,8 @@ import com.thermostate.shared.ClientError;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
@@ -35,7 +37,7 @@ class UpdateScheduleTest {
         //when
         sut.execute(id, weekDays, timeFrom, timeTo, active, minTemp);
         //then
-        verify(scheduleRepo).update(new Schedule(id, weekDays, timeFrom, timeTo, active, minTemp, null));
+        verify(scheduleRepo).update(new Schedule(id, weekDays, timeFrom, timeTo, active, minTemp, LocalDate.now()));
     }
 
     @Test

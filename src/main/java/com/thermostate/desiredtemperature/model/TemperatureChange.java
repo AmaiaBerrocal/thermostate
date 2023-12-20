@@ -1,4 +1,4 @@
-package com.thermostate.temperature.model;
+package com.thermostate.desiredtemperature.model;
 
 public record TemperatureChange(Integer change){
     public static TemperatureChange create(Integer amount) {

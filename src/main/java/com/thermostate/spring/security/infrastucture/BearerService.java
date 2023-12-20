@@ -57,7 +57,7 @@ public class BearerService implements TokenService {
                 .build()
                 .parseClaimsJws(token);
         String username = jwsClaims.getBody().getSubject();
-        Integer userId = jwsClaims.getBody().get("id", Integer.class);
+        UUID userId = UUID.fromString(jwsClaims.getBody().get("id", String.class));
         String email = jwsClaims.getBody().get("email", String.class);
         return new LogedInUser(username, email, userId);
     }

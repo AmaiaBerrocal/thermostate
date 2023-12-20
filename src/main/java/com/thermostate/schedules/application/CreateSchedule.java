@@ -5,6 +5,8 @@ import com.thermostate.schedules.model.ScheduleRepo;
 import com.thermostate.schedules.model.events.EventBus;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 
 @Component
 public class CreateSchedule {
@@ -23,7 +25,7 @@ public class CreateSchedule {
                         String timeTo,
                         Boolean active,
                         Integer minTemp) {
-        Schedule schedule = new Schedule(null,weekDays, timeFrom, timeTo, active, minTemp, null);
+        Schedule schedule = new Schedule(null,weekDays, timeFrom, timeTo, active, minTemp, LocalDate.now());
         schedule.createIn(scheduleRepo);
         schedule.publishEventsIn(eventBus);
     }

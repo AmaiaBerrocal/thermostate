@@ -8,6 +8,8 @@ import com.thermostate.users.application.LoginUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -32,7 +34,7 @@ class UsersControllerTest {
         //when
         sut.userCreation(req);
         //then
-        verify(createUser).execute(req.name, req.password, req.email);
+        verify(createUser).execute(any(UUID.class), eq(req.name), eq(req.password), eq(req.email));
     }
 
     @Test

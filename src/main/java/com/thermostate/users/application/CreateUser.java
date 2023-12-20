@@ -1,10 +1,13 @@
 package com.thermostate.users.application;
 
 import com.thermostate.schedules.model.events.EventBus;
+import com.thermostate.users.model.service.HashGenerator;
 import com.thermostate.users.model.service.RandomStringGenerator;
 import com.thermostate.users.model.User;
 import com.thermostate.users.model.UserRepo;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 @Component
 public class CreateUser {
@@ -18,8 +21,9 @@ public class CreateUser {
         this.randomStringGenerator = randomStringGenerator;
     }
 
-    public void execute(String name, String password, String email) {
-        User user = User.with(name, password, email, randomStringGenerator.generate());
+    public void execute(UUID uuid, String name, String password, String email) {
+        String salt = randomStringGenerator.generate();
+        User user = User.with(uuid, name, HashGenerator.generate(password, salt), email, salt);
         user.create(userRepo);
         user.publishEventsIn(eventBus);
     }
