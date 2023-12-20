@@ -21,7 +21,7 @@ public class TemperatureChangeTest {
     e2edb = new E2EDB("jdbc:sqlite:./assets/thermostate.db");
     e2edb.givenEmptyTable("TEMPERATURE");
     e2edb.givenEmptyTable("USERS");
-    dbAsserter.update("INSERT INTO TEMPERATURE (ID, TEMP) VALUES (1,1600)");
+    dbAsserter.update("INSERT INTO TEMPERATURE (ID, TEMPerature) VALUES (1,1600)");
     createSingleUser(e2edb);
   }
 

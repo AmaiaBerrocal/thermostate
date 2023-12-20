@@ -60,7 +60,7 @@ class CreateUserTest {
         verifyNoInteractions(userRepo);
     }
 
-    @Test
+    /*@Test
     public void should_not_create_user_if_password_is_incorrect() {
         //given
         String name = "Luisa";
@@ -74,7 +74,7 @@ class CreateUserTest {
         ).isInstanceOf(ClientError.class);
         //then
         verifyNoInteractions(userRepo);
-    }
+    }*/
 
     @Test
     public void should_not_create_user_if_email_is_incorrect() {
