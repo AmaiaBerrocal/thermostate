@@ -6,15 +6,18 @@ import com.thermostate.shared.ClientError;
 import com.thermostate.shared.ValueResponse;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @CrossOrigin()
 public class SchedulesController {
+
+    private static final Logger logger = LoggerFactory.getLogger(SchedulesController.class);
     private final CreateSchedule createSchedule;
     private final GetScheduleById getScheduleById;
 
@@ -38,7 +41,7 @@ public class SchedulesController {
 
     @PostMapping("/schedule")
     public void scheduleInsert(@RequestBody ScheduleCreateRequest scheduleCreateRequest) {
-        System.out.println("Insert schedule received " + scheduleCreateRequest);
+        logger.trace("Insert schedule received " + scheduleCreateRequest);
         createSchedule.execute(
                 scheduleCreateRequest.weekDays,
                 scheduleCreateRequest.timeFrom,
@@ -50,7 +53,7 @@ public class SchedulesController {
     @GetMapping("/schedule/{id}")
     @ResponseBody
     public ValueResponse<Schedule> scheduleGetById(@PathVariable Integer id) {
-        System.out.println("Get schedule received " + id);
+        logger.trace("Get schedule received " + id);
         return new ValueResponse<>(getScheduleById.execute(id));
     }
 
@@ -62,13 +65,13 @@ public class SchedulesController {
 
     @DeleteMapping("/schedule/{id}")
     public void deleteById(@PathVariable Integer id) {
-        System.out.println("Delete schedule received " + id);
+        logger.trace("Delete schedule received " + id);
         deleteSchedule.execute(id);
     }
 
     @PutMapping("/schedule")
     public void scheduleUpdate(@RequestBody ScheduleUpdateRequest scheduleUpdateRequest) {
-        System.out.println("Update schedule received " + scheduleUpdateRequest);
+        logger.trace("Update schedule received " + scheduleUpdateRequest);
         updateSchedule.execute(scheduleUpdateRequest.id,
                 scheduleUpdateRequest.weekDays,
                 scheduleUpdateRequest.timeFrom,
@@ -80,7 +83,7 @@ public class SchedulesController {
     @ExceptionHandler(value = ClientError.class) //client error porque es el usuario el que mete mal los datos
     @ResponseStatus(value = HttpStatus.BAD_REQUEST) //porque he metido mal algún dato en la petición
     public void handleException(Exception ex) {
-        System.err.println("ERROR: " + ex.getMessage());
+        logger.error("ERROR: " + ex.getMessage());
         ex.printStackTrace();
     }
 }
