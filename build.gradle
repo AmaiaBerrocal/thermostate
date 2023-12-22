@@ -38,6 +38,9 @@ dependencies {
 	implementation "io.jsonwebtoken:jjwt-api:${jsonwebtoken}"
 	implementation "io.jsonwebtoken:jjwt-impl:${jsonwebtoken}"
 	implementation "io.jsonwebtoken:jjwt-jackson:${jsonwebtoken}"
+	implementation "org.slf4j:slf4j-api:2.0.9"
+	implementation "ch.qos.logback:logback-core:1.4.14"
+	implementation 'ch.qos.logback:logback-classic:1.4.14'
 	implementation "org.xerial:sqlite-jdbc:${sqliteVersion}"
     implementation group: 'com.google.guava', name: 'guava', version: "${guavaVersion}"
 	compileOnly "org.projectlombok:lombok:${lombok}"
@@ -53,6 +56,8 @@ dependencies {
 	testImplementation "org.mockito:mockito-junit-jupiter:5.7.0"
 	testImplementation "org.springframework.boot:spring-boot-starter-test:${springboot}"
 	implementation group: 'net.datafaker', name: 'datafaker', version: "${faker}"}
+
+
 
 test {
 	useJUnitPlatform()

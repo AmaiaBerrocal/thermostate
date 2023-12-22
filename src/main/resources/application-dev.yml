@@ -19,7 +19,13 @@ spring:
         format-sql: true
         ddl-auto: create-drop
     generate-ddl: true
-
 logging:
+  file: logs/dev_app.log
+  pattern:
+    console: "%d : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
   level:
+    org.springframework.web: TRACE
+    guru.springframework.controllers: TRACE
+    org.hibernate: TRACE
     org.springframework.security: TRACE

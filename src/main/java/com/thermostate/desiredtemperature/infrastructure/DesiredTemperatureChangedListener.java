@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component;
 public class DesiredTemperatureChangedListener {
   @EventListener
   public void lcdTemperatureChanged(TargetTemperatureChanged temperature) {
-    System.out.println("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
+
   }
 }
