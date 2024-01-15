@@ -6,6 +6,8 @@ import com.thermostate.schedules.model.events.EventBus;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLOutput;
+
 @Component
 @AllArgsConstructor
 public class GetRoomTemperature {

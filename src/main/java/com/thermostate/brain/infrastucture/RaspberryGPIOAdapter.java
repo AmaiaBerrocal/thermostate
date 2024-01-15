@@ -1,16 +1,16 @@
 package com.thermostate.brain.infrastucture;
 
-import com.thermostate.spring.security.infrastucture.listeners.UserLoggedInListener;
+import com.thermostate.brain.domain.ThermostatAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-public class GPIOThermostateAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(GPIOThermostateAdapter.class);
+public class RaspberryGPIOAdapter implements ThermostatAdapter {
+    private static final Logger logger = LoggerFactory.getLogger(RaspberryGPIOAdapter.class);
 
-    public static void setState(boolean stateToOn) {
+    @Override
+    public void setState(boolean stateToOn) {
         try {
             String command = "";
             if (stateToOn){

@@ -24,9 +24,15 @@ public class SchedulesTest {
     @Test
     void should_create_an_schedule() {
         createScheduleWithPetition();
-        e2edb
-                .doQuery("SELECT * FROM SCHEDULES")
-                .assertThatExistAnEntryWithFields(Map.of("WEEK_DAYS", "L,M,X"));
+        E2EResponse res = E2ERequest
+                .to("http://localhost:8080/schedules")
+                .withABearer(HttpRequestsUtils::getBearer)
+                .sendAGet(Map.of())
+                .assertThatResponseIsOk();
+        //Then
+        res.assertThatBodyContains("""
+                "weekDays":"L,M,X","timeFrom":"16:00","timeTo":"20:16","active":true,"minTemp":15
+                """.trim());
     }
 
     @Test
@@ -57,12 +63,9 @@ public class SchedulesTest {
                 .sendAGet(Map.of())
                 .assertThatResponseIsOk();
         //Then
-        /*res.assertThatBodyContains(Map.of("weekdays", "L,M,X",
-                "timeFrom", "16:00",
-                "timeTo", "20:16",
-                "active", "true",
-                "minTemp", "15.0"));*/
-
+        res.assertThatBodyContains("""
+                "weekDays":"L,M,X","timeFrom":"16:00","timeTo":"20:16","active":true,"minTemp":15
+                """.trim());
     }
     //TODO
    /* @Test

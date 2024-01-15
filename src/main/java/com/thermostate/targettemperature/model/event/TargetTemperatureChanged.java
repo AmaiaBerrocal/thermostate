@@ -1,4 +1,4 @@
-package com.thermostate.desiredtemperature.model.event;
+package com.thermostate.targettemperature.model.event;
 
 import com.thermostate.shared.events.domain.DomainEvent;
 import com.thermostate.shared.events.domain.TemperatureEvent;
