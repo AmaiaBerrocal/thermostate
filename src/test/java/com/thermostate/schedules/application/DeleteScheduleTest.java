@@ -5,6 +5,8 @@ import com.thermostate.schedules.model.events.EventBus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -22,7 +24,7 @@ public class DeleteScheduleTest {
     @Test
     public void should_delete_a_schedule() {
         //given
-        Integer id = 8;
+        UUID id = UUID.randomUUID();
         //when
         sut.execute(id);
         //then

@@ -15,7 +15,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TemperatureChangeTest {
   E2EDB e2edb;
-  DBAsserter dbAsserter = new DBAsserter();
   @BeforeEach
   public void setup() {
     e2edb = new E2EDB("jdbc:sqlite:./assets/thermostate.db");

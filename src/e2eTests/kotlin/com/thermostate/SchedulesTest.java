@@ -68,16 +68,16 @@ public class SchedulesTest {
                 """.trim());
     }
     //TODO
-   /* @Test
+   @Test
     void should_delete_a_schedule() {
         //given
         createScheduleWithPetition();
         //when
 
         //then
-    }*/
+    }
     void createScheduleWithPetition() {
-        E2ERequest
+        var response = E2ERequest
                 .to("http://127.0.0.1:8080/schedule")
                 .withABearer(HttpRequestsUtils::getBearer)
                 .withContentType("application/json;charset=UTF-8")
@@ -85,8 +85,8 @@ public class SchedulesTest {
                         "timeFrom", "16:00",
                         "timeTo", "20:16",
                         "active", "true",
-                        "minTemp", "15"))
-                .assertThatResponseIsOk();
+                        "minTemp", "15"));
+        response.assertThatResponseIsOk();
     }
 
     //TODO

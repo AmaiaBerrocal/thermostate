@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -49,7 +50,7 @@ public class SchedulesControllerTest {
     @Test
     public void should_call_application_layer_correctly_getting_schedule_by_id() {
         //given
-        Integer id = 1;
+        UUID id = UUID.randomUUID();
         //when
         sut.scheduleGetById(id);
         //then
@@ -59,7 +60,7 @@ public class SchedulesControllerTest {
     @Test
     public void should_call_application_layer_correctly_deleting_schedule_by_id() {
         //given
-        Integer id = 1;
+        UUID id = UUID.randomUUID();
         //when
         sut.deleteById(id);
         //then
@@ -68,7 +69,7 @@ public class SchedulesControllerTest {
     @Test
     public void should_call_application_layer_correctly_updating_schedule() {
         //given
-        ScheduleUpdateRequest req = new ScheduleUpdateRequest(1, "L,M", "08:00", "10:12", true, 15);
+        ScheduleUpdateRequest req = new ScheduleUpdateRequest(UUID.randomUUID(), "L,M", "08:00", "10:12", true, 15);
         //when
         sut.scheduleUpdate(req);
         //then

@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin()
@@ -52,7 +53,7 @@ public class SchedulesController {
 
     @GetMapping("/schedule/{id}")
     @ResponseBody
-    public ValueResponse<Schedule> scheduleGetById(@PathVariable Integer id) {
+    public ValueResponse<Schedule> scheduleGetById(@PathVariable UUID id) {
         logger.trace("Get schedule received " + id);
         return new ValueResponse<>(getScheduleById.execute(id));
     }
@@ -64,7 +65,7 @@ public class SchedulesController {
     }
 
     @DeleteMapping("/schedule/{id}")
-    public void deleteById(@PathVariable Integer id) {
+    public void deleteById(@PathVariable UUID id) {
         logger.trace("Delete schedule received " + id);
         deleteSchedule.execute(id);
     }
@@ -101,7 +102,7 @@ class ScheduleCreateRequest {
 @AllArgsConstructor
 @ToString
 class ScheduleUpdateRequest {
-    Integer id;
+    UUID id;
     String weekDays;
     String timeFrom;
     String timeTo;

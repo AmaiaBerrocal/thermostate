@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
@@ -28,7 +29,7 @@ class UpdateScheduleTest {
     @Test
     public void should_update_schedule_if_data_are_correct() {
         //given
-        Integer id = 1;
+        UUID id = UUID.randomUUID();
         String weekDays = "L,M,X,J,V,S,D";
         String timeFrom = "19:00";
         String timeTo = "23:59";
@@ -43,7 +44,7 @@ class UpdateScheduleTest {
     @Test
     public void should_not_update_schedule_if_weekDays_is_incorrect() {
         //given
-        Integer id = 1;
+        UUID id = UUID.randomUUID();
         String weekDays = "L,MX";
         String timeFrom = "19:00";
         String timeTo = "23:59";
@@ -59,7 +60,7 @@ class UpdateScheduleTest {
     @Test
     public void should_not_update_schedule_if_weekday_is_incorrect_because_an_incorrect_day() {
         //given
-        Integer id = 1;
+        UUID id = UUID.randomUUID();
         String weekDays = "L,M,R";
         String timeFrom = "19:00";
         String timeTo = "23:59";
@@ -75,7 +76,7 @@ class UpdateScheduleTest {
     @Test
     public void should_not_update_schedule_if_timefrom_is_incorrect() {
         //given
-        Integer id = 1;
+        UUID id = UUID.randomUUID();
         String weekDays = "L,M,X";
         String timeFrom = null;
         String timeTo = "23:59";
@@ -91,7 +92,7 @@ class UpdateScheduleTest {
     @Test
     public void should_not_update_schedule_if_timeto_is_incorrect() {
         //given
-        Integer id = 1;
+        UUID id = UUID.randomUUID();
         String weekDays = "L,M,X";
         String timeFrom = "23:59";
         String timeTo = null;
@@ -107,7 +108,7 @@ class UpdateScheduleTest {
     @Test
     public void should_not_update_schedule_if_activate_is_incorrect() {
         //given
-        Integer id = 1;
+        UUID id = UUID.randomUUID();
         String weekDays = "L,M,X";
         String timeFrom = "08:00";
         String timeTo = "23:15";
@@ -123,7 +124,7 @@ class UpdateScheduleTest {
     @Test
     public void should_not_update_schedule_if_mintemp_is_incorrect() {
         //given
-        Integer id = 1;
+        UUID id = UUID.randomUUID();
         String weekDays = "L,M,X";
         String timeFrom = "08:00";
         String timeTo = "23:15";

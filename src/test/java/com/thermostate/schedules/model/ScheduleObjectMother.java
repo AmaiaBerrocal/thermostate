@@ -3,6 +3,7 @@ package com.thermostate.schedules.model;
 import net.datafaker.Faker;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class ScheduleObjectMother{
 
@@ -23,9 +24,8 @@ public class ScheduleObjectMother{
 	}
 
 	public static Schedule givenSchedule(String fromTime, String toTime, String weekDays, Boolean active, Integer mintemp){
-		Faker faker = new Faker();
 		return new Schedule(
-				faker.number().randomDigit(),
+				UUID.randomUUID(),
 				weekDays,
 				fromTime,
 				toTime,

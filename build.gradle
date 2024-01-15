@@ -3,7 +3,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.3'
 	id 'java'
 	id 'war'
-	id 'org.jetbrains.kotlin.jvm' version "1.9.20"
+	id 'org.jetbrains.kotlin.jvm' version "${kotlinVersion}"
 }
 
 group = 'com.amaia'
@@ -32,15 +32,12 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-web:${springboot}"
 	implementation "org.springframework.boot:spring-boot-starter-websocket:${springboot}"
 	implementation "org.springframework.boot:spring-boot-starter-security:${springboot}"
-	//implementation "org.springframework.boot:spring-boot-starter-autoconfigure:${springboot}"
 	implementation "org.hibernate.orm:hibernate-community-dialects:${hibernateDialects}"
 	implementation "org.springframework.data:spring-data-jpa:${springboot}"
 	implementation "io.jsonwebtoken:jjwt-api:${jsonwebtoken}"
 	implementation "io.jsonwebtoken:jjwt-impl:${jsonwebtoken}"
 	implementation "io.jsonwebtoken:jjwt-jackson:${jsonwebtoken}"
 	implementation "org.slf4j:slf4j-api:2.0.9"
-	implementation "ch.qos.logback:logback-core:1.4.14"
-	implementation 'ch.qos.logback:logback-classic:1.4.14'
 	implementation "org.xerial:sqlite-jdbc:${sqliteVersion}"
     implementation group: 'com.google.guava', name: 'guava', version: "${guavaVersion}"
 	compileOnly "org.projectlombok:lombok:${lombok}"
