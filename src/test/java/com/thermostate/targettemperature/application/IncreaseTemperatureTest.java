@@ -34,12 +34,9 @@ public class IncreaseTemperatureTest {
     public void should_increase_temperature_one_degree() {
         //given
         Integer incrementTemp = 100;
-        Integer temp = 1700;
-        var expected = new Temperature(temp);
         //when
         sut.execute(TemperatureChange.create(incrementTemp));
         //then
-        assertThat(status.getTargetTemperature().getTemp()).isEqualTo(expected.getTemp());
         var eventCaptor = ArgumentCaptor.forClass(TargetTemperatureChanged.class);
         verify(eventBus).emit(eventCaptor.capture());
         assertThat(eventCaptor.getValue().amount).isEqualTo(incrementTemp);

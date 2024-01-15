@@ -34,7 +34,6 @@ class SchedulingConfiguratorTest {
         //when
         sut.scheduleFixedDelayTask();
         //then
-        verify(getRoomTemperature).execute();
         verify(getAllSchedules).execute();
         verify(scheduleChecker).execute(List.of());
 
@@ -46,5 +45,6 @@ class SchedulingConfiguratorTest {
         sut.scheduleFixedDelayExternalTemp();
         //then
         verify(getExternalTemperature).execute();
+        verify(getRoomTemperature).execute();
     }
 }

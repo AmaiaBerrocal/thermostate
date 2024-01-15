@@ -1,11 +1,12 @@
 package com.thermostate.brain.domain;
 
-import com.thermostate.brain.infrastucture.RaspberryGPIOAdapter;
 import com.thermostate.shared.domain.Temperature;
 import com.thermostate.schedules.model.Schedule;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 @Getter
@@ -27,8 +28,11 @@ public class ThermostateStatus {
         updateStatus();
     }
 
-    public void setActiveSchedule(Schedule activeSchedule) {
-        this.activeSchedule = activeSchedule;
+    public void setActiveSchedule(Schedule newActiveSchedule) {
+        if (Objects.equals(activeSchedule.id, newActiveSchedule.id)) {
+            return;
+        }
+        this.activeSchedule = newActiveSchedule;
         setTargetTemperature(new Temperature(activeSchedule.getMinTemp()));
         updateStatus();
     }

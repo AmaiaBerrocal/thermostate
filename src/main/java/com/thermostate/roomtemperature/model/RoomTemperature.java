@@ -11,6 +11,7 @@ public class RoomTemperature extends AggregateRoot {
 
     private RoomTemperature(String temp) {
         this.temp = temp;
+        record(new RoomTemperatureReaded((int)(Double.valueOf(this.temp)*100)));
     }
 
     public static RoomTemperature create(String temp) {

@@ -1,5 +1,6 @@
 thermostate:
   dbUrl: "jdbc:sqlite:./assets/thermostate.db"
+  env: "DEV"
   roomTemp:
     file: "./assets/w1_slave"
     temp_mark_in_file: "t="

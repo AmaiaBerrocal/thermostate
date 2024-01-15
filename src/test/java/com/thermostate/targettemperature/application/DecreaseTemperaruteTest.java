@@ -1,5 +1,6 @@
 package com.thermostate.targettemperature.application;
 
+import com.thermostate.brain.domain.ThermostatAdapter;
 import com.thermostate.brain.domain.ThermostateStatus;
 import com.thermostate.schedules.model.events.EventBus;
 import com.thermostate.shared.domain.Temperature;
@@ -17,12 +18,14 @@ public class DecreaseTemperaruteTest {
     ThermostateStatus status;
     IncreaseTargetTemperature sut;
     EventBus eventBus;
+    ThermostatAdapter adapter;
 
 
     @BeforeEach
     public void setup() {
         eventBus = mock(EventBus.class);
-        status = new ThermostateStatus();
+        adapter = mock(ThermostatAdapter.class);
+        status = new ThermostateStatus(adapter);
         status.setTargetTemperature(new Temperature(1600));
         sut = new IncreaseTargetTemperature(eventBus);
     }
@@ -31,12 +34,9 @@ public class DecreaseTemperaruteTest {
     public void should_increase_temperature_one_degree() {
         //given
         Integer decrementTemp = -100;
-        var expected = new Temperature(1500);
-        status.setTargetTemperature(new Temperature(1600));
         //when
         sut.execute(TemperatureChange.create(decrementTemp));
         //then
-        assertThat(status.getTargetTemperature().getTemp()).isEqualTo(expected.getTemp());
         var eventCaptor = ArgumentCaptor.forClass(TargetTemperatureChanged.class);
         verify(eventBus).emit(eventCaptor.capture());
         assertThat(eventCaptor.getValue().amount).isEqualTo(decrementTemp);

@@ -13,7 +13,6 @@ public class RoomTemperatureEventsHandler implements EventHandler<RoomTemperatur
     ThermostateStatus status;
     @Override
     public void handle(RoomTemperatureReaded event) {
-        System.out.println("TemperatureEvent reach: " + event.eventName() + " " + event.eventId());
         status.setCurrentTemperature(new Temperature(event.temp));
     }
 }

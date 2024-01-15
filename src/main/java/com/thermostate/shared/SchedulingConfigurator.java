@@ -24,13 +24,13 @@ public class SchedulingConfigurator {
 
     @Scheduled(fixedDelay = 5000)
     public void scheduleFixedDelayTask() {
-        getRoomTemperature.execute();
         scheduleChecker.execute(getAllSchedules.execute());
     }
 
     @Scheduled(fixedDelay = 20000)
     public void scheduleFixedDelayExternalTemp() {
         getExternalTemperature.execute();
+        getRoomTemperature.execute();
     }
 }
 

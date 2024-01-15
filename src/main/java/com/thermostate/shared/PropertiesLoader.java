@@ -14,6 +14,6 @@ import java.util.Map;
 public class PropertiesLoader {
     private String dbUrl;
     private Map<String, String> roomTemp;
-
+    private String env;
     private Map<String, String> externalTemp;
 }

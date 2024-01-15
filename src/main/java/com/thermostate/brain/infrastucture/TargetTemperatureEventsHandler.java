@@ -13,7 +13,6 @@ public class TargetTemperatureEventsHandler implements EventHandler<TargetTemper
     ThermostateStatus status;
     @Override
     public void handle(TargetTemperatureChanged event) {
-        System.out.println("TemperatureEvent reach: " + event.eventName() + " " + status.getTargetTemperature().getTemp() + " + " + event.amount);
         status.setTargetTemperature(new Temperature(status.getTargetTemperature().getTemp() + event.amount));
     }
 }
