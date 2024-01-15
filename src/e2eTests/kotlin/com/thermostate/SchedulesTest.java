@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
+import java.util.UUID;
 
 import static com.thermostate.shared.HttpRequestsUtils.createSingleUser;
 
@@ -85,7 +86,8 @@ public class SchedulesTest {
                         "timeFrom", "16:00",
                         "timeTo", "20:16",
                         "active", "true",
-                        "minTemp", "15"));
+                        "minTemp", "15",
+                        "id", UUID.randomUUID().toString()));
         response.assertThatResponseIsOk();
     }
 

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import static com.thermostate.schedules.model.ScheduleObjectMother.givenScheduleForDays;
 import static com.thermostate.schedules.model.ScheduleObjectMother.givenScheduleWithActivation;
@@ -35,7 +36,7 @@ public class CreateScheduleTest {
         String weekDays = "L,M,X,J,V,S,D";
         var schedule = givenScheduleForDays(weekDays);
         //when
-        sut.execute(weekDays, schedule.timeFrom, schedule.timeTo, schedule.active, schedule.minTemp);
+        sut.execute(UUID.randomUUID(), weekDays, schedule.timeFrom, schedule.timeTo, schedule.active, schedule.minTemp);
         //then
         then(scheduleRepo).should().create(
             new Schedule(null, weekDays, schedule.timeFrom, schedule.timeTo, schedule.active, schedule.minTemp, LocalDate.now()));

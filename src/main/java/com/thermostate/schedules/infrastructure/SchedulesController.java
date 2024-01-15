@@ -44,6 +44,7 @@ public class SchedulesController {
     public void scheduleInsert(@RequestBody ScheduleCreateRequest scheduleCreateRequest) {
         logger.trace("Insert schedule received " + scheduleCreateRequest);
         createSchedule.execute(
+                scheduleCreateRequest.id,
                 scheduleCreateRequest.weekDays,
                 scheduleCreateRequest.timeFrom,
                 scheduleCreateRequest.timeTo,
@@ -92,6 +93,7 @@ public class SchedulesController {
 @AllArgsConstructor
 @ToString
 class ScheduleCreateRequest {
+    UUID id;
     String weekDays;
     String timeFrom;
     String timeTo;
