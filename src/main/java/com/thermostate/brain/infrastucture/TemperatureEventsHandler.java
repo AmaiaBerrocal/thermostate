@@ -12,6 +12,6 @@ public class TemperatureEventsHandler implements EventHandler<TemperatureEvent> 
     private static final Logger logger = LoggerFactory.getLogger(TemperatureEventsHandler.class);
     @Override
     public void handle(TemperatureEvent event) {
-        logger.info("TemperatureEvent reach: " + event.eventName() + " " + event.eventId());
+        logger.info("TemperatureEvent reach1: " + event.eventName() + " " + event.eventId());
     }
 }

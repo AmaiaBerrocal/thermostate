@@ -1,9 +1,12 @@
 package com.thermostate.roomtemperature.infrastructure;
 
+import com.thermostate.brain.infrastucture.RaspberryGPIOAdapter;
 import com.thermostate.roomtemperature.model.RoomTemperature;
 import com.thermostate.roomtemperature.model.RoomTemperatureRepo;
 import com.thermostate.shared.PropertiesLoader;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -12,7 +15,7 @@ import java.io.*;
 public class RoomTemperatureFileRepo implements RoomTemperatureRepo {
     // this is the file in which my sensor writes the temperature that it measures
     final PropertiesLoader properties;
-
+    private static final Logger logger = LoggerFactory.getLogger(RoomTemperatureFileRepo.class);
     public RoomTemperatureFileRepo(final PropertiesLoader properties) {
         this.properties = properties;
     }
@@ -38,7 +41,7 @@ public class RoomTemperatureFileRepo implements RoomTemperatureRepo {
                 .map((line) -> line.substring(line.indexOf(markOnFile) + 2))
                 .findFirst().get();
         } catch (IOException e) {
-            System.err.println("ERROR: " + e.getMessage());
+            logger.error("ERROR: " + e.getMessage(), e);
         }
         return "";
     }

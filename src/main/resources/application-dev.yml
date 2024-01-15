@@ -1,5 +1,6 @@
 thermostate:
   dbUrl: "jdbc:sqlite:./assets/thermostate.db"
+  env: "DEV"
   roomTemp:
     file: "./assets/w1_slave"
     temp_mark_in_file: "t="
@@ -10,7 +11,7 @@ spring:
     url: "jdbc:sqlite:./assets/thermostate.db"
   jpa:
     database-platform: org.hibernate.community.dialect.SQLiteDialect
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: create-drop
       format-sql: true
@@ -27,5 +28,5 @@ logging:
   level:
     org.springframework.web: TRACE
     guru.springframework.controllers: TRACE
-    org.hibernate: TRACE
+    org.hibernate: ERROR
     org.springframework.security: TRACE

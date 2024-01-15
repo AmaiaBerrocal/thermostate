@@ -6,6 +6,7 @@ import com.thermostate.schedules.model.events.ScheduleUpdated;
 import com.thermostate.shared.ClientError;
 import com.thermostate.shared.events.domain.AggregateRoot;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import java.time.LocalDate;
 import java.util.regex.Matcher;
@@ -15,6 +16,7 @@ import java.util.stream.Stream;
 import static org.apache.logging.log4j.util.Strings.isNotEmpty;
 
 @EqualsAndHashCode(callSuper = false)
+@Getter
 public class Schedule extends AggregateRoot {
     public final Integer id;
     public String weekDays;
@@ -90,5 +92,9 @@ public class Schedule extends AggregateRoot {
     public void delete(ScheduleRepo scheduleRepo) {
         scheduleRepo.deleteById(id);
         record(new ScheduleDeleted(id));
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }

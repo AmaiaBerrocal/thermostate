@@ -1,9 +1,12 @@
 package com.thermostate.roomtemperature.infrastructure;
 
+import com.thermostate.brain.infrastucture.RaspberryGPIOAdapter;
 import com.thermostate.roomtemperature.model.RoomTemperature;
 import com.thermostate.shared.ClientError;
 import com.thermostate.shared.ValueResponse;
 import com.thermostate.roomtemperature.application.GetRoomTemperature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class RoomTemperatureController {
     private final GetRoomTemperature getTemperature;
+    private static final Logger logger = LoggerFactory.getLogger(RoomTemperatureController.class);
 
     public RoomTemperatureController(final GetRoomTemperature getTemperature) {
         this.getTemperature = getTemperature;
@@ -24,7 +28,7 @@ public class RoomTemperatureController {
     @ExceptionHandler(value = ClientError.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public void handleException(Exception ex) {
-        System.err.println("ERROR: " + ex.getMessage());
+        logger.error("ERROR: " + ex.getMessage(), ex);
         ex.printStackTrace();
     }
 }
