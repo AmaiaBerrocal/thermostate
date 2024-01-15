@@ -36,3 +36,7 @@ jobs:
       run: chmod +x gradlew
     - name: Run Tests
       run: ./gradlew test
+    - name: Run dev environment
+      run: ./gradlew bootRun --args=--spring.profiles.active=dev &
+    - name: Run e2e tests
+      run: ./gradlew e2eTest
