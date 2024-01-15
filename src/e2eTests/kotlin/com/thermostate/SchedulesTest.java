@@ -24,7 +24,7 @@ public class SchedulesTest {
 
     @Test
     void should_create_an_schedule() {
-        createScheduleWithPetition();
+        createSchedule(UUID.randomUUID());
         E2EResponse res = E2ERequest
                 .to("http://localhost:8080/schedules")
                 .withABearer(HttpRequestsUtils::getBearer)
@@ -56,28 +56,83 @@ public class SchedulesTest {
     @Test
     void should_return_all_schedules() {
         //given
-        createScheduleWithPetition();
+        createSchedule(UUID.randomUUID());
         //when
         E2EResponse res = E2ERequest
                 .to("http://localhost:8080/schedules")
                 .withABearer(HttpRequestsUtils::getBearer)
-                .sendAGet(Map.of())
+                .sendAGet(Map.of()) //TODO: overload this
                 .assertThatResponseIsOk();
         //Then
         res.assertThatBodyContains("""
                 "weekDays":"L,M,X","timeFrom":"16:00","timeTo":"20:16","active":true,"minTemp":15
                 """.trim());
     }
-    //TODO
+
    @Test
     void should_delete_a_schedule() {
         //given
-        createScheduleWithPetition();
+        UUID uuid = UUID.randomUUID();
+        createSchedule(uuid);
         //when
-
+       E2ERequest
+               .to("http://localhost:8080/schedule/" + uuid)
+               .withABearer(HttpRequestsUtils::getBearer)
+               .sendADelete("") //TODO: fix this
+               .assertThatResponseIsOk();
         //then
+       E2ERequest
+               .to("http://localhost:8080/schedule/" + uuid)
+               .withABearer(HttpRequestsUtils::getBearer)
+               .sendAGet(Map.of())
+               .assertThatResponseCodeIs(401); //TODO at this moment all client errors are transalted to 401
     }
-    void createScheduleWithPetition() {
+
+    @Test
+    void should_return_given_schedule() {
+        //given
+        UUID uuid = UUID.randomUUID();
+        createSchedule(uuid);
+        //when
+        var res = E2ERequest
+                .to("http://localhost:8080/schedule/" + uuid)
+                .withABearer(HttpRequestsUtils::getBearer)
+                .sendAGet(Map.of())
+                .assertThatResponseIsOk();
+        //then
+        res.assertThatBodyContains("""
+                "weekDays":"L,M,X","timeFrom":"16:00","timeTo":"20:16","active":true,"minTemp":15
+                """.trim());
+    }
+
+    @Test
+    void updateScheduleWithPetition() {
+        //given
+        UUID uuid = UUID.randomUUID();
+        createSchedule(uuid);
+        //when
+        E2ERequest
+                .to("http://127.0.0.1:8080/schedule")
+                .withABearer(HttpRequestsUtils::getBearer)
+                .withContentType("application/json;charset=UTF-8")
+                .sendAPut(Map.of("weekDays", "L,M,X,J",
+                        "timeFrom", "17:00",
+                        "timeTo", "20:17",
+                        "active", false,
+                        "minTemp", "17",
+                        "id", uuid.toString()));
+        //then
+        var res = E2ERequest
+                .to("http://localhost:8080/schedule/" + uuid)
+                .withABearer(HttpRequestsUtils::getBearer)
+                .sendAGet(Map.of())
+                .assertThatResponseIsOk();
+
+        res.assertThatBodyContains("""
+                "weekDays":"L,M,X,J"
+                """.trim());
+    }
+    void createSchedule(UUID uuid) {
         var response = E2ERequest
                 .to("http://127.0.0.1:8080/schedule")
                 .withABearer(HttpRequestsUtils::getBearer)
@@ -87,10 +142,8 @@ public class SchedulesTest {
                         "timeTo", "20:16",
                         "active", "true",
                         "minTemp", "15",
-                        "id", UUID.randomUUID().toString()));
+                        "id", uuid.toString()));
         response.assertThatResponseIsOk();
     }
 
-    //TODO
-    //void updateScheduleWithPetition() {}
 }
