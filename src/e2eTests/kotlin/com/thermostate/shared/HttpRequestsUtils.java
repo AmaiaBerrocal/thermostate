@@ -7,16 +7,20 @@ import java.util.Map;
 import java.util.UUID;
 
 public class HttpRequestsUtils {
-    public static String getBearer() {
+    public static String getBearer(String user, String password) {
         Map res = E2ERequest.to("http://127.0.0.1:8080/login")
                 .withContentType("application/json;charset=UTF-8")
-                .sendAPost(Map.of("password", "pass",
-                        "name", "Amaia"
+                .sendAPost(Map.of("password", password,
+                        "name", user
                 ))
                 .body();
         System.out.println("Auth: " + res.get("value").toString());
         return res.get("value").toString();
     }
+    public static String getBearer() {
+        return getBearer("Amaia", "pass");
+    }
+
 
     public static void createSingleUser(E2EDB db) {
         // name: "Amaia", password: "password", salt & email: "lala@gmail.com"

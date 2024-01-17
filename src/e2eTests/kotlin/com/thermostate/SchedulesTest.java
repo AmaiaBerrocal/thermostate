@@ -85,7 +85,7 @@ public class SchedulesTest {
                .to("http://localhost:8080/schedule/" + uuid)
                .withABearer(HttpRequestsUtils::getBearer)
                .sendAGet(Map.of())
-               .assertThatResponseCodeIs(401); //TODO at this moment all client errors are transalted to 401
+               .assertThatResponseCodeIs(401); //TODO at this moment all client errors are transalated to 401
     }
 
     @Test
