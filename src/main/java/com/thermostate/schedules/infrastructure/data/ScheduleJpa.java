@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name="Schedules")
@@ -15,8 +16,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class ScheduleJpa {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private UUID id;
     @Column(name="week_days")
     private String weekDays;
     @Column(name="time_to")

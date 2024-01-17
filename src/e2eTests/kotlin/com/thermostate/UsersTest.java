@@ -58,11 +58,31 @@ class UsersTest {
         assertThat(responseBody.get("value").toString()).startsWith("Bearer ");
     }
 
+    @Test
+    void should_return_an_error_if_password_is_incorrects() throws IOException {
+        createUser("Inigo", "incorrect pass", "lalo@gmail.com");
+        E2EResponse res = E2ERequest
+                .to("http://localhost:8080/login")
+                .withContentType("application/json")
+                .sendAPost(Map.of("name", "INIGO", "password", "pass"))
+                .assertThatResponseCodeIs(400);
+    }
+
+    @Test
+    void should_return_an_error_if_name_is_incorrects() throws IOException {
+        createUser("Inigo", "pass", "lalo@gmail.com");
+        E2EResponse res = E2ERequest
+                .to("http://localhost:8080/login")
+                .withContentType("application/json")
+                .sendAPost(Map.of("name", "INIGO-no", "password", "pass"))
+                .assertThatResponseCodeIs(401);
+    }
+
     void createUser(String name, String password, String email) {
         E2ERequest
                 .to("http://127.0.0.1:8080/user")
                 //.withABearer(HttpRequestsUtils::getBearer)
-                .withHeader("Authorization", getBearer())
+                .withHeader("Authorization", getBearer("Amaia", "pass"))
                 .withContentType("application/json;charset=UTF-8")
                 .sendAPost(Map.of("name", name, "password", password, "email", email))
                 .assertThatResponseIsOk();

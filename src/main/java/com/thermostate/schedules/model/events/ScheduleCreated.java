@@ -9,8 +9,8 @@ import java.util.UUID;
 
 public class ScheduleCreated extends ScheduleEvent {
 
-    Integer id;
-    public ScheduleCreated(Integer id) {
+    UUID id;
+    public ScheduleCreated(UUID id) {
         super(UUID.randomUUID().toString());
         this.id = id;
     }

@@ -6,6 +6,7 @@ import com.thermostate.schedules.model.events.EventBus;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Component
 public class UpdateSchedule {
@@ -17,7 +18,7 @@ public class UpdateSchedule {
         this.eventBus = eventBus;
     }
 
-    public void execute(Integer id, String weekDays, String timeFrom, String timeTo, Boolean active, Integer minTemp) {
+    public void execute(UUID id, String weekDays, String timeFrom, String timeTo, Boolean active, Integer minTemp) {
         Schedule schedule = new Schedule(id, weekDays, timeFrom, timeTo, active, minTemp, LocalDate.now());
         schedule.update(scheduleRepo);
         schedule.publishEventsIn(eventBus);

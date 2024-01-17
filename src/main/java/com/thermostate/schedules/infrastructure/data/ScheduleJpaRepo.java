@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Component
@@ -19,7 +20,7 @@ public class ScheduleJpaRepo implements ScheduleRepo {
     }
 
     @Override
-    public Schedule getById(Integer id) {
+    public Schedule getById(UUID id) {
         return schedules.findById(id).map(ScheduleJpa::toDomain)
                 .orElseThrow(() -> new IllegalArgumentException("No schedule found"));
     }
@@ -35,7 +36,7 @@ public class ScheduleJpaRepo implements ScheduleRepo {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(UUID id) {
         schedules.deleteById(id);
     }
 }

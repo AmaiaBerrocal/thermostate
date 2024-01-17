@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -18,7 +19,7 @@ import static org.apache.logging.log4j.util.Strings.isNotEmpty;
 @EqualsAndHashCode(callSuper = false)
 @Getter
 public class Schedule extends AggregateRoot {
-    public final Integer id;
+    public final UUID id;
     public String weekDays;
     public String timeFrom;
     public String timeTo;
@@ -26,7 +27,7 @@ public class Schedule extends AggregateRoot {
     public Integer minTemp;
     public LocalDate createdAt;
 
-    public Schedule(Integer id, String weekDays, String timeFrom, String timeTo, Boolean active, Integer minTemp, LocalDate createdAt) {
+    public Schedule(UUID id, String weekDays, String timeFrom, String timeTo, Boolean active, Integer minTemp, LocalDate createdAt) {
         this.id = id;
         this.weekDays = weekDays;
         this.timeFrom = timeFrom;
@@ -37,7 +38,7 @@ public class Schedule extends AggregateRoot {
         checkData();
     }
 
-    public Schedule(Integer id) {
+    public Schedule(UUID id) {
         this.id = id;
     }
 

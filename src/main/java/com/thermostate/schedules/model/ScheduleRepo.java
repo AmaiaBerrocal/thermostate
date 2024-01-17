@@ -1,11 +1,12 @@
 package com.thermostate.schedules.model;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ScheduleRepo {
     void create(Schedule schedule);
-    Schedule getById(Integer id);
+    Schedule getById(UUID id);
     List<Schedule> getAll();
     void update(Schedule schedule);
-    void deleteById(Integer id);
+    void deleteById(UUID id);
 }
