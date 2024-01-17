@@ -1,7 +1,7 @@
 package com.thermostate.brain.infrastucture;
 
 import com.thermostate.brain.domain.ThermostatAdapter;
-import com.thermostate.shared.PropertiesLoader;
+import com.thermostate.spring.properties.PropertiesLoader;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,7 @@ public class RaspberryGPIOAdapter implements ThermostatAdapter {
     private static final Logger logger = LoggerFactory.getLogger(RaspberryGPIOAdapter.class);
 
     @Override
-    public void setState(boolean stateToOn) {
+    public void setActiveStatus(boolean stateToOn) {
         if ("DEV".equals(properties.getEnv().trim())) {
             logger.info("Setting state to " + stateToOn);
             return;

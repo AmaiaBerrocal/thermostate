@@ -31,7 +31,6 @@ public class BearerService implements TokenService {
         if (user == null) {
             return null;
         }
-        Instant expirationTime = Instant.now().plus(1, ChronoUnit.HOURS);
 
         Key key = Keys.hmacShaKeyFor(JWT_SECRET.getBytes());
 
@@ -40,7 +39,7 @@ public class BearerService implements TokenService {
                 .claim("id", user.getId())
                 .claim("sub", user.getName())
                 .claim("email", user.getEmail())
-                .setExpiration(null)
+                .expiration(null)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
@@ -55,10 +54,10 @@ public class BearerService implements TokenService {
         Jws<Claims> jwsClaims = Jwts.parser()
                 .setSigningKey(secretBytes)
                 .build()
-                .parseClaimsJws(token);
-        String username = jwsClaims.getBody().getSubject();
-        UUID userId = UUID.fromString(jwsClaims.getBody().get("id", String.class));
-        String email = jwsClaims.getBody().get("email", String.class);
+                .parseSignedClaims(token);
+        String username = jwsClaims.getPayload().getSubject();
+        UUID userId = UUID.fromString(jwsClaims.getPayload().get("id", String.class));
+        String email = jwsClaims.getPayload().get("email", String.class);
         return new LogedInUser(username, email, userId);
     }
 }

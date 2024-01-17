@@ -1,6 +1,6 @@
 package com.thermostate.externaltemperature.infrastucture;
 
-import com.thermostate.shared.PropertiesLoader;
+import com.thermostate.spring.properties.PropertiesLoader;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 

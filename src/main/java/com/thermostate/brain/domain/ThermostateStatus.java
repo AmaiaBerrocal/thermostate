@@ -4,6 +4,7 @@ import com.thermostate.shared.domain.Temperature;
 import com.thermostate.schedules.model.Schedule;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -14,8 +15,10 @@ import java.util.Objects;
 public class ThermostateStatus {
     private Temperature targetTemperature = new Temperature(1600);
     private Temperature currentTemperature = new Temperature(1600);
+    @Setter
+    private Temperature externalTemperature = new Temperature(1600);
     private Schedule activeSchedule;
-    private final ThermostatAdapter adapter;
+    private Boolean active = false;
 
 
     public void setTargetTemperature(Temperature targetTemperature) {
@@ -34,10 +37,9 @@ public class ThermostateStatus {
         }
         this.activeSchedule = newActiveSchedule;
         setTargetTemperature(new Temperature(activeSchedule.getMinTemp()));
-        updateStatus();
     }
 
     public void updateStatus() {
-        adapter.setState(targetTemperature.getTemp() >= currentTemperature.getTemp());
+        active = targetTemperature.getTemp() >= currentTemperature.getTemp();
     }
 }

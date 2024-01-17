@@ -1,4 +1,4 @@
-package com.thermostate.shared;
+package com.thermostate.spring.properties;
  
 import lombok.Getter;
 import lombok.Setter;

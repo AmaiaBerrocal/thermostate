@@ -1,9 +1,8 @@
 package com.thermostate.roomtemperature.infrastructure;
 
-import com.thermostate.brain.infrastucture.RaspberryGPIOAdapter;
 import com.thermostate.roomtemperature.model.RoomTemperature;
 import com.thermostate.roomtemperature.model.RoomTemperatureRepo;
-import com.thermostate.shared.PropertiesLoader;
+import com.thermostate.spring.properties.PropertiesLoader;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
