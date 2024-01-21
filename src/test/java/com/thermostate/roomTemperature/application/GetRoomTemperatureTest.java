@@ -24,7 +24,7 @@ public class GetRoomTemperatureTest {
 
     @Test
     void should_post_an_event_correctly() {
-        RoomTemperature temperature = RoomTemperature.create("15278");
+        RoomTemperature temperature = RoomTemperature.create(15278);
         when(roomTemperatureRepo.getTemp()).thenReturn(temperature);
 
         RoomTemperature actual = sut.execute();

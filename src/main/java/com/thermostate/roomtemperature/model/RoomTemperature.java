@@ -7,14 +7,14 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class RoomTemperature extends AggregateRoot {
-    public final String temp;
+    public final Integer temp;
 
-    private RoomTemperature(String temp) {
+    private RoomTemperature(Integer temp) {
         this.temp = temp;
-        record(new RoomTemperatureReaded((int)(Double.valueOf(this.temp)*100)));
+        record(new RoomTemperatureReaded(this.temp));
     }
 
-    public static RoomTemperature create(String temp) {
+    public static RoomTemperature create(Integer temp) {
         return new RoomTemperature(temp);
     }
 }

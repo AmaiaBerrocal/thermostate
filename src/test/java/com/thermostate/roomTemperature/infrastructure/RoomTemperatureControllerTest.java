@@ -23,7 +23,7 @@ class RoomTemperatureControllerTest {
     @Test
     void should_call_application_layer_correctly() {
         //given
-        RoomTemperature temperature = RoomTemperature.create("15278");
+        RoomTemperature temperature = RoomTemperature.create(15278);
         when(getRoomTemperature.execute()).thenReturn(temperature);
         //when
         ValueResponse<RoomTemperature> actual = sut.getTemp();

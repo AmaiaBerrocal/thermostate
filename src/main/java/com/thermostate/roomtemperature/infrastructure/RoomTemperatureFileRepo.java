@@ -24,7 +24,7 @@ public class RoomTemperatureFileRepo implements RoomTemperatureRepo {
         return RoomTemperature.create(read());
     }
 
-    public String read() {
+    public Integer read() {
         String res = readRoomTemperatureFromFile();
         return transformReaded(res);
     }
@@ -45,15 +45,9 @@ public class RoomTemperatureFileRepo implements RoomTemperatureRepo {
         return "";
     }
 
-    /** Temperature must be divided by 1000 because of the format in which is readed
-     * @param temp
-     * @return
-     */
-    private String transformReaded(String temp) {
-        try{
-            return String.valueOf((Double.parseDouble(temp)/1000));
-        }catch (Exception e) {
-            return temp;
-        }
+    private Integer transformReaded(String temp) {
+        // Actually sensor measures mili-C, we only need centi-C
+        String toBeUsed = temp.substring(0, temp.length() - 1);
+        return Integer.parseInt(toBeUsed);
     }
 }
