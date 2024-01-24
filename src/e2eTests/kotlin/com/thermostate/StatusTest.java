@@ -34,7 +34,7 @@ public class StatusTest {
         var map = (Map<String, Object>)response.body().get("value"); // TODO: fix this
         assertThat(((Map<String, Object>)map.get("targetTemperature")).get("temp")).isEqualTo(1600.0);
         assertThat(((Map<String, Object>)map.get("currentTemperature")).get("temp")).isEqualTo(1234.0);
-        assertThat(((Map<String, Object>)map.get("externalTemperature")).get("temp")).isEqualTo(6.0);
+        assertThat(((Map<String, Object>)map.get("externalTemperature")).get("temp")).isEqualTo(10.0);
         assertThat((map.get("active"))).isEqualTo(true);
     }
 }
