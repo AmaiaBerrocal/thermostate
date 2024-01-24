@@ -25,7 +25,7 @@ public class CreateUser {
     public void execute(UUID uuid, String name, String password, String email) {
         if (password == null) throw ClientError.becauseInvalidDataFromClient();
         String salt = randomStringGenerator.generate();
-        User user = User.with(uuid, name, HashGenerator.generate(password, salt), email, salt);
+        User user = User.with(uuid, name, HashGenerator.generate(password, salt), email, salt, false);
         user.create(userRepo);
         user.publishEventsIn(eventBus);
     }

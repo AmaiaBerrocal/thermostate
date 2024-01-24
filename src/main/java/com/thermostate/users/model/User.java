@@ -17,13 +17,15 @@ public class User extends AggregateRoot {
     private final String password;
     private final String email;
     private final String salt;
+    private final Boolean isActive;
 
-    private User(UUID id, String name, String password, String email, String salt) {
+    private User(UUID id, String name, String password, String email, String salt, Boolean isActive) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;
         this.salt = salt;
+        this.isActive = isActive;
         checkData(name, password, email);
     }
 
@@ -43,9 +45,9 @@ public class User extends AggregateRoot {
         }
     }
 
-    public static User with(UUID uuid, String name, String password, String email, String salt) {
+    public static User with(UUID uuid, String name, String password, String email, String salt, Boolean isActive) {
         if (null == password) throw ClientError.becauseInvalidDataFromClient();
-        return new User(uuid, name, password, email, salt);
+        return new User(uuid, name, password, email, salt, isActive);
     }
 
     private void checkData(String name, String password, String email) {

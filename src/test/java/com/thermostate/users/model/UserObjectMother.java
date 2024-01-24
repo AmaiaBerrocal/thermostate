@@ -15,6 +15,7 @@ public class UserObjectMother{
                 faker.starWars().character(),
                 HashGenerator.generate(pass, salt),
 				"email@email.com",
-				salt);
+				salt,
+                true);
     }
 }

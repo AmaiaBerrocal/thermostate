@@ -28,7 +28,9 @@ class UsersTest {
 
         e2edb
                 .doQuery("SELECT * FROM USERS WHERE NAME = 'Inigo'")
-                .assertThatExistAnEntryWithFields(Map.of("email", "lalo@gmail.com"));
+                .assertThatExistAnEntryWithFields(Map.of(
+                        "email", "lalo@gmail.com",
+                        "active", 0));
     }
 
     @Test
