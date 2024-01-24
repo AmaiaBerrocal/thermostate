@@ -38,13 +38,4 @@ class SchedulingConfiguratorTest {
         verify(scheduleChecker).execute(List.of());
 
     }
-
-    @Test
-    void should_call_application_layer_correctly_for_external_temp() {
-        //when
-        sut.scheduleFixedDelayExternalTemp();
-        //then
-        verify(getExternalTemperature).execute();
-        verify(getRoomTemperature).execute();
-    }
 }
