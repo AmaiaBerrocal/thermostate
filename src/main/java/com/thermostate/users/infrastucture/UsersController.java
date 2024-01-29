@@ -44,7 +44,7 @@ public class UsersController {
     }
 
     @ExceptionHandler(value = ClientError.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Unable to connect")
     public void handleException(Exception ex) {
         ex.printStackTrace();
     }

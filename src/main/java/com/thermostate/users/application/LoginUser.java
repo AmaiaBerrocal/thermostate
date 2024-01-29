@@ -30,6 +30,9 @@ public class LoginUser {
     private String createBearer(String password, User loginUser) {
         try {
             if (loginUser.checkIfAuthenticated(password)) {
+                if (!loginUser.getIsActive()) {
+                    throw ClientError.becauseDeactivatedUser(loginUser);
+                }
                 return tokenService.generateToken(loginUser);
             } else {
                 throw ClientError.becauseInvalidDataFromClient();

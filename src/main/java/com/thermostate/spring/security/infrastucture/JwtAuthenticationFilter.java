@@ -2,6 +2,7 @@ package com.thermostate.spring.security.infrastucture;
 
 import com.thermostate.spring.security.model.TokenService;
 import com.thermostate.spring.security.model.LogedInUser;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,8 +26,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain) throws IOException, ServletException {
+                                    @NotNull HttpServletResponse response,
+                                    @NotNull FilterChain filterChain) throws IOException, ServletException {
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (headerIsInvalid(header)) {
             filterChain.doFilter(request, response);

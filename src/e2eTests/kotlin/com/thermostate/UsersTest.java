@@ -1,6 +1,5 @@
 package com.thermostate;
 
-import com.thermostate.shared.HttpRequestsUtils;
 import db.E2EDB;
 import http.E2ERequest;
 import http.E2EResponse;
@@ -28,7 +27,9 @@ class UsersTest {
 
         e2edb
                 .doQuery("SELECT * FROM USERS WHERE NAME = 'Inigo'")
-                .assertThatExistAnEntryWithFields(Map.of("email", "lalo@gmail.com"));
+                .assertThatExistAnEntryWithFields(Map.of(
+                        "email", "lalo@gmail.com",
+                        "active", 0));
     }
 
     @Test
@@ -38,7 +39,7 @@ class UsersTest {
                 .withHeader("Authorization", getBearer())
                 .withContentType("application/json;charset=UTF-8")
                 .sendAPost(Map.of("name", "", "password", "pass", "email", "lalo@gmail.com"))
-                .assertThatResponseCodeIs(400);
+                .assertThatResponseCodeIs(401);
 
         e2edb
                 .doQuery("SELECT * FROM USERS WHERE email = 'lalo@gmail.com'")
@@ -47,11 +48,11 @@ class UsersTest {
 
     @Test
     void should_return_a_user_if_name_and_password_are_corrects() throws IOException {
-        createUser("Inigo", "pass", "lalo@gmail.com");
+        //createUser("Inigo", "pass", "lalo@gmail.com");
         E2EResponse res = E2ERequest
                 .to("http://localhost:8080/login")
                 .withContentType("application/json")
-                .sendAPost(Map.of("name", "INIGO", "password", "pass"))
+                .sendAPost(Map.of("name", "amaia", "password", "pass"))
                 .assertThatResponseIsOk();
 
         var responseBody = res.body();
@@ -59,17 +60,28 @@ class UsersTest {
     }
 
     @Test
-    void should_return_an_error_if_password_is_incorrects() throws IOException {
+    void should_not_login_if_user_deactivated() throws IOException {
+        createUser("Inigo", "pass", "lalo@gmail.com");
+        E2EResponse res = E2ERequest
+                .to("http://localhost:8080/login")
+                .withContentType("application/json")
+                .sendAPost(Map.of("name", "INIGO", "password", "pass"))
+                .assertThatResponseCodeIs(401);
+    }
+
+
+    @Test
+    void should_return_an_error_if_password_is_incorrect() throws IOException {
         createUser("Inigo", "incorrect pass", "lalo@gmail.com");
         E2EResponse res = E2ERequest
                 .to("http://localhost:8080/login")
                 .withContentType("application/json")
                 .sendAPost(Map.of("name", "INIGO", "password", "pass"))
-                .assertThatResponseCodeIs(400);
+                .assertThatResponseCodeIs(401);
     }
 
     @Test
-    void should_return_an_error_if_name_is_incorrects() throws IOException {
+    void should_return_an_error_if_name_are_incorrects() throws IOException {
         createUser("Inigo", "pass", "lalo@gmail.com");
         E2EResponse res = E2ERequest
                 .to("http://localhost:8080/login")

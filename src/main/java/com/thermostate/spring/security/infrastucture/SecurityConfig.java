@@ -19,7 +19,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 @Configuration
 public class SecurityConfig {
     private final JwtAuthenticationFilter authenticationFilter;
@@ -43,7 +42,7 @@ public class SecurityConfig {
                 ));
         // Set permissions on endpoints
         http.authorizeHttpRequests(auth -> {
-            auth// Our public endpoints
+            auth
                 .requestMatchers(HttpMethod.POST,"/login").permitAll()
                 .requestMatchers("/**").authenticated();
                 // The rest of them will be private

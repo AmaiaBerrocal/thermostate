@@ -28,10 +28,10 @@ public class UserJpa {
     private Boolean active;
 
     public static UserJpa fromDomain(User user) {
-        return new UserJpa(user.getId().toString(), user.getName(), user.getPassword(), user.getSalt(), user.getEmail(), true);
+        return new UserJpa(user.getId().toString(), user.getName(), user.getPassword(), user.getSalt(), user.getEmail(), user.getIsActive());
     }
 
     public User toDomain() {
-        return User.with(UUID.fromString(this.uuid), this.name, this.password, this.email, this.salt);
+        return User.with(UUID.fromString(this.uuid), this.name, this.password, this.email, this.salt, this.active);
     }
 }
