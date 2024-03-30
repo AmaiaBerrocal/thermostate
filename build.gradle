@@ -53,8 +53,7 @@ dependencies {
 	testImplementation "org.mockito:mockito-junit-jupiter:5.7.0"
 	testImplementation "org.springframework.boot:spring-boot-starter-test:${springboot}"
 	implementation group: 'net.datafaker', name: 'datafaker', version: "${faker}"}
-
-
+	//implementation group: 'com.github.inigodm', name:'thermostate-plugin', version: '0.0.0.1.1'
 
 test {
 	useJUnitPlatform()

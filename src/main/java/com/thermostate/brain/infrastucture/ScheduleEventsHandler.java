@@ -1,6 +1,6 @@
 package com.thermostate.brain.infrastucture;
 
-import com.thermostate.shared.events.domain.ScheduleEvent;
+import com.thermostate.shared.events.domain.base.ScheduleEvent;
 import com.thermostate.shared.events.infrastructure.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

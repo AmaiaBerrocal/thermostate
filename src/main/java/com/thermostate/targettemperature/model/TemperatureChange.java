@@ -1,6 +1,6 @@
 package com.thermostate.targettemperature.model;
 
-import com.thermostate.shared.events.domain.AggregateRoot;
+import com.thermostate.shared.events.domain.base.AggregateRoot;
 import com.thermostate.targettemperature.model.event.TargetTemperatureChanged;
 
 public class TemperatureChange extends AggregateRoot {

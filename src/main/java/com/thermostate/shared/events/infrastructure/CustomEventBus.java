@@ -1,7 +1,7 @@
 package com.thermostate.shared.events.infrastructure;
 
-import com.thermostate.schedules.model.events.EventBus;
-import com.thermostate.shared.events.domain.DomainEvent;
+import com.thermostate.shared.events.domain.base.EventBus;
+import com.thermostate.shared.events.domain.base.DomainEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

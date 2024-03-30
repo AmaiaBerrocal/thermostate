@@ -1,7 +1,7 @@
 package com.thermostate.brain.infrastucture;
 
 import com.thermostate.brain.domain.ThermostateStatus;
-import com.thermostate.externaltemperature.model.events.ExternalTemperatureReaded;
+import com.thermostate.shared.events.domain.ExternalTemperatureReaded;
 import com.thermostate.shared.domain.Temperature;
 import com.thermostate.shared.events.infrastructure.EventHandler;
 import lombok.AllArgsConstructor;

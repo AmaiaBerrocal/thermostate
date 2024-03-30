@@ -1,7 +1,7 @@
 package com.thermostate.users.model;
 
 import com.thermostate.shared.ClientError;
-import com.thermostate.shared.events.domain.AggregateRoot;
+import com.thermostate.shared.events.domain.base.AggregateRoot;
 import com.thermostate.users.model.event.UserCreated;
 import com.thermostate.users.model.event.UserLoggedIn;
 import com.thermostate.users.model.event.UserLoginFailure;

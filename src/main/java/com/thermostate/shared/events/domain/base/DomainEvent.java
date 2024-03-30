@@ -1,9 +1,10 @@
-package com.thermostate.shared.events.domain;
+package com.thermostate.shared.events.domain.base;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public abstract class DomainEvent {
@@ -28,7 +29,7 @@ public abstract class DomainEvent {
 
     public abstract String eventName();
 
-    public abstract HashMap<String, Serializable> toPrimitives();
+    public abstract Map<String, Serializable> toPrimitives();
 
     public abstract DomainEvent fromPrimitives(
         String aggregateId,

@@ -1,4 +1,4 @@
-package com.thermostate.shared.events.domain;
+package com.thermostate.shared.events.domain.base;
 
 
 public abstract class TemperatureEvent extends DomainEvent {

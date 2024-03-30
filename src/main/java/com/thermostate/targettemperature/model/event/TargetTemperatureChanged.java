@@ -1,7 +1,7 @@
 package com.thermostate.targettemperature.model.event;
 
-import com.thermostate.shared.events.domain.DomainEvent;
-import com.thermostate.shared.events.domain.TemperatureEvent;
+import com.thermostate.shared.events.domain.base.DomainEvent;
+import com.thermostate.shared.events.domain.base.TemperatureEvent;
 
 import java.io.Serializable;
 import java.util.HashMap;

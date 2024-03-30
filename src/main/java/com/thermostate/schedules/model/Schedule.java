@@ -1,10 +1,10 @@
 package com.thermostate.schedules.model;
 
-import com.thermostate.schedules.model.events.ScheduleCreated;
-import com.thermostate.schedules.model.events.ScheduleDeleted;
-import com.thermostate.schedules.model.events.ScheduleUpdated;
+import com.thermostate.shared.events.domain.ScheduleCreated;
+import com.thermostate.shared.events.domain.ScheduleDeleted;
+import com.thermostate.shared.events.domain.ScheduleUpdated;
 import com.thermostate.shared.ClientError;
-import com.thermostate.shared.events.domain.AggregateRoot;
+import com.thermostate.shared.events.domain.base.AggregateRoot;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 

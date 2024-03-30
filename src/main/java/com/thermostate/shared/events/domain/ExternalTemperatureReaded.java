@@ -1,24 +1,22 @@
-package com.thermostate.roomtemperature.model.events;
+package com.thermostate.shared.events.domain;
 
-import com.thermostate.shared.events.domain.DomainEvent;
-import com.thermostate.shared.events.domain.TemperatureEvent;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+import com.thermostate.shared.events.domain.base.DomainEvent;
+import com.thermostate.shared.events.domain.base.TemperatureEvent;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class RoomTemperatureReaded extends TemperatureEvent {
-
+public class ExternalTemperatureReaded extends TemperatureEvent {
     public final Integer temp;
-    public RoomTemperatureReaded(Integer temp) {
+    public ExternalTemperatureReaded(Integer integer) {
         super(UUID.randomUUID().toString());
-        this.temp = temp;
+        this.temp = integer;
     }
+
     @Override
     public String eventName() {
-        return "ROOM_TEMPERATURE_READED";
+        return "EXTERNAL_TEMPERATURE_READED";
     }
 
     @Override

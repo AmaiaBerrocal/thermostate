@@ -2,7 +2,7 @@ package com.thermostate.brain.infrastucture;
 
 import com.thermostate.brain.domain.ThermostateStatus;
 import com.thermostate.shared.domain.Temperature;
-import com.thermostate.roomtemperature.model.events.RoomTemperatureReaded;
+import com.thermostate.shared.events.domain.RoomTemperatureReaded;
 import com.thermostate.shared.events.infrastructure.EventHandler;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

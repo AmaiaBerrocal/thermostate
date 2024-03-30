@@ -1,7 +1,7 @@
 package com.thermostate.brain.infrastucture;
 
 import com.thermostate.shared.events.infrastructure.EventHandler;
-import com.thermostate.shared.events.domain.TemperatureEvent;
+import com.thermostate.shared.events.domain.base.TemperatureEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

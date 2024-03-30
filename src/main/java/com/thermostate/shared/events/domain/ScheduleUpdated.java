@@ -1,22 +1,22 @@
-package com.thermostate.schedules.model.events;
+package com.thermostate.shared.events.domain;
 
-import com.thermostate.shared.events.domain.DomainEvent;
-import com.thermostate.shared.events.domain.ScheduleEvent;
+import com.thermostate.shared.events.domain.base.DomainEvent;
+import com.thermostate.shared.events.domain.base.ScheduleEvent;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class ScheduleCreated extends ScheduleEvent {
+public class ScheduleUpdated extends ScheduleEvent {
 
     UUID id;
-    public ScheduleCreated(UUID id) {
+    public ScheduleUpdated(UUID id) {
         super(UUID.randomUUID().toString());
         this.id = id;
     }
     @Override
     public String eventName() {
-        return "SCHEDULE_CREATED";
+        return "SCHEDULE_UPDATED";
     }
 
     @Override

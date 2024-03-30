@@ -6,7 +6,6 @@ import http.E2EResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.Map;
 
 import static com.thermostate.shared.HttpRequestsUtils.createSingleUser;
@@ -47,7 +46,7 @@ class UsersTest {
     }
 
     @Test
-    void should_return_a_user_if_name_and_password_are_corrects() throws IOException {
+    void should_return_a_user_if_name_and_password_are_corrects() {
         //createUser("Inigo", "pass", "lalo@gmail.com");
         E2EResponse res = E2ERequest
                 .to("http://localhost:8080/login")
@@ -60,7 +59,7 @@ class UsersTest {
     }
 
     @Test
-    void should_not_login_if_user_deactivated() throws IOException {
+    void should_not_login_if_user_deactivated() {
         createUser("Inigo", "pass", "lalo@gmail.com");
         E2EResponse res = E2ERequest
                 .to("http://localhost:8080/login")
@@ -71,7 +70,7 @@ class UsersTest {
 
 
     @Test
-    void should_return_an_error_if_password_is_incorrect() throws IOException {
+    void should_return_an_error_if_password_is_incorrect() {
         createUser("Inigo", "incorrect pass", "lalo@gmail.com");
         E2EResponse res = E2ERequest
                 .to("http://localhost:8080/login")
@@ -81,7 +80,7 @@ class UsersTest {
     }
 
     @Test
-    void should_return_an_error_if_name_are_incorrects() throws IOException {
+    void should_return_an_error_if_name_are_incorrects() {
         createUser("Inigo", "pass", "lalo@gmail.com");
         E2EResponse res = E2ERequest
                 .to("http://localhost:8080/login")
