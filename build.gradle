@@ -4,6 +4,8 @@ plugins {
 	id 'java'
 	id 'war'
 	id 'org.jetbrains.kotlin.jvm' version "${kotlinVersion}"
+	id 'org.jetbrains.kotlin.plugin.spring' version  "${kotlinVersion}"
+	id 'org.jetbrains.kotlin.plugin.jpa' version  "${kotlinVersion}"
 }
 
 group = 'com.amaia'
@@ -53,7 +55,9 @@ dependencies {
 	testImplementation "org.mockito:mockito-junit-jupiter:5.7.0"
 	testImplementation "org.springframework.boot:spring-boot-starter-test:${springboot}"
 	implementation group: 'net.datafaker', name: 'datafaker', version: "${faker}"
+	implementation "org.jetbrains.kotlin:kotlin-reflect"
 	implementation "org.apache.pdfbox:pdfbox:3.0.1"
+	implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
 	//implementation group: 'com.github.inigodm', name:'thermostate-plugin', version: '0.0.0.1.1'
 }
 
