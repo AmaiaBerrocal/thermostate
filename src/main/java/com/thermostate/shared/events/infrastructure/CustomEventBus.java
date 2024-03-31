@@ -24,10 +24,6 @@ public class CustomEventBus implements EventBus {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomEventBus.class);
     public Map<String, List<EventHandler<? extends DomainEvent>>> eventSubscribers = new ConcurrentHashMap<>();
 
-    public CustomEventBus(Collection<EventHandler<? extends DomainEvent>> eventHandlerList) {
-        eventHandlerList.forEach(this::subscribe);
-    }
-
     private static <T extends DomainEvent> void handleEvent(T event, EventHandler<T> subscriber) {
         try {
             subscriber.handle(event);

@@ -61,7 +61,7 @@ class UsersTest {
     @Test
     void should_not_login_if_user_deactivated() {
         createUser("Inigo", "pass", "lalo@gmail.com");
-        E2EResponse res = E2ERequest
+        E2ERequest
                 .to("http://localhost:8080/login")
                 .withContentType("application/json")
                 .sendAPost(Map.of("name", "INIGO", "password", "pass"))
@@ -72,7 +72,7 @@ class UsersTest {
     @Test
     void should_return_an_error_if_password_is_incorrect() {
         createUser("Inigo", "incorrect pass", "lalo@gmail.com");
-        E2EResponse res = E2ERequest
+        E2ERequest
                 .to("http://localhost:8080/login")
                 .withContentType("application/json")
                 .sendAPost(Map.of("name", "INIGO", "password", "pass"))
@@ -82,7 +82,7 @@ class UsersTest {
     @Test
     void should_return_an_error_if_name_are_incorrects() {
         createUser("Inigo", "pass", "lalo@gmail.com");
-        E2EResponse res = E2ERequest
+        E2ERequest
                 .to("http://localhost:8080/login")
                 .withContentType("application/json")
                 .sendAPost(Map.of("name", "INIGO-no", "password", "pass"))

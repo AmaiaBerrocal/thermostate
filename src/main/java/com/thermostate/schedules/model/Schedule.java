@@ -59,10 +59,6 @@ public class Schedule extends AggregateRoot {
                 .isEmpty();
     }
 
-    public boolean isValidDateTo(LocalDate dateTo) {
-        return dateTo != null;
-    }
-
     public boolean isValidTime(String timeFrom) {
         if (timeFrom == null) {
             return false;
