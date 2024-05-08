@@ -10,6 +10,10 @@ public class Temperature extends AggregateRoot {
         this.temp = temp;
     }
 
+    public static Temperature of(Integer temp) {
+        return new Temperature(temp);
+    }
+
     public Integer getTemp() {
         return temp;
     }

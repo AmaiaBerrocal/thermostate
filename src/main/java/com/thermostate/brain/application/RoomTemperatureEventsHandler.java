@@ -18,7 +18,7 @@ public class RoomTemperatureEventsHandler implements EventHandler<RoomTemperatur
 
     @Override
     public void handle(RoomTemperatureRead event) {
-        status.setCurrentTemperature(new Temperature(event.temp));
+        status.setCurrentTemperature(Temperature.of(event.temp));
         status.evaluate(adapter);
         status.publishEventsIn(eventBus);
     }
