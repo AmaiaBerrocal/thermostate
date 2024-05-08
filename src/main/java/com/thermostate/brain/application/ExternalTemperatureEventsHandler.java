@@ -1,4 +1,4 @@
-package com.thermostate.brain.infrastucture;
+package com.thermostate.brain.application;
 
 import com.thermostate.brain.domain.ThermostateStatus;
 import com.thermostate.externaltemperature.model.events.ExternalTemperatureReaded;

@@ -1,4 +1,4 @@
-package com.thermostate.brain.infrastucture;
+package com.thermostate.brain.application;
 
 import com.thermostate.shared.events.infrastructure.EventHandler;
 import com.thermostate.shared.events.domain.TemperatureEvent;
