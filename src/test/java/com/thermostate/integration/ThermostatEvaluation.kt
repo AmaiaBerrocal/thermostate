@@ -4,10 +4,14 @@ import com.thermostate.roomtemperature.model.RoomTemperature
 import com.thermostate.roomtemperature.model.RoomTemperatureRepo
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 
-@SpringBootTest
+@SpringBootTest(
+    webEnvironment = SpringBootTest.WebEnvironment.MOCK
+)
+@AutoConfigureMockMvc
 class ThermostatEvaluation {
 
     @MockBean
