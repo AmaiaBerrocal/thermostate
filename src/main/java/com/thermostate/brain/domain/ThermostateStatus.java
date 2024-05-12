@@ -1,9 +1,9 @@
 package com.thermostate.brain.domain;
 
 import com.thermostate.brain.domain.events.ThermostateSwitched;
-import com.thermostate.shared.domain.Temperature;
 import com.thermostate.schedules.model.Schedule;
-import com.thermostate.shared.events.domain.AggregateRoot;
+import com.thermostate.schedules.model.events.EventBus;
+import com.thermostate.shared.domain.Temperature;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -14,13 +14,14 @@ import java.util.Objects;
 @Service
 @Getter
 @RequiredArgsConstructor
-public class ThermostateStatus extends AggregateRoot {
+public class ThermostateStatus {
     private Temperature targetTemperature = new Temperature(1600);
-    private Temperature currentTemperature = new Temperature(1600);
+    private Temperature currentTemperature = new Temperature(1700);
     @Setter
     private Temperature externalTemperature = new Temperature(1600);
     private Schedule activeSchedule;
     private Boolean active = false;
+    private final EventBus eventBus;
 
 
     public void setTargetTemperature(Temperature targetTemperature) {
@@ -45,11 +46,11 @@ public class ThermostateStatus extends AggregateRoot {
         var previous = active;
         active = targetTemperature.getTemp() >= currentTemperature.getTemp();
         if (previous != null) {
-            record(ThermostateSwitched.of(active));
+            eventBus.emit(ThermostateSwitched.of(active));
         }
     }
 
-    public void evaluate(ThermostatAdapter adapter) {
+    public void activate(ThermostatAdapter adapter) {
         adapter.setActiveStatus(active);
     }
 }

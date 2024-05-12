@@ -1,18 +1,19 @@
 package com.thermostate.stadistics.application;
 
-import com.thermostate.brain.domain.ThermostateStatus;
-import com.thermostate.shared.domain.Temperature;
 import com.thermostate.roomtemperature.model.events.RoomTemperatureRead;
-import com.thermostate.shared.events.infrastructure.EventHandler;
 import com.thermostate.stadistics.domain.State;
 import lombok.AllArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
 @AllArgsConstructor
-public class SaveDataOnRoomTemperatureRead implements EventHandler<RoomTemperatureRead> {
+public class SaveDataOnRoomTemperatureRead  {
 
-    @Override
+    @Async
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMPLETION)
     public void handle(RoomTemperatureRead event) {
         State state = State.from(event);
     }

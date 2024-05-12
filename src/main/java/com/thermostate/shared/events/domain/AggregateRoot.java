@@ -1,7 +1,6 @@
 package com.thermostate.shared.events.domain;
 
 import com.thermostate.schedules.model.events.EventBus;
-import com.thermostate.shared.events.infrastructure.CustomEventBus;
 
 import java.util.ArrayList;
 import java.util.Collections;

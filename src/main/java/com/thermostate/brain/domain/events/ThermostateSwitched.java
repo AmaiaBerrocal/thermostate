@@ -1,14 +1,17 @@
 package com.thermostate.brain.domain.events;
 
 import com.thermostate.shared.events.domain.DomainEvent;
-import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 import java.util.HashMap;
 
-@RequiredArgsConstructor
 public class ThermostateSwitched extends DomainEvent {
     final boolean isOn;
+
+    public ThermostateSwitched(boolean isOn) {
+        super(Boolean.toString(isOn));
+        this.isOn = isOn;
+    }
 
     public static ThermostateSwitched of(Boolean active) {
         return new ThermostateSwitched(active);
