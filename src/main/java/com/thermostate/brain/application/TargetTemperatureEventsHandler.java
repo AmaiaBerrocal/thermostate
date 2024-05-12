@@ -16,8 +16,6 @@ public class TargetTemperatureEventsHandler  extends EventHandler<TargetTemperat
     ThermostateStatus status;
 
     @Override
-    @Async
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMPLETION)
     public void handle(TargetTemperatureChanged event) {
         status.setTargetTemperature(new Temperature(status.getTargetTemperature().getTemp() + event.amount));
     }

@@ -1,5 +1,6 @@
 package com.thermostate.schedules.model;
 
+import com.thermostate.schedules.infrastructure.DateHelper;
 import com.thermostate.schedules.model.events.ScheduleCreated;
 import com.thermostate.schedules.model.events.ScheduleDeleted;
 import com.thermostate.schedules.model.events.ScheduleUpdated;
@@ -95,7 +96,17 @@ public class Schedule extends AggregateRoot {
         record(new ScheduleDeleted(id));
     }
 
-    public boolean isActive() {
-        return active;
+    public boolean isActive(DateHelper dateHelper) {
+        return active && isActiveAtThisWeekDay(dateHelper) && isActiveAtThisTime(dateHelper);
+    }
+
+    private boolean isActiveAtThisWeekDay(DateHelper dateHelper) {
+        return weekDays.contains(dateHelper.nowAsDayOfWeek());
+    }
+
+    private boolean isActiveAtThisTime(DateHelper dateHelper) {
+        int timeNow = dateHelper.nowAsNumber();
+        return dateHelper.hourOfDayAsNumber(timeFrom) < timeNow &&
+                dateHelper.hourOfDayAsNumber(timeTo) >= timeNow;
     }
 }

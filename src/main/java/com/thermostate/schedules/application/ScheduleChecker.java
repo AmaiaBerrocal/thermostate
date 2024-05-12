@@ -1,49 +1,38 @@
 package com.thermostate.schedules.application;
 
 import com.thermostate.brain.domain.ThermostateStatus;
+import com.thermostate.schedules.infrastructure.DateHelper;
+import com.thermostate.schedules.model.DateCalculator;
 import com.thermostate.schedules.model.Schedule;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
-
-import java.util.Date;
 
 @Component
 @AllArgsConstructor
 public class ScheduleChecker {
     private ThermostateStatus status;
-    public static String[] DAYS = {"D","L","M","X","J","V","S"};
-    public static String nowAsDayOfWeek(){
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
-        return DAYS[c.get(Calendar.DAY_OF_WEEK)-1];
-    }
+    private DateHelper dateHelper;
 
     public void execute(List<Schedule> schedules) {
-        var timeNow = nowAsNumber();
-        schedules.stream()
-                .filter(Schedule::isActive)
-                .filter(schedule -> schedule.getWeekDays().contains(nowAsDayOfWeek()))
-                .filter(schedule ->
-                            hourOfDayAsNumber(schedule.getTimeFrom()) >= timeNow &&
-                            hourOfDayAsNumber(schedule.getTimeTo()) < timeNow
-                )
+        var timeNow = dateHelper.nowAsNumber();
+        status.makeAwareOfSchedules(schedules);
+                /*.filter(Schedule::isActive)
+                .filter(this::isActiveAtThisWeekDay)
+                .filter(schedule -> isActiveAtThisTime(schedule, timeNow))
                 .findFirst()
-                .ifPresent(schedule -> status.setActiveSchedule(schedule));
+                .ifPresent(schedule -> status.setActiveSchedule(schedule));*/
     }
 
-    public static int nowAsNumber() {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        return hourOfDayAsNumber(sdf.format(new Date()));
+    private boolean isActiveAtThisWeekDay(Schedule schedule) {
+        return schedule.getWeekDays().contains(dateHelper.nowAsDayOfWeek());
+    }
+
+    private boolean isActiveAtThisTime(Schedule schedule, int timeNow) {
+        return dateHelper.hourOfDayAsNumber(schedule.getTimeFrom()) < timeNow &&
+                dateHelper.hourOfDayAsNumber(schedule.getTimeTo()) >= timeNow;
     }
 
 
-    public static int hourOfDayAsNumber(String hour) {
-        int h = Integer.parseInt(hour.substring(0,2))*100;
-        int m = Integer.parseInt(hour.substring(3));
-        return h+m;
-    }
 }
