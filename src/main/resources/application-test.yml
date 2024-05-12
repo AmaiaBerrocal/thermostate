@@ -1,0 +1,33 @@
+thermostate:
+  dbUrl: "jdbc:sqlite:./assets/thermostate.db"
+  env: "DEV"
+  roomTemp:
+    file: "./assets/w1_slave"
+    temp_mark_in_file: "t="
+  externalTemp:
+    url: "https://wttr.in/01003?format=%t"
+spring:
+  datasource:
+    url: "jdbc:sqlite:./assets/thermostate.db"
+    driverClassName: "org.sqlite.JDBC"
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    show-sql: false
+    hibernate:
+      ddl-auto: create-drop
+      format-sql: true
+    properties:
+      hibernate:
+        format-sql: true
+        ddl-auto: create-drop
+    generate-ddl: true
+logging:
+  file: logs/dev_app.log
+  pattern:
+    console: "%d : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
+  level:
+    org.springframework.web: TRACE
+    guru.springframework.controllers: TRACE
+    org.hibernate: ERROR
+    org.springframework.security: TRACE
