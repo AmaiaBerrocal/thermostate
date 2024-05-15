@@ -12,10 +12,7 @@ public class ActiveSchedules implements ActiveTemperature {
     public static int DEFAULT_TEMP = 1600;
     List<Schedule> scheduleList = new ArrayList<>();
     List<UUID> uuids = new ArrayList<>();
-    Boolean active = false;
     Integer temperature = null;
-    Boolean switched = false;
-    Long activatedOn;
 
     public void add(Schedule schedule) {
         if (uuids.contains(schedule.id)) {
@@ -37,17 +34,10 @@ public class ActiveSchedules implements ActiveTemperature {
     }
 
     public void makeAwareOf(Schedule schedule, DateHelper dateHelper) {
-        switched = false;
         if (schedule.isActive(dateHelper)) {
-            if (scheduleList.isEmpty()) {
-                switched = true;
-            }
             add(schedule);
         } else {
             remove(schedule);
-            if (scheduleList.isEmpty()) {
-                switched = true;
-            }
         }
         temperature = getScheduledTemperature(dateHelper);
     }
@@ -68,5 +58,9 @@ public class ActiveSchedules implements ActiveTemperature {
             return false;
         }
         return temperature > currentTemperature.getTemp();
+    }
+
+    public boolean isEmpty() {
+        return scheduleList.isEmpty();
     }
 }

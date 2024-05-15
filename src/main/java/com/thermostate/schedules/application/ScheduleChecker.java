@@ -16,6 +16,6 @@ public class ScheduleChecker {
     private DateHelper dateHelper;
 
     public void execute(List<Schedule> schedules) {
-        status.makeAwareOfSchedules(schedules);
+        status.makeAwareOfSchedules(schedules, dateHelper);
     }
 }

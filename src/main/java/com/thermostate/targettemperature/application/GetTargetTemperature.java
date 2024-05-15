@@ -11,6 +11,6 @@ public class GetTargetTemperature {
   final ThermostateStatus status;
 
   public Temperature execute() {
-    return status.getManualTemperature();
+    return Temperature.of(status.getManualTemperature().getTemp());
   }
 }

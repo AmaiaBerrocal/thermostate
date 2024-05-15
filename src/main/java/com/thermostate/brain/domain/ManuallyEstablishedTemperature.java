@@ -1,14 +1,14 @@
 package com.thermostate.brain.domain;
 
 import com.thermostate.shared.domain.Temperature;
+import lombok.Getter;
 
 import java.util.Date;
 
+@Getter
 public class ManuallyEstablishedTemperature implements ActiveTemperature {
-
     Integer temp;
     Boolean active;
-    Long activatedOn;
 
     public ManuallyEstablishedTemperature(Integer temp) {
         this.temp = temp;
@@ -18,11 +18,6 @@ public class ManuallyEstablishedTemperature implements ActiveTemperature {
     public void setTemperature(Temperature tepm) {
         this.temp = tepm.getTemp();
         this.active = true;
-        this.activatedOn = (new Date()).getTime();
-    }
-
-    public void deactivate() {
-        this.active = false;
     }
 
     @Override

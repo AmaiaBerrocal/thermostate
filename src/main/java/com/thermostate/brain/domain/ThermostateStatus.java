@@ -21,11 +21,10 @@ public class ThermostateStatus {
     private Temperature currentTargetTemperature = new Temperature(1700);
     @Setter
     private Temperature externalTemperature = new Temperature(1600);
-    private ActiveSchedules activeSchedules;
+    private ActiveSchedules activeSchedules = new ActiveSchedules();
     private Boolean active = false;
     private final EventBus eventBus;
-    private DateHelper dateHelper;
-    private ActiveTemperature activeTemperature;
+    private ActiveTemperature activeTemperature = manualTemperature;
 
 
     public void setManualTemperature(Temperature manualTemperature) {
@@ -41,7 +40,7 @@ public class ThermostateStatus {
 
     public void updateStatus() {
         var previous = active;
-        active = getActiveTemperature().higherThan(currentTemperature);
+        active = activeTemperature.higherThan(currentTemperature);
         if (previous != null) {
             eventBus.emit(ThermostateSwitched.of(active));
         }
@@ -51,11 +50,15 @@ public class ThermostateStatus {
         adapter.setActiveStatus(active);
     }
 
-    public void makeAwareOfSchedules(List<Schedule> schedules) {
-        schedules.forEach(this::makeAwareOfSchedule);
+    public void makeAwareOfSchedules(List<Schedule> schedules, DateHelper dateHelper) {
+        boolean wasEmpty = schedules.isEmpty();
+        schedules.forEach(it -> makeAwareOfSchedule(it, dateHelper));
+        if (wasEmpty != schedules.isEmpty()) {
+            activeTemperature = this.activeSchedules;
+        }
     }
 
-    public void makeAwareOfSchedule(Schedule schedule) {
+    public void makeAwareOfSchedule(Schedule schedule, DateHelper dateHelper) {
         activeSchedules.makeAwareOf(schedule, dateHelper);
 
     }
