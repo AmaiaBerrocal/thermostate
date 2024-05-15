@@ -7,16 +7,16 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class TargetTemperatureChanged extends TemperatureEvent {
+public class ManualTemperatureChanged extends TemperatureEvent {
     public final Integer amount;
 
-    public TargetTemperatureChanged(Integer amount) {
+    public ManualTemperatureChanged(Integer amount) {
         super(UUID.randomUUID().toString());
         this.amount = amount;
     }
 
-    public static TargetTemperatureChanged as(Integer amount) {
-        return new TargetTemperatureChanged(amount);
+    public static ManualTemperatureChanged as(Integer amount) {
+        return new ManualTemperatureChanged(amount);
     }
 
     @Override

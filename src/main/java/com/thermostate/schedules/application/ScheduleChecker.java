@@ -16,23 +16,6 @@ public class ScheduleChecker {
     private DateHelper dateHelper;
 
     public void execute(List<Schedule> schedules) {
-        var timeNow = dateHelper.nowAsNumber();
         status.makeAwareOfSchedules(schedules);
-                /*.filter(Schedule::isActive)
-                .filter(this::isActiveAtThisWeekDay)
-                .filter(schedule -> isActiveAtThisTime(schedule, timeNow))
-                .findFirst()
-                .ifPresent(schedule -> status.setActiveSchedule(schedule));*/
     }
-
-    private boolean isActiveAtThisWeekDay(Schedule schedule) {
-        return schedule.getWeekDays().contains(dateHelper.nowAsDayOfWeek());
-    }
-
-    private boolean isActiveAtThisTime(Schedule schedule, int timeNow) {
-        return dateHelper.hourOfDayAsNumber(schedule.getTimeFrom()) < timeNow &&
-                dateHelper.hourOfDayAsNumber(schedule.getTimeTo()) >= timeNow;
-    }
-
-
 }
