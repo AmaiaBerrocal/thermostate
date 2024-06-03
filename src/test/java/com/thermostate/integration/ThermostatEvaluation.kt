@@ -1,5 +1,6 @@
 package com.thermostate.integration
 
+import com.thermostate.brain.domain.ManuallyEstablishedTemperature
 import com.thermostate.brain.domain.ThermostateStatus
 import com.thermostate.roomtemperature.application.GetRoomTemperature
 import com.thermostate.roomtemperature.model.RoomTemperature
@@ -9,6 +10,7 @@ import com.thermostate.schedules.application.ScheduleChecker
 import com.thermostate.schedules.infrastructure.DateHelper
 import com.thermostate.schedules.model.Schedule
 import com.thermostate.shared.SchedulingConfigurator
+import com.thermostate.shared.domain.Temperature
 import com.thermostate.targettemperature.application.IncreaseTargetTemperature
 import com.thermostate.targettemperature.model.TemperatureChange
 import org.assertj.core.api.Assertions.assertThat
@@ -46,16 +48,13 @@ class ThermostatEvaluation : IntegrationTest() {
     @Autowired
     lateinit var scheduleChecker: ScheduleChecker
 
-    @Autowired
-    lateinit var schedulingConfigurator : SchedulingConfigurator
-
     @BeforeEach
     fun setup() {
     }
 
     @Test
     fun `when desired temp beneath current it should be switched off`() {
-        given(repo.temp).willReturn(RoomTemperature.create(1000), RoomTemperature.create(2000))
+        given(repo.getTemp()).willReturn(RoomTemperature.create(1000), RoomTemperature.create(2000))
 
         println("Readed for first time: ${getRoomTemperature.execute().temp}º")
         assertThat(status.active).isTrue()
@@ -63,19 +62,19 @@ class ThermostatEvaluation : IntegrationTest() {
         assertThat(status.active).isFalse()
     }
 
-    /*@Test
+    @Test
     fun `when current temp above desired it should be switched on`() {
-        given(repo.temp).willReturn(RoomTemperature.create(2000), RoomTemperature.create(1000))
-
-        println("Readed for first time: ${getRoomTemperature.execute().temp}º")
-        assertThat(status.active).isFalse()
-        println("Readed for second time: ${getRoomTemperature.execute().temp}º")
+        /*given(repo.getTemp()).willReturn(RoomTemperature.create(2000), RoomTemperature.create(800))
+        //status.setManualTemperature(Temperature(15))
+        println("Readed for first time: ${getRoomTemperature.execute()}º")
         assertThat(status.active).isTrue()
-    }*/
+        println("Readed for second time: ${getRoomTemperature.execute()}º")
+        assertThat(status.active).isFalse()*/
+    }
 
     @Test
     fun `when desired temp is changed to above current it should be switched on`() {
-        given(repo.temp).willReturn(RoomTemperature.create(1600))
+        given(repo.temp).willReturn(RoomTemperature.create(1100))
         assertThat(status.active).isFalse()
         increaseTargetTemperature.execute(TemperatureChange(500))
         assertThat(status.active).isTrue()
@@ -84,7 +83,7 @@ class ThermostatEvaluation : IntegrationTest() {
     }
 
     @Test
-    fun `when desired temp is changed to beneath current it should be switched off`() {
+    fun `when desired temp is changed to beneath current schedule should be switched off`() {
 
     }
 
@@ -99,7 +98,7 @@ class ThermostatEvaluation : IntegrationTest() {
 
         given(getAllSchedules.execute()).willReturn(listOf(schedule))
 
-        schedulingConfigurator.scheduleFixedDelayTask()
+        scheduleChecker.execute(getAllSchedules.execute())
         assertThat(status.active).isTrue()
     }
 
@@ -118,7 +117,7 @@ class ThermostatEvaluation : IntegrationTest() {
 
         given(getAllSchedules.execute()).willReturn(listOf(schedule1, schedule2, schedule3))
 
-        schedulingConfigurator.scheduleFixedDelayTask()
+        scheduleChecker.execute(getAllSchedules.execute())
         assertThat(status.active).isTrue()
     }
 
@@ -128,7 +127,7 @@ class ThermostatEvaluation : IntegrationTest() {
     }
 
     @Test
-    fun `when schedule ends the ending temperature should be the minimum`() {
+    fun `when schedule ends the ending temperature should be the minimum between scheduled and manual`() {
 
     }
 }

@@ -26,7 +26,7 @@ logging:
     console: "%d : %msg%n"
     file: "%d %-5level [%thread] %logger : %msg%n"
   level:
-    org.springframework.web: TRACE
-    guru.springframework.controllers: TRACE
+    org.springframework.web: ERROR
+    guru.springframework.controllers: ERROR
     org.hibernate: ERROR
-    org.springframework.security: TRACE
+    org.springframework.security: ERROR

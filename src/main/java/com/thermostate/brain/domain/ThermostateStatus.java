@@ -41,7 +41,7 @@ public class ThermostateStatus {
     public void updateStatus() {
         var previous = active;
         active = activeTemperature.higherThan(currentTemperature);
-        if (previous != null) {
+        if (previous != active) {
             eventBus.emit(ThermostateSwitched.of(active));
         }
     }
@@ -60,6 +60,5 @@ public class ThermostateStatus {
 
     public void makeAwareOfSchedule(Schedule schedule, DateHelper dateHelper) {
         activeSchedules.makeAwareOf(schedule, dateHelper);
-
     }
 }
