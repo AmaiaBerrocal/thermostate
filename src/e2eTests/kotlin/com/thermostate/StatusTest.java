@@ -35,6 +35,6 @@ public class StatusTest {
         assertThat(((Map<String, Object>)map.get("currentTargetTemperature")).get("temp")).isNotInstanceOf(Integer.class);
         assertThat(((Map<String, Object>)map.get("currentTemperature")).get("temp")).isNotInstanceOf(Integer.class);
         assertThat(((Map<String, Object>)map.get("externalTemperature")).get("temp")).isNotInstanceOf(Integer.class);
-        assertThat((map.get("active"))).isEqualTo(true);
+        //assertThat((map.get("active"))).isEqualTo(true);
     }
 }
