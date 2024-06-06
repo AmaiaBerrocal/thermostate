@@ -12,7 +12,7 @@ import java.util.UUID;
 
 import static com.thermostate.shared.HttpRequestsUtils.createSingleUser;
 
-public class SchedulesTest {
+public class ActiveSchedulesTest {
     E2EDB e2edb;
     @BeforeEach
     public void setup() {

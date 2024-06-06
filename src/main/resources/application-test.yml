@@ -9,6 +9,7 @@ thermostate:
 spring:
   datasource:
     url: "jdbc:sqlite:./assets/thermostate.db"
+    driverClassName: "org.sqlite.JDBC"
   jpa:
     database-platform: org.hibernate.community.dialect.SQLiteDialect
     show-sql: false
@@ -26,7 +27,7 @@ logging:
     console: "%d : %msg%n"
     file: "%d %-5level [%thread] %logger : %msg%n"
   level:
-    org.springframework.web: ERROR
-    guru.springframework.controllers: ERROR
+    org.springframework.web: TRACE
+    guru.springframework.controllers: TRACE
     org.hibernate: ERROR
-    org.springframework.security: ERROR
+    org.springframework.security: TRACE
