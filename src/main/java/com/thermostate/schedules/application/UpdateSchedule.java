@@ -18,8 +18,8 @@ public class UpdateSchedule {
         this.eventBus = eventBus;
     }
 
-    public void execute(UUID id, String weekDays, String timeFrom, String timeTo, Boolean active, Integer minTemp) {
-        Schedule schedule = new Schedule(id, weekDays, timeFrom, timeTo, active, minTemp, LocalDate.now());
+    public void execute(UUID id, String weekDays, String timeFrom, Boolean active, Integer minTemp) {
+        Schedule schedule = new Schedule(id, weekDays, timeFrom, active, minTemp, LocalDate.now());
         schedule.update(scheduleRepo);
         schedule.publishEventsIn(eventBus);
     }

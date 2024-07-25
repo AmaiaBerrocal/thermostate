@@ -21,7 +21,7 @@ public class RoomTemperatureEventsHandler extends EventHandler<RoomTemperatureRe
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMPLETION)
     public void handle(RoomTemperatureRead event) {
-        status.setCurrentTemperature(Temperature.of(event.temp));
+        status.setRoomTemperature(Temperature.of(event.temp));
         status.activate(adapter);
     }
 }

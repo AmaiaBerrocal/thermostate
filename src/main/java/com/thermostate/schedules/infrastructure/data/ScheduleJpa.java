@@ -19,8 +19,6 @@ public class ScheduleJpa {
     private UUID id;
     @Column(name="week_days")
     private String weekDays;
-    @Column(name="time_to")
-    private String timeTo;
     @Column(name="time_from")
     private String timeFrom;
     private Boolean active;
@@ -30,10 +28,10 @@ public class ScheduleJpa {
     private LocalDate createdAt;
 
     public static ScheduleJpa fromDomain(Schedule schedule) {
-        return new ScheduleJpa(schedule.id, schedule.weekDays, schedule.timeTo, schedule.timeFrom, true, schedule.minTemp, schedule.createdAt);
+        return new ScheduleJpa(schedule.id, schedule.weekDays, schedule.timeFrom, true, schedule.minTemp, schedule.createdAt);
     }
 
     public Schedule toDomain() {
-        return new Schedule(this.id, this.weekDays, this.timeFrom, this.timeTo, this.active, this.minTemp, this.createdAt);
+        return new Schedule(this.id, this.weekDays, this.timeFrom, this.active, this.minTemp, this.createdAt);
     }
 }

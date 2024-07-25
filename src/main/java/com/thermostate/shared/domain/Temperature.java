@@ -18,4 +18,8 @@ public class Temperature extends AggregateRoot {
     public Integer getTemp() {
         return temp;
     }
+
+    public Boolean higherThan(Temperature currentTemperature) {
+        return temp > currentTemperature.getTemp();
+    }
 }

@@ -24,10 +24,9 @@ public class CreateSchedule {
     public void execute(UUID id,
                         String weekDays,
                         String timeFrom,
-                        String timeTo,
                         Boolean active,
                         Integer minTemp) {
-        Schedule schedule = new Schedule(id,weekDays, timeFrom, timeTo, active, minTemp, LocalDate.now());
+        Schedule schedule = new Schedule(id,weekDays, timeFrom, active, minTemp, LocalDate.now());
         schedule.createIn(scheduleRepo);
         schedule.publishEventsIn(eventBus);
     }

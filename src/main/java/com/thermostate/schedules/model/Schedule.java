@@ -1,10 +1,10 @@
 package com.thermostate.schedules.model;
 
-import com.thermostate.schedules.infrastructure.DateHelper;
 import com.thermostate.schedules.model.events.ScheduleCreated;
 import com.thermostate.schedules.model.events.ScheduleDeleted;
 import com.thermostate.schedules.model.events.ScheduleUpdated;
 import com.thermostate.shared.ClientError;
+import com.thermostate.shared.domain.Temperature;
 import com.thermostate.shared.events.domain.AggregateRoot;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,16 +23,14 @@ public class Schedule extends AggregateRoot {
     public final UUID id;
     public String weekDays;
     public String timeFrom;
-    public String timeTo;
     public Boolean active;
     public Integer minTemp;
     public LocalDate createdAt;
 
-    public Schedule(UUID id, String weekDays, String timeFrom, String timeTo, Boolean active, Integer minTemp, LocalDate createdAt) {
+    public Schedule(UUID id, String weekDays, String timeFrom, Boolean active, Integer minTemp, LocalDate createdAt) {
         this.id = id;
         this.weekDays = weekDays;
         this.timeFrom = timeFrom;
-        this.timeTo = timeTo;
         this.active = active;
         this.minTemp = minTemp;
         this.createdAt = createdAt;
@@ -46,7 +44,6 @@ public class Schedule extends AggregateRoot {
     private void checkData() {
         if (!(isValidWeekDays(weekDays)
                 && isValidTime(timeFrom)
-                && isValidTime(timeTo)
                 && isValidActive(active)
                 && isValidMinTemp(minTemp))){
             throw ClientError.becauseInvalidDataFromClient();
@@ -58,10 +55,6 @@ public class Schedule extends AggregateRoot {
                 .filter(c -> !"LMXJVSD".contains(c) || c.length() != 1)
                 .findAny()
                 .isEmpty();
-    }
-
-    public boolean isValidDateTo(LocalDate dateTo) {
-        return dateTo != null;
     }
 
     public boolean isValidTime(String timeFrom) {
@@ -96,17 +89,20 @@ public class Schedule extends AggregateRoot {
         record(new ScheduleDeleted(id));
     }
 
-    public boolean isActive(DateHelper dateHelper) {
-        return active && isActiveAtThisWeekDay(dateHelper) && isActiveAtThisTime(dateHelper);
+    public boolean isActive() {
+        return active && isActiveAtThisWeekDay() && isActiveAtThisTime();
     }
 
-    private boolean isActiveAtThisWeekDay(DateHelper dateHelper) {
-        return weekDays.contains(dateHelper.nowAsDayOfWeek());
+    private boolean isActiveAtThisWeekDay() {
+        return weekDays.contains(DateCalculator.nowAsDayOfWeek());
     }
 
-    private boolean isActiveAtThisTime(DateHelper dateHelper) {
-        int timeNow = dateHelper.nowAsNumber();
-        return dateHelper.hourOfDayAsNumber(timeFrom) < timeNow &&
-                dateHelper.hourOfDayAsNumber(timeTo) >= timeNow;
+    private boolean isActiveAtThisTime() {
+        int timeNow = DateCalculator.nowAsNumber();
+        return DateCalculator.timeOfDayAsNumber(timeFrom) == timeNow;
+    }
+
+    public Temperature getMinTemperature() {
+        return Temperature.of(minTemp);
     }
 }
