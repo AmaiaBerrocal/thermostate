@@ -26,7 +26,7 @@ public class SchedulingConfigurator {
     GetAllSchedules getAllSchedules;
     ScheduleChecker scheduleChecker;
 
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 60001)
     public void scheduleFixedDelayTask() {
         scheduleChecker.execute(getAllSchedules.execute());
     }

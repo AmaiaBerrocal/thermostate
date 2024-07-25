@@ -32,7 +32,7 @@ public class ActiveSchedulesTest {
                 .assertThatResponseIsOk();
         //Then
         res.assertThatBodyContains("""
-                "weekDays":"L,M,X","timeFrom":"16:00","timeTo":"20:16","active":true,"minTemp":15
+                "weekDays":"L,M,X","timeFrom":"16:00","active":true,"minTemp":15
                 """.trim());
     }
 
@@ -44,12 +44,11 @@ public class ActiveSchedulesTest {
                 .withContentType("application/json;charset=UTF-8")
                 .sendAPost(Map.of("weekDays", "L,M,F",
                         "timeFrom", "16:00",
-                        "timeTo", "20:16",
                         "active", "true",
                         "minTemp", "15"))
                 .assertThatResponseCodeIs(400);
         e2edb
-                .doQuery("SELECT * FROM SCHEDULES WHERE TIME_TO = '20:16'")
+                .doQuery("SELECT * FROM SCHEDULES WHERE TIME_FROM = '16:00'")
                 .assertThatNumberOfResults(0);
     }
 
@@ -65,7 +64,7 @@ public class ActiveSchedulesTest {
                 .assertThatResponseIsOk();
         //Then
         res.assertThatBodyContains("""
-                "weekDays":"L,M,X","timeFrom":"16:00","timeTo":"20:16","active":true,"minTemp":15
+                "weekDays":"L,M,X","timeFrom":"16:00","active":true,"minTemp":15
                 """.trim());
     }
 
@@ -101,7 +100,7 @@ public class ActiveSchedulesTest {
                 .assertThatResponseIsOk();
         //then
         res.assertThatBodyContains("""
-                "weekDays":"L,M,X","timeFrom":"16:00","timeTo":"20:16","active":true,"minTemp":15
+                "weekDays":"L,M,X","timeFrom":"16:00","active":true,"minTemp":15
                 """.trim());
     }
 
@@ -117,7 +116,6 @@ public class ActiveSchedulesTest {
                 .withContentType("application/json;charset=UTF-8")
                 .sendAPut(Map.of("weekDays", "L,M,X,J",
                         "timeFrom", "17:00",
-                        "timeTo", "20:17",
                         "active", false,
                         "minTemp", "17",
                         "id", uuid.toString()));
@@ -139,7 +137,6 @@ public class ActiveSchedulesTest {
                 .withContentType("application/json;charset=UTF-8")
                 .sendAPost(Map.of("weekDays", "L,M,X",
                         "timeFrom", "16:00",
-                        "timeTo", "20:16",
                         "active", "true",
                         "minTemp", "15",
                         "id", uuid.toString()));

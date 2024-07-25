@@ -16,6 +16,6 @@ public class ProcessOnManualTemperatureChanged extends EventHandler<ManualTemper
 
     @Override
     public void handle(ManualTemperatureChanged event) {
-        status.setManualTemperature(Temperature.of(event.amount + status.getManualTemperature().getTemp()));
+        status.setTargetTemperature(Temperature.of(event.amount + status.getTargetTemperature().getTemp()));
         status.activate(adapter);}
 }

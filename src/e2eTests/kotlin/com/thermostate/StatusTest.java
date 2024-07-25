@@ -30,10 +30,10 @@ public class StatusTest {
                 .withContentType("application/json;charset=UTF-8")
                 .sendAGet(Map.of())
                 .assertThatResponseIsOk();
-
-        var map = (Map<String, Object>)response.body().get("value"); // TODO: fix this
-        assertThat(((Map<String, Object>)map.get("currentTargetTemperature")).get("temp")).isNotInstanceOf(Integer.class);
-        assertThat(((Map<String, Object>)map.get("currentTemperature")).get("temp")).isNotInstanceOf(Integer.class);
+        var body = response.body();
+        var map = (Map<String, Object>)body.get("value"); // TODO: fix this
+        assertThat(((Map<String, Object>)map.get("targetTemperature")).get("temp")).isNotInstanceOf(Integer.class);
+        assertThat(((Map<String, Object>)map.get("roomTemperature")).get("temp")).isNotInstanceOf(Integer.class);
         assertThat(((Map<String, Object>)map.get("externalTemperature")).get("temp")).isNotInstanceOf(Integer.class);
         //assertThat((map.get("active"))).isEqualTo(true);
     }

@@ -47,7 +47,6 @@ public class SchedulesController {
                 scheduleCreateRequest.id,
                 scheduleCreateRequest.weekDays,
                 scheduleCreateRequest.timeFrom,
-                scheduleCreateRequest.timeTo,
                 scheduleCreateRequest.active,
                 scheduleCreateRequest.minTemp);
     }
@@ -77,7 +76,6 @@ public class SchedulesController {
         updateSchedule.execute(scheduleUpdateRequest.id,
                 scheduleUpdateRequest.weekDays,
                 scheduleUpdateRequest.timeFrom,
-                scheduleUpdateRequest.timeTo,
                 scheduleUpdateRequest.active,
                 scheduleUpdateRequest.minTemp);
     }
@@ -96,7 +94,6 @@ class ScheduleCreateRequest {
     UUID id;
     String weekDays;
     String timeFrom;
-    String timeTo;
     Boolean active;
     Integer minTemp;
 }
