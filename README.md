@@ -1,7 +1,5 @@
-[![Java CI with Gradle](https://github.com/AmaiaBerrocal/thermostate/actions/workflows/gradle.yml/badge.svg)](https://github.com/AmaiaBerrocal/thermostate/actions/workflows/gradle.yml)
-[![CodeQL](https://github.com/AmaiaBerrocal/thermostate/actions/workflows/codeql.yml/badge.svg)](https://github.com/AmaiaBerrocal/thermostate/actions/workflows/codeql.yml)
+# Thermostate [![Java CI with Gradle](https://github.com/AmaiaBerrocal/thermostate/actions/workflows/gradle.yml/badge.svg)](https://github.com/AmaiaBerrocal/thermostate/actions/workflows/gradle.yml) [![CodeQL](https://github.com/AmaiaBerrocal/thermostate/actions/workflows/codeql.yml/badge.svg)](https://github.com/AmaiaBerrocal/thermostate/actions/workflows/codeql.yml)
 
-# Thermostate
 
 A thermostate to be used with our Raspberry pi 2B (or 3B) at home.
 
