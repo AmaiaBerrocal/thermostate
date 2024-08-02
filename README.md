@@ -1,4 +1,5 @@
 [![Java CI with Gradle](https://github.com/AmaiaBerrocal/thermostate/actions/workflows/gradle.yml/badge.svg)](https://github.com/AmaiaBerrocal/thermostate/actions/workflows/gradle.yml)
+[![CodeQL](https://github.com/AmaiaBerrocal/thermostate/actions/workflows/gradle.yml/badge.svg)](https://github.com/AmaiaBerrocal/thermostate/actions/workflows/codeql.yml)
 
 # Thermostate
 
