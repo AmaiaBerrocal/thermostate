@@ -39,7 +39,7 @@ dependencies {
 	implementation "io.jsonwebtoken:jjwt-jackson:${jsonwebtoken}"
 	implementation "org.slf4j:slf4j-api:2.0.9"
 	implementation "org.xerial:sqlite-jdbc:${sqliteVersion}"
-    implementation group: 'com.google.guava', name: 'guava', version: "${guavaVersion}"
+	implementation group: 'com.google.guava', name: 'guava', version: "${guavaVersion}"
 	compileOnly "org.projectlombok:lombok:${lombok}"
 	developmentOnly "org.springframework.boot:spring-boot-devtools:${springboot}"
 	annotationProcessor "org.projectlombok:lombok:${lombok}"
@@ -52,8 +52,12 @@ dependencies {
 	testImplementation "com.github.inigodm:E2EHelper:${e2eHelper}"
 	testImplementation "org.mockito:mockito-junit-jupiter:5.7.0"
 	testImplementation "org.springframework.boot:spring-boot-starter-test:${springboot}"
-	implementation group: 'net.datafaker', name: 'datafaker', version: "${faker}"}
-
+	implementation group: 'net.datafaker', name: 'datafaker', version: "${faker}"
+	implementation group: 'com.pi4j', name: 'pi4j-core', version: '2.6.1'
+	implementation group: 'com.pi4j', name: 'pi4j-plugin-raspberrypi', version: '2.6.1'
+	implementation 'com.pi4j:pi4j-plugin-pigpio:2.6.1'
+	implementation 'com.pi4j:pi4j-plugin-linuxfs:2.6.1'
+}
 
 
 test {

@@ -1,7 +1,7 @@
 package com.thermostate.schedules.infrastructure.data;
 
-import com.thermostate.schedules.model.Schedule;
-import com.thermostate.schedules.model.ScheduleRepo;
+import com.thermostate.schedules.domain.Schedule;
+import com.thermostate.schedules.domain.ScheduleRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
 package com.thermostate.schedules.application;
 
 import com.thermostate.brain.domain.ThermostateStatus;
-import com.thermostate.schedules.model.Schedule;
+import com.thermostate.schedules.domain.Schedule;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

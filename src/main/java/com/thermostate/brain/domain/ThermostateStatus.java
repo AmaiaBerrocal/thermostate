@@ -1,8 +1,8 @@
 package com.thermostate.brain.domain;
 
 import com.thermostate.brain.domain.events.ThermostateSwitched;
-import com.thermostate.schedules.model.Schedule;
-import com.thermostate.schedules.model.events.EventBus;
+import com.thermostate.schedules.domain.Schedule;
+import com.thermostate.schedules.domain.events.EventBus;
 import com.thermostate.shared.domain.Temperature;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.thermostate.users.infrastucture.data;
 
-import com.thermostate.users.model.User;
-import com.thermostate.users.model.UserRepo;
+import com.thermostate.users.domain.User;
+import com.thermostate.users.domain.UserRepo;
 import org.springframework.stereotype.Component;
 
 @Component

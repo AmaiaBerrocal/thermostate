@@ -1,8 +1,8 @@
 package com.thermostate.roomtemperature.application;
 
-import com.thermostate.roomtemperature.model.RoomTemperature;
-import com.thermostate.roomtemperature.model.RoomTemperatureRepo;
-import com.thermostate.schedules.model.events.EventBus;
+import com.thermostate.roomtemperature.domain.RoomTemperature;
+import com.thermostate.roomtemperature.domain.RoomTemperatureRepo;
+import com.thermostate.schedules.domain.events.EventBus;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

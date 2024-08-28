@@ -6,7 +6,7 @@ import com.thermostate.targettemperature.application.DecreaseTargetTemperature;
 import com.thermostate.targettemperature.application.GetTargetTemperature;
 import com.thermostate.targettemperature.application.IncreaseTargetTemperature;
 import com.thermostate.shared.domain.Temperature;
-import com.thermostate.targettemperature.model.TemperatureChange;
+import com.thermostate.targettemperature.domain.TemperatureChange;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

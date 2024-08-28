@@ -2,13 +2,13 @@ package com.thermostate.integration
 
 import com.thermostate.brain.domain.ThermostateStatus
 import com.thermostate.roomtemperature.application.GetRoomTemperature
-import com.thermostate.roomtemperature.model.RoomTemperature
-import com.thermostate.roomtemperature.model.RoomTemperatureRepo
+import com.thermostate.roomtemperature.domain.RoomTemperature
+import com.thermostate.roomtemperature.domain.RoomTemperatureRepo
 import com.thermostate.schedules.application.GetAllSchedules
 import com.thermostate.schedules.application.ScheduleChecker
-import com.thermostate.schedules.model.Schedule
+import com.thermostate.schedules.domain.Schedule
 import com.thermostate.targettemperature.application.IncreaseTargetTemperature
-import com.thermostate.targettemperature.model.TemperatureChange
+import com.thermostate.targettemperature.domain.TemperatureChange
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
