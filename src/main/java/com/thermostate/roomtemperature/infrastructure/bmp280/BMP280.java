@@ -5,10 +5,8 @@ import com.pi4j.context.Context;
 import com.pi4j.io.i2c.I2C;
 import com.pi4j.io.i2c.I2CConfig;
 import com.pi4j.io.i2c.I2CProvider;
-import com.thermostate.roomtemperature.domain.RoomTemperature;
-import com.thermostate.roomtemperature.domain.RoomTemperatureRepo;
 
-public class RoomTemperatureBMP280Repo implements RoomTemperatureRepo {
+public class BMP280 {
 
     private static final int BMP280_ADDRESS = 0x76; // Dirección I2C del BMP280
     private static final int BMP280_REGISTER_TEMP_MSB = 0xFA; // Registro de temperatura MSB
@@ -16,11 +14,7 @@ public class RoomTemperatureBMP280Repo implements RoomTemperatureRepo {
 
     private I2C device;
 
-    public RoomTemperatureBMP280Repo() {
-        this(Pi4J.newAutoContext());
-    }
-
-    public RoomTemperatureBMP280Repo(Context pi4j) {
+    public BMP280(Context pi4j) {
         I2CProvider i2cProvider = pi4j.provider("i2c");
 
         I2CConfig config = I2C.newConfigBuilder(pi4j)
@@ -31,6 +25,10 @@ public class RoomTemperatureBMP280Repo implements RoomTemperatureRepo {
 
         this.device = i2cProvider.create(config);
 
+        init();
+    }
+
+    private void init() {
         // Configuración básica del BMP280
         device.writeRegister(0xF4, (byte) 0x27); // Configura el sensor en modo normal
         device.writeRegister(0xF5, (byte) 0xA0); // Configura el filtro y la tasa de muestreo
@@ -44,9 +42,11 @@ public class RoomTemperatureBMP280Repo implements RoomTemperatureRepo {
 
         // last 4 bits are useless (mostly noise) so we remove them
         int rawTemperature = (msb << 12) | (lsb << 4) | (xlsb >> 4);
-        // to centigrades
+
         double var1 = (((double) rawTemperature) / 16384.0 - 5120.0) / 5120.0;
-        return var1 * 50.0; // To be adjusted
+        double temperature = var1 * 50.0; // To be adjusted
+
+        return temperature;
     }
 
     public double readPressure() {
@@ -56,7 +56,10 @@ public class RoomTemperatureBMP280Repo implements RoomTemperatureRepo {
 
         int rawPressure = (msb << 12) | (lsb << 4) | (xlsb >> 4);
 
-        return (double) rawPressure / 25600.0; // Ajusta según la calibración de tu sensor
+        // Cálculo de la presión en Pa
+        double pressure = (double) rawPressure / 25600.0; // Ajusta según la calibración de tu sensor
+
+        return pressure;
     }
 
     public static void main(String[] args) {
@@ -73,10 +76,5 @@ public class RoomTemperatureBMP280Repo implements RoomTemperatureRepo {
 
         // Cerrar el contexto al final del uso
         pi4j.shutdown();
-    }
-
-    @Override
-    public RoomTemperature getTemp() {
-        return RoomTemperature.create((int)(readTemperature() * 1000));
     }
 }
