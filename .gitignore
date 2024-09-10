@@ -1,7 +1,7 @@
 HELP.md
 .gradle
 build/
-!gradle/wrapper/gradle-wrapper.jar
+!../bme280-driver/gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 
@@ -40,7 +40,7 @@ gradlew
 
 gradlew.bat
 
-gradle/wrapper/
+../bme280-driver/gradle/wrapper/
 
 *.db
 

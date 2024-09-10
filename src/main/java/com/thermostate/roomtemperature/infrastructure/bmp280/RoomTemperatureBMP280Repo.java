@@ -7,7 +7,9 @@ import com.pi4j.io.i2c.I2CConfig;
 import com.pi4j.io.i2c.I2CProvider;
 import com.thermostate.roomtemperature.domain.RoomTemperature;
 import com.thermostate.roomtemperature.domain.RoomTemperatureRepo;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RoomTemperatureBMP280Repo implements RoomTemperatureRepo {
 
     private static final int BMP280_ADDRESS = 0x76; // Dirección I2C del BMP280
@@ -67,6 +69,9 @@ public class RoomTemperatureBMP280Repo implements RoomTemperatureRepo {
 
         double temperature = bmp280.readTemperature();
         double pressure = bmp280.readPressure();
+
+        System.out.println("Temperature: " + temperature + " °C");
+        System.out.println("Pressure: " + pressure + " Pa");
 
         System.out.println("Temperature: " + temperature + " °C");
         System.out.println("Pressure: " + pressure + " Pa");

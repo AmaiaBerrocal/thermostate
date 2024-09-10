@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.*;
 
-@Component
 public class RoomTemperatureFileRepo implements RoomTemperatureRepo {
     // this is the file in which my sensor writes the temperature that it measures
     final PropertiesLoader properties;
@@ -29,7 +28,6 @@ public class RoomTemperatureFileRepo implements RoomTemperatureRepo {
         return transformReaded(res);
     }
 
-    @Nullable
     private String readRoomTemperatureFromFile() {
         String roomTemperatureFile = properties.getRoomTemp().get("file");
         String markOnFile = properties.getRoomTemp().get("temp_mark_in_file");
