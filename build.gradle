@@ -48,7 +48,7 @@ dependencies {
 	testImplementation "org.junit.jupiter:junit-jupiter-api:${junit5version}"
 	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit5version}"
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.9.3")
-	testImplementation group: 'org.assertj', name: 'assertj-core', version: "${assertJVersion}"
+	implementation group: 'org.assertj', name: 'assertj-core', version: "${assertJVersion}"
 	testImplementation "com.github.inigodm:E2EHelper:${e2eHelper}"
 	testImplementation "org.mockito:mockito-junit-jupiter:5.7.0"
 	testImplementation "org.springframework.boot:spring-boot-starter-test:${springboot}"

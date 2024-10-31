@@ -22,6 +22,7 @@ public class LoginUser {
     public String execute(String name, String password) {
         User loginUser = userRepo.getByName(name);
         if (loginUser == null) {
+            System.out.println("Wrong login");
             throw ClientError.becauseInvalidDataFromClient();
         }
         return createBearer(password, loginUser);
