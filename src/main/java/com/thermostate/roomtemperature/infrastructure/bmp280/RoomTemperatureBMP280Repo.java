@@ -7,9 +7,11 @@ import com.pi4j.io.i2c.I2CConfig;
 import com.pi4j.io.i2c.I2CProvider;
 import com.thermostate.roomtemperature.domain.RoomTemperature;
 import com.thermostate.roomtemperature.domain.RoomTemperatureRepo;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
+@Profile("prod")
 public class RoomTemperatureBMP280Repo implements RoomTemperatureRepo {
 
     private static final int BMP280_ADDRESS = 0x76; // Dirección I2C del BMP280
@@ -22,7 +24,7 @@ public class RoomTemperatureBMP280Repo implements RoomTemperatureRepo {
         this(Pi4J.newAutoContext());
     }
 
-    public RoomTemperatureBMP280Repo(Context pi4j) {
+    private RoomTemperatureBMP280Repo(Context pi4j) {
         I2CProvider i2cProvider = pi4j.provider("i2c");
 
         I2CConfig config = I2C.newConfigBuilder(pi4j)
