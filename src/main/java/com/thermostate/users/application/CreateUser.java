@@ -16,19 +16,16 @@ import java.util.UUID;
 public class CreateUser {
     final UserRepo userRepo;
     final EventBus eventBus;
-    final RandomStringGenerator randomStringGenerator;
 
-    public CreateUser(UserRepo userRepo, EventBus eventBus, RandomStringGenerator randomStringGenerator) {
+    public CreateUser(UserRepo userRepo, EventBus eventBus) {
         this.userRepo = userRepo;
         this.eventBus = eventBus;
-        this.randomStringGenerator = randomStringGenerator;
     }
 
     public void execute(UUID uuid, String name, String password, String email, UserType type, UserType currentUserType) {
         if (password == null) throw ClientError.becauseInvalidDataFromClient();
         checkPermissions(currentUserType);
-        String salt = randomStringGenerator.generate();
-        User user = User.with(uuid, name, HashGenerator.generate(password, salt), email, salt, type, true);
+        User user = User.with(uuid, name, password, email, type, true);
         user.create(userRepo);
         user.publishEventsIn(eventBus);
     }

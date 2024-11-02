@@ -38,7 +38,7 @@ public class User extends AggregateRoot {
     }
 
     public boolean checkIfAuthenticated(String pass) {
-        String loginUserHash = HashGenerator.generate(pass, salt);
+        String loginUserHash = HashGenerator.generateHashedPassword(pass, salt);
         if (loginUserHash.equals(password)) {
             record(new UserLoggedIn(name));
             return true;
@@ -50,13 +50,23 @@ public class User extends AggregateRoot {
 
     public static User with(UUID uuid,
                             String name,
-                            String password,
+                            String hashedPassword,
                             String email,
                             String salt,
                             UserType type,
                             Boolean isActive) {
-        if (null == password) throw ClientError.becauseInvalidDataFromClient();
-        return new User(uuid, name, password, email, salt, type, isActive);
+        if (null == hashedPassword) throw ClientError.becauseInvalidDataFromClient();
+        return new User(uuid, name, hashedPassword, email, salt, type, isActive);
+    }
+
+    public static User with(UUID uuid,
+                            String name,
+                            String password,
+                            String email,
+                            UserType type,
+                            Boolean isActive) {
+        String salt = HashGenerator.generateRandomString();
+        return User.with(uuid, name, HashGenerator.generateHashedPassword(password, salt), email, salt, type, isActive);
     }
 
     private void checkData(String name, String password, String email) {

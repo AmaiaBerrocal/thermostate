@@ -14,7 +14,7 @@ public class UserObjectMother{
         return User.with(
                 UUID.randomUUID(),
                 faker.starWars().character(),
-                HashGenerator.generate(pass, salt),
+                HashGenerator.generateHashedPassword(pass, salt),
 				"email@email.com",
 				salt,
                 faker.options().option(UserType.class),
