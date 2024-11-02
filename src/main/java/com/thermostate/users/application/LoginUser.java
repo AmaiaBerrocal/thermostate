@@ -1,10 +1,10 @@
 package com.thermostate.users.application;
 
-import com.thermostate.schedules.model.events.EventBus;
+import com.thermostate.schedules.domain.events.EventBus;
 import com.thermostate.spring.security.model.TokenService;
 import com.thermostate.shared.ClientError;
-import com.thermostate.users.model.User;
-import com.thermostate.users.model.UserRepo;
+import com.thermostate.users.domain.User;
+import com.thermostate.users.domain.UserRepo;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -2,7 +2,7 @@ package com.thermostate.brain.application;
 
 import com.thermostate.brain.domain.ThermostatAdapter;
 import com.thermostate.brain.domain.ThermostateStatus;
-import com.thermostate.roomtemperature.model.events.RoomTemperatureRead;
+import com.thermostate.roomtemperature.domain.events.RoomTemperatureRead;
 import com.thermostate.shared.domain.Temperature;
 import com.thermostate.shared.events.infrastructure.EventHandler;
 import lombok.AllArgsConstructor;

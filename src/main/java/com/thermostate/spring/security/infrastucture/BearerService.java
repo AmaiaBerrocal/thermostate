@@ -3,7 +3,7 @@ package com.thermostate.spring.security.infrastucture;
 import com.thermostate.spring.security.model.TokenService;
 import com.thermostate.spring.security.model.LogedInUser;
 import com.thermostate.users.infrastucture.data.UserType;
-import com.thermostate.users.model.User;
+import com.thermostate.users.domain.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -12,9 +12,6 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.UUID;
 
 @Component

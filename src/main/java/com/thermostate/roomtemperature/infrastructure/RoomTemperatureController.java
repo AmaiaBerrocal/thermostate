@@ -1,7 +1,6 @@
 package com.thermostate.roomtemperature.infrastructure;
 
-import com.thermostate.brain.infrastucture.RaspberryGPIOAdapter;
-import com.thermostate.roomtemperature.model.RoomTemperature;
+import com.thermostate.roomtemperature.domain.RoomTemperature;
 import com.thermostate.shared.ClientError;
 import com.thermostate.shared.ValueResponse;
 import com.thermostate.roomtemperature.application.GetRoomTemperature;

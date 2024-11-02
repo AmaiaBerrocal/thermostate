@@ -1,8 +1,8 @@
 package com.thermostate.externaltemperature.application;
 
-import com.thermostate.externaltemperature.model.ExternalTemperature;
-import com.thermostate.externaltemperature.model.ExternalTemperatureRepo;
-import com.thermostate.schedules.model.events.EventBus;
+import com.thermostate.externaltemperature.domain.ExternalTemperature;
+import com.thermostate.externaltemperature.domain.ExternalTemperatureRepo;
+import com.thermostate.schedules.domain.events.EventBus;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

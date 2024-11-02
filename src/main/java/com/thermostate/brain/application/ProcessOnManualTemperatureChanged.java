@@ -4,7 +4,7 @@ import com.thermostate.brain.domain.ThermostatAdapter;
 import com.thermostate.brain.domain.ThermostateStatus;
 import com.thermostate.shared.domain.Temperature;
 import com.thermostate.shared.events.infrastructure.EventHandler;
-import com.thermostate.targettemperature.model.event.ManualTemperatureChanged;
+import com.thermostate.targettemperature.domain.event.ManualTemperatureChanged;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

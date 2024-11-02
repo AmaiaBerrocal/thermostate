@@ -1,6 +1,6 @@
 package com.thermostate.stadistics.domain;
 
-import com.thermostate.roomtemperature.model.events.RoomTemperatureRead;
+import com.thermostate.roomtemperature.domain.events.RoomTemperatureRead;
 import com.thermostate.shared.events.domain.AggregateRoot;
 import lombok.RequiredArgsConstructor;
 

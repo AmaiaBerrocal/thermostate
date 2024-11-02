@@ -1,6 +1,6 @@
 package com.thermostate.users.infrastucture.data;
 
-import com.thermostate.users.model.User;
+import com.thermostate.users.domain.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

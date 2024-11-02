@@ -1,8 +1,8 @@
 package com.thermostate.schedules.infrastructure;
 
 import com.thermostate.schedules.application.*;
-import com.thermostate.schedules.model.Schedule;
-import com.thermostate.schedules.model.ScheduleView;
+import com.thermostate.schedules.domain.Schedule;
+import com.thermostate.schedules.domain.ScheduleView;
 import com.thermostate.shared.ClientError;
 import com.thermostate.shared.ValueResponse;
 import com.thermostate.spring.security.model.LogedInUser;

@@ -1,7 +1,7 @@
 package com.thermostate.schedules.application;
 
-import com.thermostate.schedules.model.ScheduleView;
-import com.thermostate.schedules.model.ScheduleRepo;
+import com.thermostate.schedules.domain.ScheduleView;
+import com.thermostate.schedules.domain.ScheduleRepo;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

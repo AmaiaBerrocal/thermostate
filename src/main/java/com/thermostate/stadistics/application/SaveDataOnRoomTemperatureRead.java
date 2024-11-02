@@ -1,6 +1,6 @@
 package com.thermostate.stadistics.application;
 
-import com.thermostate.roomtemperature.model.events.RoomTemperatureRead;
+import com.thermostate.roomtemperature.domain.events.RoomTemperatureRead;
 import com.thermostate.stadistics.domain.State;
 import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.Async;

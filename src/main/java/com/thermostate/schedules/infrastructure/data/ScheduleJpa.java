@@ -1,7 +1,7 @@
 package com.thermostate.schedules.infrastructure.data;
 
-import com.thermostate.schedules.model.Schedule;
-import com.thermostate.schedules.model.ScheduleView;
+import com.thermostate.schedules.domain.Schedule;
+import com.thermostate.schedules.domain.ScheduleView;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

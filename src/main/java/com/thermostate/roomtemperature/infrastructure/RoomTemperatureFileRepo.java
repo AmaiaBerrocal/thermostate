@@ -1,7 +1,7 @@
 package com.thermostate.roomtemperature.infrastructure;
 
-import com.thermostate.roomtemperature.model.RoomTemperature;
-import com.thermostate.roomtemperature.model.RoomTemperatureRepo;
+import com.thermostate.roomtemperature.domain.RoomTemperature;
+import com.thermostate.roomtemperature.domain.RoomTemperatureRepo;
 import com.thermostate.spring.properties.PropertiesLoader;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;

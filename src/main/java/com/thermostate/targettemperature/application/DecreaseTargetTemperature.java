@@ -1,8 +1,7 @@
 package com.thermostate.targettemperature.application;
 
-import com.thermostate.brain.domain.ThermostateStatus;
-import com.thermostate.schedules.model.events.EventBus;
-import com.thermostate.targettemperature.model.TemperatureChange;
+import com.thermostate.schedules.domain.events.EventBus;
+import com.thermostate.targettemperature.domain.TemperatureChange;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
