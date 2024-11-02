@@ -2,6 +2,7 @@ package com.thermostate.users.model;
 
 import com.thermostate.shared.ClientError;
 import com.thermostate.shared.events.domain.AggregateRoot;
+import com.thermostate.users.infrastucture.data.UserType;
 import com.thermostate.users.model.event.UserCreated;
 import com.thermostate.users.model.event.UserLoggedIn;
 import com.thermostate.users.model.event.UserLoginFailure;
@@ -17,14 +18,16 @@ public class User extends AggregateRoot {
     private final String password;
     private final String email;
     private final String salt;
+    private final UserType type;
     private final Boolean isActive;
 
-    private User(UUID id, String name, String password, String email, String salt, Boolean isActive) {
+    private User(UUID id, String name, String password, String email, String salt, UserType type, Boolean isActive) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;
         this.salt = salt;
+        this.type = type;
         this.isActive = isActive;
         checkData(name, password, email);
     }
@@ -45,9 +48,15 @@ public class User extends AggregateRoot {
         }
     }
 
-    public static User with(UUID uuid, String name, String password, String email, String salt, Boolean isActive) {
+    public static User with(UUID uuid,
+                            String name,
+                            String password,
+                            String email,
+                            String salt,
+                            UserType type,
+                            Boolean isActive) {
         if (null == password) throw ClientError.becauseInvalidDataFromClient();
-        return new User(uuid, name, password, email, salt, isActive);
+        return new User(uuid, name, password, email, salt, type, isActive);
     }
 
     private void checkData(String name, String password, String email) {

@@ -6,7 +6,7 @@ import com.thermostate.roomtemperature.model.RoomTemperature
 import com.thermostate.roomtemperature.model.RoomTemperatureRepo
 import com.thermostate.schedules.application.GetAllSchedules
 import com.thermostate.schedules.application.ScheduleChecker
-import com.thermostate.schedules.model.Schedule
+import com.thermostate.schedules.model.ScheduleView
 import com.thermostate.targettemperature.application.IncreaseTargetTemperature
 import com.thermostate.targettemperature.model.TemperatureChange
 import org.assertj.core.api.Assertions.assertThat
@@ -83,7 +83,14 @@ class ThermostatEvaluation : IntegrationTest() {
     fun `when programmed temp changes to above current it should be switched on`() {
         //given(repo.temp).willReturn(RoomTemperature.create(900))
         val schedule =
-            Schedule(UUID.randomUUID(), "L", "09:00", true, 2500, LocalDate.now())
+            ScheduleView(
+                UUID.randomUUID(),
+                "L",
+                "09:00",
+                true,
+                2500,
+                LocalDate.now()
+            )
 
         given(getAllSchedules.execute()).willReturn(listOf(schedule))
 
@@ -95,11 +102,32 @@ class ThermostatEvaluation : IntegrationTest() {
     fun `when they are many active schedules higher temp should be the target`() {
         //given(repo.temp).willReturn(RoomTemperature.create(900))
         val schedule1 =
-            Schedule(UUID.randomUUID(), "L", "09:00", true, 2500, LocalDate.now())
+            ScheduleView(
+                UUID.randomUUID(),
+                "L",
+                "09:00",
+                true,
+                2500,
+                LocalDate.now()
+            )
         val schedule2 =
-            Schedule(UUID.randomUUID(), "L", "09:00", true, 2600, LocalDate.now())
+            ScheduleView(
+                UUID.randomUUID(),
+                "L",
+                "09:00",
+                true,
+                2600,
+                LocalDate.now()
+            )
         val schedule3 =
-            Schedule(UUID.randomUUID(), "L", "09:00", true, 2400, LocalDate.now())
+            ScheduleView(
+                UUID.randomUUID(),
+                "L",
+                "09:00",
+                true,
+                2400,
+                LocalDate.now()
+            )
 
         given(getAllSchedules.execute()).willReturn(listOf(schedule1, schedule2, schedule3))
 

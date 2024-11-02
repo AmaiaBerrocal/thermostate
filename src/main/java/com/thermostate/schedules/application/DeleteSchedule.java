@@ -17,8 +17,7 @@ public class DeleteSchedule {
         this.eventBus = eventBus;
     }
 
-    public void execute(UUID id) {
-        Schedule schedule = new Schedule(id);
+    public void execute(Schedule schedule) {
         schedule.delete(scheduleRepo);
         schedule.publishEventsIn(eventBus);
     }

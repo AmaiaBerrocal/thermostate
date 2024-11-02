@@ -1,12 +1,15 @@
 package com.thermostate.users.infrastucture;
 
+import com.thermostate.spring.security.model.LogedInUser;
 import com.thermostate.spring.security.model.TokenService;
 import com.thermostate.shared.ClientError;
 import com.thermostate.shared.ValueResponse;
 import com.thermostate.users.application.CreateUser;
 import com.thermostate.users.application.LoginUser;
+import com.thermostate.users.infrastucture.data.UserType;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -29,11 +32,15 @@ public class UsersController {
 
     @PostMapping("/user")
     public void userCreation(@RequestBody UserCreateRequest userCreateRequest) {
+        LogedInUser loginUser = (LogedInUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         createUser.execute(
                 UUID.randomUUID(),
                 userCreateRequest.name,
                 userCreateRequest.password,
-                userCreateRequest.email);
+                userCreateRequest.email,
+                UserType.valueOf(userCreateRequest.userType),
+                loginUser.userType()
+        );
     }
 
     @PostMapping("/login")
@@ -54,6 +61,7 @@ public class UsersController {
 @AllArgsConstructor
 class UserCreateRequest {
 
+    String userType;
     String password;
     String name;
     String email;

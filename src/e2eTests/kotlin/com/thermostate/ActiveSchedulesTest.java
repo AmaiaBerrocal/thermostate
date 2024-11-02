@@ -1,6 +1,7 @@
 package com.thermostate;
 
 import com.thermostate.shared.HttpRequestsUtils;
+import com.thermostate.users.infrastucture.data.UserType;
 import db.E2EDB;
 import http.E2ERequest;
 import http.E2EResponse;
@@ -34,6 +35,23 @@ public class ActiveSchedulesTest {
         res.assertThatBodyContains("""
                 "weekDays":"L,M,X","timeFrom":"16:00","active":true,"minTemp":15
                 """.trim());
+    }
+
+    @Test
+    void should_not_create_an_schedule_if_not_allowed() {
+        HttpRequestsUtils.createUser("test", "pass", "email@email.com", UserType.LOCALIZABLE_USER.name());
+        UUID uuid = UUID.randomUUID();
+
+        var response = E2ERequest
+                .to("http://127.0.0.1:8080/schedule")
+                .withABearer(() -> HttpRequestsUtils.getBearer("test", "pass"))
+                .withContentType("application/json;charset=UTF-8")
+                .sendAPost(Map.of("weekDays", "L,M,X",
+                        "timeFrom", "16:00",
+                        "active", "true",
+                        "minTemp", "15",
+                        "id", uuid.toString()));
+        response.assertThatResponseCodeIs(401);
     }
 
     @Test

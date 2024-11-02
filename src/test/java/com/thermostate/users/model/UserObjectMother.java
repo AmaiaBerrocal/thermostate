@@ -1,5 +1,6 @@
 package com.thermostate.users.model;
 
+import com.thermostate.users.infrastucture.data.UserType;
 import com.thermostate.users.model.service.HashGenerator;
 import net.datafaker.Faker;
 
@@ -16,6 +17,7 @@ public class UserObjectMother{
                 HashGenerator.generate(pass, salt),
 				"email@email.com",
 				salt,
+                faker.options().option(UserType.class),
                 true);
     }
 }

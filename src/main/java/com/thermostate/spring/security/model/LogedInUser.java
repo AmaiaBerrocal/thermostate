@@ -1,6 +1,8 @@
 package com.thermostate.spring.security.model;
 
+import com.thermostate.users.infrastucture.data.UserType;
+
 import java.util.UUID;
 
-public record LogedInUser(String name, String email, UUID id) {
+public record LogedInUser(String name, String email, UUID id, UserType userType) {
 }

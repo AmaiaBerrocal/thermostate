@@ -5,8 +5,8 @@ import java.util.UUID;
 
 public interface ScheduleRepo {
     void create(Schedule schedule);
-    Schedule getById(UUID id);
-    List<Schedule> getAll();
+    ScheduleView getById(UUID id);
+    List<ScheduleView> getAll();
     void update(Schedule schedule);
     void deleteById(UUID id);
 }

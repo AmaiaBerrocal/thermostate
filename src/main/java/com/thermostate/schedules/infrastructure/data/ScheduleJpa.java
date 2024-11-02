@@ -1,6 +1,7 @@
 package com.thermostate.schedules.infrastructure.data;
 
 import com.thermostate.schedules.model.Schedule;
+import com.thermostate.schedules.model.ScheduleView;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,10 +29,10 @@ public class ScheduleJpa {
     private LocalDate createdAt;
 
     public static ScheduleJpa fromDomain(Schedule schedule) {
-        return new ScheduleJpa(schedule.id, schedule.weekDays, schedule.timeFrom, true, schedule.minTemp, schedule.createdAt);
+        return new ScheduleJpa(schedule.id, schedule.weekDays, schedule.timeFrom, schedule.active, schedule.minTemp, schedule.createdAt);
     }
 
-    public Schedule toDomain() {
-        return new Schedule(this.id, this.weekDays, this.timeFrom, this.active, this.minTemp, this.createdAt);
+    public ScheduleView toDomain() {
+        return new ScheduleView(this.id, this.weekDays, this.timeFrom, this.active, this.minTemp, this.createdAt);
     }
 }

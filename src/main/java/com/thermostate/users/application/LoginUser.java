@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LoginUser {
-    final UserRepo userRepo;
-    final EventBus eventBus;
-    final TokenService tokenService;
+    public final UserRepo userRepo;
+    public final EventBus eventBus;
+    public final TokenService tokenService;
 
     public LoginUser(UserRepo userRepo, EventBus eventBus, TokenService tokenService) {
         this.userRepo = userRepo;
@@ -22,7 +22,6 @@ public class LoginUser {
     public String execute(String name, String password) {
         User loginUser = userRepo.getByName(name);
         if (loginUser == null) {
-            System.out.println("Wrong login");
             throw ClientError.becauseInvalidDataFromClient();
         }
         return createBearer(password, loginUser);

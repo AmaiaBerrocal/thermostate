@@ -52,7 +52,6 @@ dependencies {
 	testImplementation "com.github.inigodm:E2EHelper:${e2eHelper}"
 	testImplementation "org.mockito:mockito-junit-jupiter:5.7.0"
 	testImplementation "org.springframework.boot:spring-boot-starter-test:${springboot}"
-	implementation group: 'net.datafaker', name: 'datafaker', version: "${faker}"}
 	implementation group: 'net.datafaker', name: 'datafaker', version: "${faker}"
 	implementation 'com.pi4j:pi4j-core:2.6.1'
 	implementation 'com.pi4j:pi4j-plugin-pigpio:2.6.1'
@@ -61,8 +60,6 @@ dependencies {
 	implementation 'com.pi4j:pi4j-device:1.3'
 	implementation 'com.pi4j:pi4j-plugin-raspberrypi:2.6.1'
 }
-
-
 
 test {
 	useJUnitPlatform()

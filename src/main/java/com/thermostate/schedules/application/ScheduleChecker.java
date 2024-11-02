@@ -1,7 +1,7 @@
 package com.thermostate.schedules.application;
 
 import com.thermostate.brain.domain.ThermostateStatus;
-import com.thermostate.schedules.model.Schedule;
+import com.thermostate.schedules.model.ScheduleView;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class ScheduleChecker {
     private ThermostateStatus status;
 
-    public void execute(List<Schedule> schedules) {
+    public void execute(List<ScheduleView> schedules) {
         status.makeAwareOfSchedules(schedules);
     }
 }

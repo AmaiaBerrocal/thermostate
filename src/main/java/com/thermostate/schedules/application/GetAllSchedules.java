@@ -1,6 +1,6 @@
 package com.thermostate.schedules.application;
 
-import com.thermostate.schedules.model.Schedule;
+import com.thermostate.schedules.model.ScheduleView;
 import com.thermostate.schedules.model.ScheduleRepo;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,7 @@ public class GetAllSchedules {
         this.scheduleRepo = scheduleRepo;
     }
 
-    public List<Schedule> execute() {
+    public List<ScheduleView> execute() {
         return scheduleRepo.getAll();
     }
 }

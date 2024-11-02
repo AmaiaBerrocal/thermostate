@@ -5,11 +5,15 @@ import com.thermostate.schedules.model.events.ScheduleDeleted;
 import com.thermostate.schedules.model.events.ScheduleUpdated;
 import com.thermostate.shared.ClientError;
 import com.thermostate.shared.domain.Temperature;
+import com.thermostate.shared.domain.exceptions.Unauthorized;
 import com.thermostate.shared.events.domain.AggregateRoot;
+import com.thermostate.users.infrastucture.data.UserType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,7 +31,18 @@ public class Schedule extends AggregateRoot {
     public Integer minTemp;
     public LocalDate createdAt;
 
-    public Schedule(UUID id, String weekDays, String timeFrom, Boolean active, Integer minTemp, LocalDate createdAt) {
+    public Schedule(UUID id, String weekDays, String timeFrom, Boolean active, Integer minTemp, UserType userType) {
+        this(id, weekDays, timeFrom, active, minTemp, userType, LocalDate.now());
+    }
+    public Schedule(UUID id,
+                    String weekDays,
+                    String timeFrom,
+                    Boolean active,
+                    Integer minTemp,
+                    UserType userType,
+                    LocalDate createdAt) {
+        checkPermissions(userType);
+        this.active = true;
         this.id = id;
         this.weekDays = weekDays;
         this.timeFrom = timeFrom;
@@ -35,6 +50,12 @@ public class Schedule extends AggregateRoot {
         this.minTemp = minTemp;
         this.createdAt = createdAt;
         checkData();
+    }
+
+    private static void checkPermissions(UserType userType) {
+        if (!List.of(UserType.THERMOSTAT_USER, UserType.ADMIN).contains(userType)) {
+            throw Unauthorized.becauseNotAbleToManageSchedules(userType);
+        }
     }
 
     public Schedule(UUID id) {
@@ -100,9 +121,5 @@ public class Schedule extends AggregateRoot {
     private boolean isActiveAtThisTime() {
         int timeNow = DateCalculator.nowAsNumber();
         return DateCalculator.timeOfDayAsNumber(timeFrom) == timeNow;
-    }
-
-    public Temperature getMinTemperature() {
-        return Temperature.of(minTemp);
     }
 }

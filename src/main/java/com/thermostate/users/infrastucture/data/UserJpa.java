@@ -26,12 +26,27 @@ public class UserJpa {
     private String email;
     @Column
     private Boolean active;
+    @Column
+    private Integer type;
 
     public static UserJpa fromDomain(User user) {
-        return new UserJpa(user.getId().toString(), user.getName(), user.getPassword(), user.getSalt(), user.getEmail(), user.getIsActive());
+        return new UserJpa(
+                user.getId().toString(),
+                user.getName(),
+                user.getPassword(),
+                user.getSalt(),
+                user.getEmail(),
+                user.getIsActive(),
+                user.getType().value);
     }
 
     public User toDomain() {
-        return User.with(UUID.fromString(this.uuid), this.name, this.password, this.email, this.salt, this.active);
+        return User.with(UUID.fromString(this.uuid),
+                this.name,
+                this.password,
+                this.email,
+                this.salt,
+                UserType.valueOf(this.type),
+                this.active);
     }
 }
