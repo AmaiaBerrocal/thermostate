@@ -1,14 +1,13 @@
 package com.thermostate;
 
 import com.thermostate.shared.HttpRequestsUtils;
-import com.thermostate.users.infrastucture.data.UserType;
+import com.thermostate.users.infrastucture.data.UserRole;
 import db.E2EDB;
 import http.E2ERequest;
 import http.E2EResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.Map;
 
 import static com.thermostate.shared.HttpRequestsUtils.createSingleUser;
@@ -26,7 +25,7 @@ class UsersTest {
 
     @Test
     void should_create_a_user() {
-        HttpRequestsUtils.createUser("Inigo", "pass", "lalo@gmail.com", UserType.THERMOSTAT_USER.name());
+        HttpRequestsUtils.createUser("Inigo", "pass", "lalo@gmail.com", UserRole.THERMOSTAT_USER.name());
 
         e2edb
                 .doQuery("SELECT * FROM USERS WHERE NAME = 'Inigo'")
@@ -43,7 +42,7 @@ class UsersTest {
                 .withHeader("Authorization", getBearer("Amaia", "pass"))
                 .withContentType("application/json;charset=UTF-8")
                 .sendAPost(Map.of("name", "wrong", "password", "any", "email", "t@t.com",
-                        "userType", "UNKNOWN_TYPE"))
+                        "userRole", "UNKNOWN_TYPE"))
                 .assertThatResponseCodeIs(401);
     }
 
@@ -63,7 +62,7 @@ class UsersTest {
 
     @Test
     void should_fail_create_a_user_without_permissions() {
-        HttpRequestsUtils.createUser("Inigo", "pass", "lalo@gmail.com", UserType.THERMOSTAT_USER.name());
+        HttpRequestsUtils.createUser("Inigo", "pass", "lalo@gmail.com", UserRole.THERMOSTAT_USER.name());
         E2ERequest
                 .to("http://localhost:8080/user")
                 .withHeader("Authorization", getBearer("Inigo", "pass"))
@@ -85,7 +84,7 @@ class UsersTest {
                 .assertThatResponseIsOk();
 
         var responseBody = res.body();
-        assertThat(responseBody.get("value").toString()).startsWith("Bearer ");
+        assertThat(((Map)responseBody.get("value")).get("bearer").toString()).startsWith("Bearer ");
     }
 
     @Test

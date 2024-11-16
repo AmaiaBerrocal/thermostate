@@ -7,6 +7,7 @@ import com.thermostate.shared.domain.criteria.Filter;
 import com.thermostate.shared.domain.criteria.Limit;
 import com.thermostate.shared.domain.criteria.OrderBy;
 import lombok.AllArgsConstructor;
+import lombok.ToString;
 import lombok.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,15 +24,18 @@ public class LocationController {
 
     @PutMapping("/geolocation")
     public void putLocation(@RequestBody LocationRequest request) {
+        System.out.println("putting " + request.toString());
         pushLocation.execute(Location.from(
                 request.userId,
                 request.latitude,
                 request.longitude
         ));
+        System.out.println("Done putting!!!!!");
     }
 
     @PostMapping("/geolocation")
     public List<LocationResponse> getLocations(@RequestBody LocationSearchRequest request) {
+        System.out.println("Saving " + request.toString());
         return getLocations.execute(
            Filter.listFrom(request.filters), OrderBy.from(request.orderBy), new Limit(request.limit)).stream()
                 .map(it -> new LocationResponse(
@@ -51,6 +55,7 @@ public class LocationController {
 }
 
 @AllArgsConstructor
+@ToString
 class LocationRequest {
     UUID userId;
     Double latitude;

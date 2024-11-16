@@ -6,7 +6,7 @@ import com.thermostate.schedules.domain.events.ScheduleUpdated;
 import com.thermostate.shared.ClientError;
 import com.thermostate.shared.domain.exceptions.Unauthorized;
 import com.thermostate.shared.events.domain.AggregateRoot;
-import com.thermostate.users.infrastucture.data.UserType;
+import com.thermostate.users.infrastucture.data.UserRole;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -29,17 +29,17 @@ public class Schedule extends AggregateRoot {
     public Integer minTemp;
     public LocalDate createdAt;
 
-    public Schedule(UUID id, String weekDays, String timeFrom, Boolean active, Integer minTemp, UserType userType) {
-        this(id, weekDays, timeFrom, active, minTemp, userType, LocalDate.now());
+    public Schedule(UUID id, String weekDays, String timeFrom, Boolean active, Integer minTemp, UserRole userRole) {
+        this(id, weekDays, timeFrom, active, minTemp, userRole, LocalDate.now());
     }
     public Schedule(UUID id,
                     String weekDays,
                     String timeFrom,
                     Boolean active,
                     Integer minTemp,
-                    UserType userType,
+                    UserRole userRole,
                     LocalDate createdAt) {
-        checkPermissions(userType);
+        checkPermissions(userRole);
         this.active = true;
         this.id = id;
         this.weekDays = weekDays;
@@ -50,9 +50,9 @@ public class Schedule extends AggregateRoot {
         checkData();
     }
 
-    private static void checkPermissions(UserType userType) {
-        if (!List.of(UserType.THERMOSTAT_USER, UserType.ADMIN).contains(userType)) {
-            throw Unauthorized.becauseNotAbleToManageSchedules(userType);
+    private static void checkPermissions(UserRole userRole) {
+        if (!List.of(UserRole.THERMOSTAT_USER, UserRole.ADMIN).contains(userRole)) {
+            throw Unauthorized.becauseNotAbleToManageSchedules(userRole);
         }
     }
 

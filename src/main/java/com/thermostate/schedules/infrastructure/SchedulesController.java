@@ -54,7 +54,7 @@ public class SchedulesController {
                 scheduleCreateRequest.timeFrom,
                 scheduleCreateRequest.active,
                 scheduleCreateRequest.minTemp,
-                loginUser.userType()));
+                loginUser.userRole()));
     }
 
     @GetMapping("/schedule/{id}")
@@ -86,7 +86,7 @@ public class SchedulesController {
                         scheduleUpdateRequest.timeFrom,
                         scheduleUpdateRequest.active,
                         scheduleUpdateRequest.minTemp,
-                        loginUser.userType()));
+                        loginUser.userRole()));
     }
 
     @ExceptionHandler(value = ClientError.class) //client error porque es el usuario el que mete mal los datos

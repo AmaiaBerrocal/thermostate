@@ -1,6 +1,6 @@
 package com.thermostate.users.domain;
 
-import com.thermostate.users.infrastucture.data.UserType;
+import com.thermostate.users.infrastucture.data.UserRole;
 import com.thermostate.users.domain.service.HashGenerator;
 import net.datafaker.Faker;
 
@@ -17,7 +17,7 @@ public class UserObjectMother{
                 HashGenerator.generateHashedPassword(pass, salt),
 				"email@email.com",
 				salt,
-                faker.options().option(UserType.class),
+                faker.options().option(UserRole.class),
                 true);
     }
 }

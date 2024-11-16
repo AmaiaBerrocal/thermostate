@@ -27,7 +27,7 @@ public class UserJpa {
     @Column
     private Boolean active;
     @Column
-    private Integer type;
+    private Integer role;
 
     public static UserJpa fromDomain(User user) {
         return new UserJpa(
@@ -37,7 +37,7 @@ public class UserJpa {
                 user.getSalt(),
                 user.getEmail(),
                 user.getIsActive(),
-                user.getType().value);
+                user.getRole().value);
     }
 
     public User toDomain() {
@@ -46,7 +46,7 @@ public class UserJpa {
                 this.password,
                 this.email,
                 this.salt,
-                UserType.valueOf(this.type),
+                UserRole.valueOf(this.role),
                 this.active);
     }
 }

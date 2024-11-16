@@ -7,6 +7,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,7 +19,12 @@ public class LocationSqliteStorer implements LocationStore {
 
     @Override
     public void save(Location location) {
-        repo.save(LocationJpa.fromDomain(location));
+        try {
+            var res = repo.save(LocationJpa.fromDomain(location));
+            System.out.println("Saved " + res);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -14,10 +14,13 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "Locations")
+@Table(name = "Locations",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"userId", "createdAt"})
+        })
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
+@IdClass(LocationId.class)
 public class LocationJpa {
     @Id
     private String userId;
@@ -25,14 +28,22 @@ public class LocationJpa {
     private Double latitude;
     @Column
     private Double longitude;
-    @Column
+    @Id
     private Timestamp createdAt;
+
+    public LocationJpa(String userIdValue,
+                       Double latitudeValue,
+                       Double longitudeValue) {
+        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
+        this.latitude = latitudeValue;
+        this.longitude = longitudeValue;
+        this.userId = userIdValue;
+    }
 
     public static LocationJpa fromDomain(Location location) {
         return new LocationJpa(location.getUserIdValue(),
                 location.getLatitudeValue(),
-                location.getLongitudeValue(),
-                Timestamp.valueOf(LocalDateTime.now()));
+                location.getLongitudeValue());
     }
 
     public Location toDomain() {

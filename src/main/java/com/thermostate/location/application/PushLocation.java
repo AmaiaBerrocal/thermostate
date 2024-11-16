@@ -6,10 +6,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@AllArgsConstructor
 public class PushLocation {
-    LocationStore store;
+    final LocationStore store;
+
+    public PushLocation(LocationStore store) {
+        this.store = store;
+    }
+
     public void execute(Location location) {
-        store.save(location);
+        location.save(store);
     }
 }

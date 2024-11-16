@@ -5,7 +5,7 @@ thermostate:
     file: "./assets/w1_slave"
     temp_mark_in_file: "t="
   externalTemp:
-    url: "https://wttr.in/01003?format=%t"
+    url: "https://wttr.in/01003"
 spring:
   datasource:
     url: "jdbc:sqlite:./assets/thermostate.db"

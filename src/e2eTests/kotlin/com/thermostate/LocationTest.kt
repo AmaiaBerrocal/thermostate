@@ -53,13 +53,10 @@ class LocationTest {
         val bearer = HttpRequestsUtils.getBearer()
         println(bearer)
         println(req)
-        val res = E2ERequest.to("http://127.0.0.1:8080/geolocation")
+        E2ERequest.to("http://127.0.0.1:8080/geolocation")
             .withHeader("Authorization", bearer)
             .withContentType("application/json;charset=UTF-8")
             .sendAPost(req)
             .assertThatResponseIsOk()
-            .body()
-
-        println(res)
     }
 }

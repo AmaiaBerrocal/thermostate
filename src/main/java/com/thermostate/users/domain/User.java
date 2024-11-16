@@ -2,7 +2,7 @@ package com.thermostate.users.domain;
 
 import com.thermostate.shared.ClientError;
 import com.thermostate.shared.events.domain.AggregateRoot;
-import com.thermostate.users.infrastucture.data.UserType;
+import com.thermostate.users.infrastucture.data.UserRole;
 import com.thermostate.users.domain.event.UserCreated;
 import com.thermostate.users.domain.event.UserLoggedIn;
 import com.thermostate.users.domain.event.UserLoginFailure;
@@ -18,16 +18,16 @@ public class User extends AggregateRoot {
     private final String password;
     private final String email;
     private final String salt;
-    private final UserType type;
+    private final UserRole role;
     private final Boolean isActive;
 
-    private User(UUID id, String name, String password, String email, String salt, UserType type, Boolean isActive) {
+    private User(UUID id, String name, String password, String email, String salt, UserRole role, Boolean isActive) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;
         this.salt = salt;
-        this.type = type;
+        this.role = role;
         this.isActive = isActive;
         checkData(name, password, email);
     }
@@ -53,7 +53,7 @@ public class User extends AggregateRoot {
                             String hashedPassword,
                             String email,
                             String salt,
-                            UserType type,
+                            UserRole type,
                             Boolean isActive) {
         if (null == hashedPassword) throw ClientError.becauseInvalidDataFromClient();
         return new User(uuid, name, hashedPassword, email, salt, type, isActive);
@@ -63,7 +63,7 @@ public class User extends AggregateRoot {
                             String name,
                             String password,
                             String email,
-                            UserType type,
+                            UserRole type,
                             Boolean isActive) {
         String salt = HashGenerator.generateRandomString();
         return User.with(uuid, name, HashGenerator.generateHashedPassword(password, salt), email, salt, type, isActive);

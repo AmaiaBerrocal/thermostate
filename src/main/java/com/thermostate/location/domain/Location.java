@@ -28,4 +28,8 @@ public class Location {
     public static Location from(UUID userID, Double latitude, Double longitude) {
         return new Location(UserId.from(userID), Latitude.from(latitude), Longitude.from(longitude));
     }
+
+    public void save(LocationStore store) {
+        store.save(this);
+    }
 }
