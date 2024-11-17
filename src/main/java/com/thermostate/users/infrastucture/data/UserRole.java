@@ -5,7 +5,7 @@ import java.util.Arrays;
 public enum UserRole {
     THERMOSTAT_USER(2),
     LOCALIZABLE_USER(1),
-    pa(0);
+    ADMIN(0);
 
     public final Integer value;
 
