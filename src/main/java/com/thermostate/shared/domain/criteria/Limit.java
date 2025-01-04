@@ -6,12 +6,13 @@ public class Limit {
     final Integer limit;
 
     public Limit(Integer limit) {
-        assertThat(limit).isNotNull();
-        assertThat(limit).isPositive();
         this.limit = limit;
     }
 
     public String toSql() {
+        if (limit == null) {
+            return "";
+        }
         return " limit " + limit;
     }
 }

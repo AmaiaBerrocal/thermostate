@@ -16,7 +16,7 @@ public class Filter {
 
     public static List<Filter> listFrom(List<Map<String, String>> filters) {
         return filters.stream().map(filter -> new Filter(new Field(filter.get("field")),
-                Option.valueOf(filter.get("option")),
+                Option.fromValue(filter.get("option")),
                 new Value(filter.get("value")))).toList();
     }
 

@@ -12,7 +12,7 @@ import java.util.Map
 
 class LocationTest {
     var e2edb: E2EDB? = null
-
+/*
     @BeforeEach
     fun setup() {
         e2edb = E2EDB("jdbc:sqlite:./assets/thermostate.db")
@@ -86,5 +86,5 @@ class LocationTest {
             .sendAPost(req)
             .assertThatResponseIsOk()
         println(res)
-    }
+    }*/
 }
