@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Getter
 public class User extends AggregateRoot {
-    private UUID id;
+    private final UUID id;
     private final String name;
     private final String password;
     private final String email;
