@@ -4,6 +4,7 @@ import org.springframework.context.ApplicationEvent;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public abstract class DomainEvent extends ApplicationEvent {
@@ -24,7 +25,7 @@ public abstract class DomainEvent extends ApplicationEvent {
 
     public abstract String eventName();
 
-    public abstract HashMap<String, Serializable> toPrimitives();
+    public abstract Map<String, Serializable> toPrimitives();
 
     public abstract DomainEvent fromPrimitives(
         String aggregateId,

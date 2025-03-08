@@ -1,10 +1,9 @@
 package com.thermostate.shared.events.domain
 
-import com.thermostate.shared.events.domain.base.DomainEvent
 import java.io.Serializable
 import java.util.*
 
-class NewBillArrived(val fileName: String) : DomainEvent() {
+class NewBillArrived(val fileName: String) : DomainEvent(fileName) {
     override fun eventName(): String {
         return "NEW_BILL_ARRIVED"
     }

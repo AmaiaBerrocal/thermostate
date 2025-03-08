@@ -26,7 +26,8 @@ class Ticket {
 
     @Test
     fun `ticket should be added to database`() {
-        var event = NewBillArrived("./Compra.pdf")
+        println("Current working directory: " + System.getProperty("user.dir"))
+        var event = NewBillArrived("./src/test/resources/Compra.pdf")
 
         handleNewBill.handle(event)
 

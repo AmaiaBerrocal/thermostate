@@ -10,7 +10,7 @@ class ItemsRepo(val items: Items) : TicketRepository{
 
     @Transactional
     override fun save(ticket: Ticket) {
-        ticket.items.forEach {
+        ticket.item2s.forEach {
             items.save(ItemJpa.fromDomain(it, ticket.id))
         }
     }
