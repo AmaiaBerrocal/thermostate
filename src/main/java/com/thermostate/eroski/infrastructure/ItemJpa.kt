@@ -1,6 +1,6 @@
 package com.thermostate.eroski.infrastructure
 
-import com.thermostate.eroski.domain.Item2
+import com.thermostate.eroski.domain.Item
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
@@ -17,17 +17,21 @@ class ItemJpa(
     @Column(name="units") val units: Int,
     @Column(name="product") val product: String,
     @Column(name="unitPrize") val unitPrize : Int,
+    @Column(name="type") val type: String,
+    @Column(name="alias") val alias: String,
     @Column(name="discount") val discount: Int) {
 
     companion object {
-        fun fromDomain(item2: Item2, ticketId: String): ItemJpa {
+        fun fromDomain(item: Item, ticketId: String): ItemJpa {
             return ItemJpa(
                 ticketId,
                 UUID.randomUUID(),
-                item2.units,
-                item2.product,
-                item2.precioUnit,
-                item2.discounts
+                item.numberOfItems,
+                item.description,
+                item.amountPerUnit,
+                item.type,
+                item.alias,
+                item.discount
             )
         }
     }

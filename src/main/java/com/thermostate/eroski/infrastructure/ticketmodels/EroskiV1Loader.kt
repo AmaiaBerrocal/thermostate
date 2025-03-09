@@ -1,33 +1,30 @@
 package com.thermostate.eroski.infrastructure.ticketmodels
 
 import com.thermostate.eroski.domain.Item
-import com.thermostate.eroski.infrastructure.CommandExecutor
-import java.io.IOException
-import java.nio.file.Files
-import java.nio.file.Path
+import com.thermostate.eroski.domain.TicketLoader
+import org.springframework.stereotype.Component
 import java.util.regex.Pattern
 
-object SupermarketReceiptParser {
-    fun parseReceipt(fileLines: List<String>): List<Item> {
+@Component("EroskiV1")
+class EroskiV1Loader: TicketLoader {
+    override fun loadItems(lines: List<String>): List<Item> {
         val items: MutableList<Item> = ArrayList()
         val descuentosGenerales: MutableMap<String, Int> = HashMap()
         var parsingProducts = false
         var parsingDiscounts = false
 
-        for (line in fileLines) {
-            var line = line
-            println(line)
-            line = line.trim { it <= ' ' }
+        lines.forEach { fileLine ->
+            val line = fileLine.trim { it <= ' ' }
 
             if (line.startsWith("DESCUENTOS POR OFERTA")) {
                 parsingProducts = false
                 parsingDiscounts = true
-                continue
+                return@forEach
             }
 
             if (line.contains("€/TOT")) { // Detectamos el encabezado de productos
                 parsingProducts = true
-                continue
+                return@forEach
             }
 
             if (parsingProducts) {
@@ -46,8 +43,18 @@ object SupermarketReceiptParser {
                     val precioPorUnidad =
                         if (unidades > 1 && m.group(3) != null) (m.group(3).toDouble() * 100).toInt() else precioTotal
 
-                    items.add(Item(unidades, producto, precioPorUnidad, descuento))
+                    items.add(
+                        Item(unidades,
+                            producto,
+                            precioPorUnidad,
+                            descuento,
+                            producto,
+                            "EroskiV1"))
                 }
+            }
+
+            if (items.isEmpty()) {
+                return items
             }
 
             if (parsingDiscounts) {
@@ -68,34 +75,4 @@ object SupermarketReceiptParser {
 
         return items
     }
-
-    @Throws(IOException::class)
-    @JvmStatic
-    fun main(args: Array<String>) {
-        println("Current working directory: " + System.getProperty("user.dir"))
-        val base = System.getProperty("user.dir")
-        val filePdf = "$base/src/test/resources/Compra.pdf"
-        val fileTxt = "$base/src/test/resources/Compra.txt"
-        val commandToParse = "pdftotext -layout $filePdf $fileTxt"
-        val commandToDelete = "rm $fileTxt"
-
-        if (!Files.exists(Path.of(filePdf))) {
-            System.err.println("File not created: $filePdf")
-            return
-        }
-
-        CommandExecutor.execute(commandToParse)
-        val fileLines = Files.readAllLines(Path.of(fileTxt))
-
-        val items = parseReceipt(fileLines)
-        for (item in items) {
-            println(item)
-        }
-        println("Total: " + items.stream().mapToInt { i: Item -> i.numberOfItems * i.amountPerUnit - i.discount }
-            .sum() / 100.0)
-        println(items.size.toString() + " items")
-        CommandExecutor.execute(commandToDelete)
-    }
 }
-
-
