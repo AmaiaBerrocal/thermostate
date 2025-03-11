@@ -1,4 +1,4 @@
-package eroski
+package com.thermostate.eroski
 
 import com.thermostate.eroski.application.HandleNewBill
 import com.thermostate.eroski.domain.TicketRepository
@@ -33,7 +33,7 @@ class TicketEroski {
     @Test
     fun `ticket eroski V1 should be added to database`() {
         println("Current working directory: " + System.getProperty("user.dir"))
-        val event = NewBillArrived("./src/test/resources/Compra1.pdf")
+        val event = NewBillArrived("./src/test/resources/Compra.pdf")
 
         handleNewBill.handle(event)
 

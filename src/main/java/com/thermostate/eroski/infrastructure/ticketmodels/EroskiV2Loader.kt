@@ -51,8 +51,6 @@ class EroskiV2Loader: TicketLoader {
                                 m.group(4).replace(",", ".")
                             ) * 100).toInt() / unidades // si no viene el precio unitario lo calculas
 
-                        val precioTotal = (java.lang.Double.parseDouble(m.group(4).replace(",", ".")) * 100).toInt()
-
                         val descuento = if (m.group(5) != null) (java.lang.Double.parseDouble(
                             m.group(5).replace(",", ".")
                         ) * 100).toInt() else
