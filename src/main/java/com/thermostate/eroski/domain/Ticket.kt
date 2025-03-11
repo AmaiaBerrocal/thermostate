@@ -5,10 +5,10 @@ import java.util.*
 class Ticket (val items: List<Item>, val id: String) {
 
     companion object {
-        fun buildTicket(lines: List<String>, ticketLoader: TicketLoader): Ticket {
+        fun buildTicket(lines: List<String>, ticketLoaders: List<TicketLoader>): Ticket {
             val ticket = Ticket(
                 id = UUID.randomUUID().toString(),
-                items = ticketLoader.loadItems(lines)
+                items = ticketLoaders.first { it.hasKey(lines) }.loadItems(lines)
             )
             return ticket
         }

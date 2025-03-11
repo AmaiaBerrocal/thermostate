@@ -7,6 +7,8 @@ import java.util.regex.Pattern
 
 @Component("EroskiV1")
 class EroskiV1Loader: TicketLoader {
+    override fun hasKey(lines: List<String>): Boolean = lines.any { it.contains("****EROSKI BOULEVARD****") }
+
     override fun loadItems(lines: List<String>): List<Item> {
         val items: MutableList<Item> = ArrayList()
         val descuentosGenerales: MutableMap<String, Int> = HashMap()
@@ -53,10 +55,6 @@ class EroskiV1Loader: TicketLoader {
                 }
             }
 
-            if (items.isEmpty()) {
-                return items
-            }
-
             if (parsingDiscounts) {
                 val d = Pattern.compile("([A-ZÁÉÍÓÚÑ./\\s]+)\\s*(-?\\d+\\.\\d+)").matcher(line)
                 if (d.find()) {
@@ -75,4 +73,6 @@ class EroskiV1Loader: TicketLoader {
 
         return items
     }
+
+
 }
