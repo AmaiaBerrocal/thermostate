@@ -15,13 +15,14 @@ internal object CommandExecutor {
             }
             var error: String?
             while ((errorLector.readLine().also { error = it }) != null) {
-                System.err.println(error)
+                throw RuntimeException("Error executing command: $commando because: $error")
             }
 
             val outputCode = proceso.waitFor()
             println("Exit code: $outputCode")
         } catch (e: Exception) {
             e.printStackTrace()
+            throw e
         }
     }
 }

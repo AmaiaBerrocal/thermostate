@@ -18,7 +18,7 @@ class EroskiV2Loader: TicketLoader {
 
         run loop@{
             lines.forEach {
-                var line = it.trim()
+                val line = it.trim()
                 // Activa el flag cuando empiece la tabla de productos
                 if (line.startsWith("KOP.")) {
                     parsingProducts = true

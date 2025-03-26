@@ -74,6 +74,24 @@ Which should contain a number which is the temp in milis
 
 More info at: https://en.kompf.de/weather/pionewiremini.html
 
+# OCR for photos
+
+We will use imagemagik to improve image quality:
+    
+``` sudo apt install imagemagick ```
+
+And tesseract to get text from images:
+
+``` sudo apt install tesseract-ocr ```
+
+And, to get spanish language:
+    
+``` sudo apt install tesseract-ocr-spa ```
+
+# PdftoText for pdfs
+
+``` sudo apt install poppler-utils ```
+
 # Relay use
 
 To switch on / of the relee should be enough with:
