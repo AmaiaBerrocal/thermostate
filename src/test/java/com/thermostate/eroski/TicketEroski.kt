@@ -43,7 +43,6 @@ class TicketEroski {
 
         verify(repo, times(44)).save(any())
     }
-
     //@Test
     fun `ticket eroski V2 should be added to database`() {
         println("Current working directory: " + System.getProperty("user.dir"))

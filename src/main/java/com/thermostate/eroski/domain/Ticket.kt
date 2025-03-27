@@ -6,9 +6,10 @@ class Ticket (val items: List<Item>, val id: String) {
 
     companion object {
         fun buildTicket(lines: List<String>, ticketLoaders: List<TicketLoader>): Ticket {
+            val ticketLoader = ticketLoaders.first { it.hasKey(lines) }
             val ticket = Ticket(
-                id = UUID.randomUUID().toString(),
-                items = ticketLoaders.first { it.hasKey(lines) }.loadItems(lines)
+                id = ticketLoader.findId(lines),
+                items = ticketLoader.loadItems(lines)
             )
             return ticket
         }

@@ -20,7 +20,8 @@ class ItemJpa(
     @Column(name="type") val type: String,
     @Column(name="alias") val alias: String,
     @Column(name="discount") val discount: Int,
-    @Column(name="date") val date: Long) {
+    @Column(name="date") val date: Long,
+    @Column(name="ticket-id") val ticketId: String) {
 
     companion object {
         fun fromDomain(item: Item, ticketId: String): ItemJpa {
@@ -33,7 +34,8 @@ class ItemJpa(
                 item.type,
                 item.alias,
                 item.discount,
-                Date().time
+                Date().time,
+                item.ticketId
             )
         }
     }
