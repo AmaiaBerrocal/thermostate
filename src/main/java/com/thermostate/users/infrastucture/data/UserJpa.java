@@ -1,6 +1,6 @@
 package com.thermostate.users.infrastucture.data;
 
-import com.thermostate.users.model.User;
+import com.thermostate.users.domain.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,12 +26,27 @@ public class UserJpa {
     private String email;
     @Column
     private Boolean active;
+    @Column
+    private Integer role;
 
     public static UserJpa fromDomain(User user) {
-        return new UserJpa(user.getId().toString(), user.getName(), user.getPassword(), user.getSalt(), user.getEmail(), user.getIsActive());
+        return new UserJpa(
+                user.getId().toString(),
+                user.getName(),
+                user.getPassword(),
+                user.getSalt(),
+                user.getEmail(),
+                user.getIsActive(),
+                user.getRole().value);
     }
 
     public User toDomain() {
-        return User.with(UUID.fromString(this.uuid), this.name, this.password, this.email, this.salt, this.active);
+        return User.with(UUID.fromString(this.uuid),
+                this.name,
+                this.password,
+                this.email,
+                this.salt,
+                UserRole.valueOf(this.role),
+                this.active);
     }
 }

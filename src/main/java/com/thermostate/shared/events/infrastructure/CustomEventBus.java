@@ -1,6 +1,6 @@
 package com.thermostate.shared.events.infrastructure;
 
-import com.thermostate.schedules.model.events.EventBus;
+import com.thermostate.schedules.domain.events.EventBus;
 import com.thermostate.shared.events.domain.DomainEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;

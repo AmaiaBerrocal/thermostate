@@ -1,12 +1,13 @@
 package com.thermostate;
 
+import com.thermostate.shared.HttpRequestsUtils;
+import com.thermostate.users.infrastucture.data.UserRole;
 import db.E2EDB;
 import http.E2ERequest;
 import http.E2EResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.Map;
 
 import static com.thermostate.shared.HttpRequestsUtils.createSingleUser;
@@ -21,15 +22,28 @@ class UsersTest {
         e2edb.givenEmptyTable("USERS");
         createSingleUser(e2edb);
     }
+
     @Test
     void should_create_a_user() {
-        createUser("Inigo", "pass", "lalo@gmail.com");
+        HttpRequestsUtils.createUser("Inigo", "pass", "lalo@gmail.com", UserRole.THERMOSTAT_USER.name());
 
         e2edb
                 .doQuery("SELECT * FROM USERS WHERE NAME = 'Inigo'")
                 .assertThatExistAnEntryWithFields(Map.of(
                         "email", "lalo@gmail.com",
-                        "active", 0));
+                        "active", 1));
+    }
+
+    @Test
+    void should_fail_creating_a_user_of_unknown_type() {
+        E2ERequest
+                .to("http://127.0.0.1:8080/user")
+                //.withABearer(HttpRequestsUtils::getBearer)
+                .withHeader("Authorization", getBearer("Amaia", "pass"))
+                .withContentType("application/json;charset=UTF-8")
+                .sendAPost(Map.of("name", "wrong", "password", "any", "email", "t@t.com",
+                        "userRole", "UNKNOWN_TYPE"))
+                .assertThatResponseCodeIs(401);
     }
 
     @Test
@@ -47,8 +61,22 @@ class UsersTest {
     }
 
     @Test
-    void should_return_a_user_if_name_and_password_are_corrects() throws IOException {
-        //createUser("Inigo", "pass", "lalo@gmail.com");
+    void should_fail_create_a_user_without_permissions() {
+        HttpRequestsUtils.createUser("Inigo", "pass", "lalo@gmail.com", UserRole.THERMOSTAT_USER.name());
+        E2ERequest
+                .to("http://localhost:8080/user")
+                .withHeader("Authorization", getBearer("Inigo", "pass"))
+                .withContentType("application/json;charset=UTF-8")
+                .sendAPost(Map.of("name", "tete", "password", "pass", "email", "lalo@gmail.com"))
+                .assertThatResponseCodeIs(401);
+
+        e2edb
+                .doQuery("SELECT * FROM USERS WHERE name = 'tete'")
+                .assertThatNumberOfResults(0);
+    }
+
+    @Test
+    void should_return_a_user_if_name_and_password_are_corrects() {
         E2EResponse res = E2ERequest
                 .to("http://localhost:8080/login")
                 .withContentType("application/json")
@@ -56,12 +84,13 @@ class UsersTest {
                 .assertThatResponseIsOk();
 
         var responseBody = res.body();
-        assertThat(responseBody.get("value").toString()).startsWith("Bearer ");
+        assertThat(((Map)responseBody.get("value")).get("bearer").toString()).startsWith("Bearer ");
     }
 
     @Test
-    void should_not_login_if_user_deactivated() throws IOException {
+    void should_not_login_if_user_deactivated() {
         createUser("Inigo", "pass", "lalo@gmail.com");
+        e2edb.given("Update users set active=0 where name = 'Inigo'");
         E2EResponse res = E2ERequest
                 .to("http://localhost:8080/login")
                 .withContentType("application/json")
@@ -71,9 +100,9 @@ class UsersTest {
 
 
     @Test
-    void should_return_an_error_if_password_is_incorrect() throws IOException {
+    void should_return_an_error_if_password_is_incorrect() {
         createUser("Inigo", "incorrect pass", "lalo@gmail.com");
-        E2EResponse res = E2ERequest
+        E2ERequest
                 .to("http://localhost:8080/login")
                 .withContentType("application/json")
                 .sendAPost(Map.of("name", "INIGO", "password", "pass"))
@@ -81,9 +110,9 @@ class UsersTest {
     }
 
     @Test
-    void should_return_an_error_if_name_are_incorrects() throws IOException {
+    void should_return_an_error_if_name_are_incorrects() {
         createUser("Inigo", "pass", "lalo@gmail.com");
-        E2EResponse res = E2ERequest
+        E2ERequest
                 .to("http://localhost:8080/login")
                 .withContentType("application/json")
                 .sendAPost(Map.of("name", "INIGO-no", "password", "pass"))
@@ -91,12 +120,7 @@ class UsersTest {
     }
 
     void createUser(String name, String password, String email) {
-        E2ERequest
-                .to("http://127.0.0.1:8080/user")
-                //.withABearer(HttpRequestsUtils::getBearer)
-                .withHeader("Authorization", getBearer("Amaia", "pass"))
-                .withContentType("application/json;charset=UTF-8")
-                .sendAPost(Map.of("name", name, "password", password, "email", email))
-                .assertThatResponseIsOk();
+        HttpRequestsUtils.createUser(name, password, email, "ADMIN");
     }
+
 }

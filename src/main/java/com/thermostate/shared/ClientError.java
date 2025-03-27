@@ -1,6 +1,6 @@
 package com.thermostate.shared;
 
-import com.thermostate.users.model.User;
+import com.thermostate.users.domain.User;
 
 public class ClientError extends RuntimeException {
     private ClientError(String message) {

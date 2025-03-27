@@ -1,8 +1,8 @@
 package com.thermostate.brain.domain;
 
 import com.thermostate.brain.domain.events.ThermostateSwitched;
-import com.thermostate.schedules.model.Schedule;
-import com.thermostate.schedules.model.events.EventBus;
+import com.thermostate.schedules.domain.ScheduleView;
+import com.thermostate.schedules.domain.events.EventBus;
 import com.thermostate.shared.domain.Temperature;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -42,8 +42,8 @@ public class ThermostateStatus {
         adapter.setActiveStatus(active);
     }
 
-    public void makeAwareOfSchedules(List<Schedule> schedules) {
-        schedules.stream().filter(Schedule::isActive).findFirst().ifPresent(it -> {
+    public void makeAwareOfSchedules(List<ScheduleView> schedules) {
+        schedules.stream().filter(schedule -> schedule.active).findFirst().ifPresent(it -> {
             setTargetTemperature(it.getMinTemperature());
         });
     }

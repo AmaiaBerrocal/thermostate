@@ -1,14 +1,17 @@
 package com.thermostate.schedules.infrastructure;
 
 import com.thermostate.schedules.application.*;
-import com.thermostate.schedules.model.Schedule;
+import com.thermostate.schedules.domain.Schedule;
+import com.thermostate.schedules.domain.ScheduleView;
 import com.thermostate.shared.ClientError;
 import com.thermostate.shared.ValueResponse;
+import com.thermostate.spring.security.model.LogedInUser;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,42 +45,48 @@ public class SchedulesController {
 
     @PostMapping("/schedule")
     public void scheduleInsert(@RequestBody ScheduleCreateRequest scheduleCreateRequest) {
+        LogedInUser loginUser = (LogedInUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         logger.trace("Insert schedule received " + scheduleCreateRequest);
         createSchedule.execute(
+                new Schedule(
                 scheduleCreateRequest.id,
                 scheduleCreateRequest.weekDays,
                 scheduleCreateRequest.timeFrom,
                 scheduleCreateRequest.active,
-                scheduleCreateRequest.minTemp);
+                scheduleCreateRequest.minTemp,
+                loginUser.userRole()));
     }
 
     @GetMapping("/schedule/{id}")
     @ResponseBody
-    public ValueResponse<Schedule> scheduleGetById(@PathVariable UUID id) {
+    public ValueResponse<ScheduleView> scheduleGetById(@PathVariable UUID id) {
         logger.trace("Get schedule received " + id);
         return new ValueResponse<>(getScheduleById.execute(id));
     }
 
     @GetMapping("/schedules")
     @ResponseBody
-    public ValueResponse<List<Schedule>> scheduleGetAll() {
+    public ValueResponse<List<ScheduleView>> scheduleGetAll() {
         return new ValueResponse<>(getAllSchedules.execute());
     }
 
     @DeleteMapping("/schedule/{id}")
     public void deleteById(@PathVariable UUID id) {
         logger.trace("Delete schedule received " + id);
-        deleteSchedule.execute(id);
+        deleteSchedule.execute(new Schedule(id));
     }
 
     @PutMapping("/schedule")
     public void scheduleUpdate(@RequestBody ScheduleUpdateRequest scheduleUpdateRequest) {
+        LogedInUser loginUser = (LogedInUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         logger.trace("Update schedule received " + scheduleUpdateRequest);
-        updateSchedule.execute(scheduleUpdateRequest.id,
-                scheduleUpdateRequest.weekDays,
-                scheduleUpdateRequest.timeFrom,
-                scheduleUpdateRequest.active,
-                scheduleUpdateRequest.minTemp);
+        updateSchedule.execute(new Schedule(
+                        scheduleUpdateRequest.id,
+                        scheduleUpdateRequest.weekDays,
+                        scheduleUpdateRequest.timeFrom,
+                        scheduleUpdateRequest.active,
+                        scheduleUpdateRequest.minTemp,
+                        loginUser.userRole()));
     }
 
     @ExceptionHandler(value = ClientError.class) //client error porque es el usuario el que mete mal los datos

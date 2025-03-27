@@ -1,11 +1,9 @@
 package com.thermostate.schedules.application;
 
-import com.thermostate.schedules.model.Schedule;
-import com.thermostate.schedules.model.ScheduleRepo;
-import com.thermostate.schedules.model.events.EventBus;
+import com.thermostate.schedules.domain.Schedule;
+import com.thermostate.schedules.domain.ScheduleRepo;
+import com.thermostate.schedules.domain.events.EventBus;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Component
 public class DeleteSchedule {
@@ -17,8 +15,7 @@ public class DeleteSchedule {
         this.eventBus = eventBus;
     }
 
-    public void execute(UUID id) {
-        Schedule schedule = new Schedule(id);
+    public void execute(Schedule schedule) {
         schedule.delete(scheduleRepo);
         schedule.publishEventsIn(eventBus);
     }

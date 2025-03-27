@@ -5,6 +5,10 @@ A thermostate to be used with our Raspberry pi 2B (or 3B) at home.
 
 # Make it run
 
+You will need, as dependencia:
+
+```sudo apt install poppler-utils```
+
 You would need a DB created to run app. Nowadays we don't use any DB change control as liquibase, so just reset the
 one that is on _/assets_ or create one with the SQLs in each repository.
 
@@ -69,6 +73,24 @@ It is supposed to let a file at /sys/bus/w1/devices/ as:
 Which should contain a number which is the temp in milis
 
 More info at: https://en.kompf.de/weather/pionewiremini.html
+
+# OCR for photos
+
+We will use imagemagik to improve image quality:
+    
+``` sudo apt install imagemagick ```
+
+And tesseract to get text from images:
+
+``` sudo apt install tesseract-ocr ```
+
+And, to get spanish language:
+    
+``` sudo apt install tesseract-ocr-spa ```
+
+# PdftoText for pdfs
+
+``` sudo apt install poppler-utils ```
 
 # Relay use
 

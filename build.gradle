@@ -4,6 +4,8 @@ plugins {
 	id 'java'
 	id 'war'
 	id 'org.jetbrains.kotlin.jvm' version "${kotlinVersion}"
+	id 'org.jetbrains.kotlin.plugin.spring' version  "${kotlinVersion}"
+	id 'org.jetbrains.kotlin.plugin.jpa' version  "${kotlinVersion}"
 }
 
 group = 'com.amaia'
@@ -39,7 +41,7 @@ dependencies {
 	implementation "io.jsonwebtoken:jjwt-jackson:${jsonwebtoken}"
 	implementation "org.slf4j:slf4j-api:2.0.9"
 	implementation "org.xerial:sqlite-jdbc:${sqliteVersion}"
-    implementation group: 'com.google.guava', name: 'guava', version: "${guavaVersion}"
+	implementation group: 'com.google.guava', name: 'guava', version: "${guavaVersion}"
 	compileOnly "org.projectlombok:lombok:${lombok}"
 	developmentOnly "org.springframework.boot:spring-boot-devtools:${springboot}"
 	annotationProcessor "org.projectlombok:lombok:${lombok}"
@@ -48,13 +50,24 @@ dependencies {
 	testImplementation "org.junit.jupiter:junit-jupiter-api:${junit5version}"
 	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit5version}"
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.9.3")
-	testImplementation group: 'org.assertj', name: 'assertj-core', version: "${assertJVersion}"
+	implementation group: 'org.assertj', name: 'assertj-core', version: "${assertJVersion}"
 	testImplementation "com.github.inigodm:E2EHelper:${e2eHelper}"
 	testImplementation "org.mockito:mockito-junit-jupiter:5.7.0"
 	testImplementation "org.springframework.boot:spring-boot-starter-test:${springboot}"
-	implementation group: 'net.datafaker', name: 'datafaker', version: "${faker}"}
-
-
+	implementation group: 'net.datafaker', name: 'datafaker', version: "${faker}"
+	implementation "com.pi4j:pi4j-core:${pi4j}"
+	implementation "com.pi4j:pi4j-plugin-pigpio:${pi4j}"
+	implementation "com.pi4j:pi4j-plugin-linuxfs:${pi4j}"
+	implementation "com.pi4j:pi4j-library:${pi4j}"
+	implementation "com.pi4j:pi4j-device:1.3"
+	implementation "com.pi4j:pi4j-plugin-raspberrypi:${pi4j}"
+	implementation 'com.google.code.gson:gson:2.11.0'
+	implementation group: 'net.datafaker', name: 'datafaker', version: "${faker}"
+	implementation "org.jetbrains.kotlin:kotlin-reflect"
+	implementation "org.apache.pdfbox:pdfbox:3.0.1"
+	implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
+	//implementation group: 'com.github.inigodm', name:'thermostate-plugin', version: '0.0.0.1.1'
+}
 
 test {
 	useJUnitPlatform()

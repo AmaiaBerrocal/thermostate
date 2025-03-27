@@ -1,7 +1,8 @@
 package com.thermostate.schedules.infrastructure.data;
 
-import com.thermostate.schedules.model.Schedule;
-import com.thermostate.schedules.model.ScheduleRepo;
+import com.thermostate.schedules.domain.Schedule;
+import com.thermostate.schedules.domain.ScheduleView;
+import com.thermostate.schedules.domain.ScheduleRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +21,7 @@ public class ScheduleJpaRepo implements ScheduleRepo {
     }
 
     @Override
-    public Schedule getById(UUID id) {
+    public ScheduleView getById(UUID id) {
         return schedules.findById(id).map(ScheduleJpa::toDomain)
                 .orElseThrow(() -> new IllegalArgumentException("No schedule found"));
     }
@@ -31,7 +32,7 @@ public class ScheduleJpaRepo implements ScheduleRepo {
     }
 
     @Override
-    public List<Schedule> getAll() {
+    public List<ScheduleView> getAll() {
         return schedules.findAll().stream().map(ScheduleJpa::toDomain).toList();
     }
 

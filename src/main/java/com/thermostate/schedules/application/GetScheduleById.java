@@ -1,7 +1,7 @@
 package com.thermostate.schedules.application;
 
-import com.thermostate.schedules.model.Schedule;
-import com.thermostate.schedules.model.ScheduleRepo;
+import com.thermostate.schedules.domain.ScheduleView;
+import com.thermostate.schedules.domain.ScheduleRepo;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -14,7 +14,7 @@ public class GetScheduleById {
         this.scheduleRepo = scheduleRepo;
     }
 
-    public Schedule execute(UUID id) {
+    public ScheduleView execute(UUID id) {
         return scheduleRepo.getById(id);
     }
 }
