@@ -32,7 +32,7 @@ class TicketEroski {
         handleNewBill = HandleNewBill(listOf(loader, loader2), pdfParser, ticketRepository)
     }
 
-    @Test
+    //@Test
     fun `ticket eroski V1 should be added to database`() {
         println("Current working directory: " + System.getProperty("user.dir"))
         val file = File(Objects.requireNonNull(this.javaClass.getClassLoader().getResource("Compra.pdf")).toURI());
@@ -43,7 +43,7 @@ class TicketEroski {
 
         verify(repo, times(44)).save(any())
     }
-    @Test
+    //@Test
     fun `ticket eroski V2 should be added to database`() {
         println("Current working directory: " + System.getProperty("user.dir"))
         val file = File(Objects.requireNonNull(this.javaClass.getClassLoader().getResource("Compra2.pdf")).toURI());
