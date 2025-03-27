@@ -7,14 +7,26 @@ import java.util.regex.Pattern
 
 @Component("EroskiV1")
 class EroskiV1Loader: TicketLoader {
+    lateinit var id: String
     override fun hasKey(lines: List<String>): Boolean = lines.any { it.contains("****EROSKI BOULEVARD****") }
+
+    override fun findId(lines: List<String>): String {
+        id = ""
+        val idRegex = Pattern.compile("\\b\\d{2} \\d{2} \\d{1} \\d{4}\\b")
+        for (line in lines) {
+            val matcher = idRegex.matcher(line)
+            if (matcher.find()) {
+                id = matcher.group()
+            }
+        }
+        return id
+    }
 
     override fun loadItems(lines: List<String>): List<Item> {
         val items: MutableList<Item> = ArrayList()
         val descuentosGenerales: MutableMap<String, Int> = HashMap()
         var parsingProducts = false
         var parsingDiscounts = false
-
         lines.forEach { fileLine ->
             val line = fileLine.trim { it <= ' ' }
 
@@ -51,7 +63,8 @@ class EroskiV1Loader: TicketLoader {
                             precioPorUnidad,
                             descuento,
                             producto,
-                            "EroskiV1"))
+                            "EroskiV1",
+                            id))
                 }
             }
 

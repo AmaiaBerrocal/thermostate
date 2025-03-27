@@ -5,4 +5,5 @@ data class Item(val numberOfItems: Int,
                 val amountPerUnit: Int,
                 var discount: Int,
                 val alias: String,
-                val type: String)
+                val type: String,
+                val ticketId: String)
