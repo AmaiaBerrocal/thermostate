@@ -11,6 +11,8 @@ import com.thermostate.shared.events.domain.NewBillArrived
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.*
+import java.io.File
+import java.util.*
 
 class TicketEroski {
     lateinit var repo: Items
@@ -33,7 +35,9 @@ class TicketEroski {
     @Test
     fun `ticket eroski V1 should be added to database`() {
         println("Current working directory: " + System.getProperty("user.dir"))
-        val event = NewBillArrived("./src/test/resources/Compra.pdf")
+        val file = File(Objects.requireNonNull(this.javaClass.getClassLoader().getResource("Compra.pdf")).toURI());
+
+        val event = NewBillArrived(file.absolutePath)
 
         handleNewBill.handle(event)
 
@@ -43,7 +47,8 @@ class TicketEroski {
     @Test
     fun `ticket eroski V2 should be added to database`() {
         println("Current working directory: " + System.getProperty("user.dir"))
-        val event = NewBillArrived("./src/test/resources/Compra2.pdf")
+        val file = File(Objects.requireNonNull(this.javaClass.getClassLoader().getResource("Compra2.pdf")).toURI());
+        val event = NewBillArrived(file.absolutePath)
 
         handleNewBill.handle(event)
 
