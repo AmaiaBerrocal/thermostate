@@ -6,7 +6,7 @@ class Ticket (val items: List<Item>, val id: String) {
 
     companion object {
         fun buildTicket(lines: List<String>, ticketLoaders: List<TicketLoader>): Ticket {
-            val ticketLoader = ticketLoaders.first { it.hasKey(lines) }
+            val ticketLoader = ticketLoaders.filter { it.hasKey(lines) }.firstOrNull() ?: throw IllegalArgumentException("No loader found")
             val ticket = Ticket(
                 id = ticketLoader.findId(lines),
                 items = ticketLoader.loadItems(lines)
