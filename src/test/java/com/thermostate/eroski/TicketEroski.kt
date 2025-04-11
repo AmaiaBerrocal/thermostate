@@ -7,6 +7,7 @@ import com.thermostate.eroski.infrastructure.ItemsRepo
 import com.thermostate.eroski.infrastructure.PdfToTextParse
 import com.thermostate.eroski.infrastructure.ticketmodels.EroskiV1Loader
 import com.thermostate.eroski.infrastructure.ticketmodels.EroskiV2Loader
+import com.thermostate.eroski.infrastructure.ticketmodels.MercadonaV1Loader
 import com.thermostate.shared.events.domain.NewBillArrived
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -20,19 +21,21 @@ class TicketEroski {
     lateinit var handleNewBill: HandleNewBill
     lateinit var loader: EroskiV1Loader
     lateinit var loader2: EroskiV2Loader
+    lateinit var loader3: MercadonaV1Loader
     lateinit var pdfParser: PdfToTextParse
 
     @BeforeEach
     fun setup() {
         loader = EroskiV1Loader()
         loader2 = EroskiV2Loader()
+        loader3 = MercadonaV1Loader()
         pdfParser = PdfToTextParse()
         repo = mock(Items::class.java)
         ticketRepository = ItemsRepo(repo)
-        handleNewBill = HandleNewBill(listOf(loader, loader2), pdfParser, ticketRepository)
+        handleNewBill = HandleNewBill(listOf(loader, loader2, loader3), pdfParser, ticketRepository)
     }
 
-    //@Test
+    @Test
     fun `ticket eroski V1 should be added to database`() {
         println("Current working directory: " + System.getProperty("user.dir"))
         val file = File(Objects.requireNonNull(this.javaClass.getClassLoader().getResource("Compra.pdf")).toURI());
@@ -43,7 +46,7 @@ class TicketEroski {
 
         verify(repo, times(44)).save(any())
     }
-    //@Test
+    @Test
     fun `ticket eroski V2 should be added to database`() {
         println("Current working directory: " + System.getProperty("user.dir"))
         val file = File(Objects.requireNonNull(this.javaClass.getClassLoader().getResource("Compra2.pdf")).toURI());
@@ -52,5 +55,16 @@ class TicketEroski {
         handleNewBill.handle(event)
 
         verify(repo, times(5)).save(any())
+    }
+
+    @Test
+    fun `ticket eroski V3 should be added to database`() {
+        println("Current working directory: " + System.getProperty("user.dir"))
+        val file = File(Objects.requireNonNull(this.javaClass.getClassLoader().getResource("Compra3.pdf")).toURI());
+        val event = NewBillArrived(file.absolutePath)
+
+        handleNewBill.handle(event)
+
+        verify(repo, times(20)).save(any())
     }
 }

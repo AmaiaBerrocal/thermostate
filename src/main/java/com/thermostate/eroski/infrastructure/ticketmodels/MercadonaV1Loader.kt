@@ -1,48 +1,29 @@
 package com.thermostate.eroski.infrastructure.ticketmodels
 
+import com.thermostate.eroski.domain.Item
+import com.thermostate.eroski.domain.TicketLoader
+import org.springframework.stereotype.Component
 import java.util.regex.Pattern
 
-object MercadonaV1Loader {
-    @JvmStatic
-    fun main(args: Array<String>) {
-        val ticket = """
-MERCADONA, S.A. A-46103834
-              C/ SIERRA DE ANDIA 10
-             01010 VITORIA-GASTEIZ
-              TELÉFONO: 945318995
-          01/04/2025 19:01  OP: 3472084
-      FACTURA SIMPLIFICADA: 4334-021-423648
+@Component("MercadonaV1Loader")
+class MercadonaV1Loader: TicketLoader {
+    lateinit var id: String
 
-    Descripción                    P. Unit    Importe
-  1 FILETE MERLUZA CABO                          4,95
-  1 PATATAS CORTE GRUESO                         3,10
-  4 PROTEINA 0% NATURAL               1,41       5,64
-  1 T.CHERRY 500 GR                              1,98
-  1 SANDÍA PARTIDA B/S                           4,17
-  2 JAMON C.CALIDAD EXTR              2,04       4,08
-  1 INF TE VERDE                                 0,75
-  1 PENNE RIGATE                                 0,80
-  1 COCA COLA LIGHT P -9                         7,47
-  1 MACARRON FINO                                0,80
-  1 MINI RELLENO LECHE                           1,95
-  2 CEBOLLA TIERNA                    1,35       2,70
-  1 MOUSSE PROTEIN CHOCO                         1,30
-  1 PECHUGA FAMILIAR                             7,85
-  1 ZANAHORIA RALLADA                            0,94
-  1 GOURMET MAXI                                 1,76
-  2 PANECILLO 11 UDS                  1,14       2,28
-  1 PAN ACEITE DE OLIVA                          0,57
-  1 GEL-CHAMPÚ DUCHA                             1,00
-  1 + PROTEÍNAS FRESA                            1,47
-  1 PLATANO
-        1,322 kg                 3,20 €/kg       4,23
-  1 MANZANA GOLDEN
-        1,030 kg                 2,10 €/kg       2,16
-                                TOTAL (€)       61,95
-                       TARJETA BANCARIA         61,95
-     IVA        BASE IMPONIBLE (€)      CUOTA (€)
+    override fun findId(lines: List<String>): String {
+        id = ""
+        val idRegex = Pattern.compile("\\b\\d{4}-\\d{3}-\\d{6}\\b")
+        for (line in lines) {
+            val matcher = idRegex.matcher(line)
+            if (matcher.find()) {
+                id = matcher.group()
+            }
+        }
+        return id
+    }
 
-""".trimIndent()
+    override fun hasKey(lines: List<String>) = lines.any { it.contains("MERCADONA")}
+
+    override fun loadItems(lines: List<String>): List<Item> {
 
         val items: MutableList<Item> = ArrayList()
         var previousLine: String? = null
@@ -59,7 +40,7 @@ MERCADONA, S.A. A-46103834
             "^\\s*(\\d+,\\d{3}) kg\\s+(\\d+,\\d{2}) €/kg\\s+(\\d+,\\d{2})$"
         )
 
-        for (line in ticket.split("\\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+        for (line in lines) {
             var line = line
             line = line.trim { it <= ' ' }
 
@@ -70,36 +51,23 @@ MERCADONA, S.A. A-46103834
                 val unidades = productMatcher.group(1).toInt()
                 val producto = productMatcher.group(2).trim { it <= ' ' }
                 val precioPorUnidad = if (productMatcher.group(3) != null) (productMatcher.group(3).replace(",", ".")
-                    .toDouble() * 100).toInt() else
-                    0 // Se calculará después en caso de productos por peso
+                    .toDouble() * 100).toInt() else 0
 
                 val precioTotal = (productMatcher.group(4).replace(",", ".").toDouble() * 100).toInt()
-
-                items.add(Item(unidades, producto, precioPorUnidad, precioTotal))
+                val precio = if (unidades > 1) precioPorUnidad else precioTotal
+                items.add(Item(unidades, producto, precio, 0, producto, "MERCADONAV1", id))
                 previousLine = producto
             } else if (weightMatcher.find() && previousLine != null) {
                 val pesoKg = weightMatcher.group(1).replace(",", ".").toDouble()
                 val precioPorKg = (weightMatcher.group(2).replace(",", ".").toDouble() * 100).toInt()
-                val precioTotal = (weightMatcher.group(3).replace(",", ".").toDouble() * 100).toInt()
 
-                items.add(Item(1, "$previousLine ($pesoKg kg)", precioPorKg, precioTotal))
+                items.add(Item((pesoKg * 1000).toInt(), previousLine, precioPorKg, 0, previousLine, "MERCADONAV1", id))
                 previousLine = null // Se resetea después de capturar el peso
+            } else {
+                previousLine = line
             }
         }
-
-        // Mostrar resultados
-        for (item in items) {
-            println(item)
-        }
+        return items
     }
 
-    internal class Item(
-        var unidades: Int, var producto: String, // en céntimos
-        var precioPorUnidad: Int, // en céntimos
-        var precioTotal: Int
-    ) {
-        override fun toString(): String {
-            return unidades.toString() + " x " + producto + " @ " + (precioPorUnidad / 100.0) + "€ (Total: " + (precioTotal / 100.0) + "€)"
-        }
-    }
 }
