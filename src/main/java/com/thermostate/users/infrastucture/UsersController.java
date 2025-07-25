@@ -48,6 +48,8 @@ public class UsersController {
     @ResponseBody
     public ValueResponse<LogedUserInfo> login(@RequestBody UserLoginRequest request) {
         LogedUserInfo userInfo =  loginUser.execute(request.name, request.password);
+        System.out.println("User logged in: " + userInfo.getUserId() + " with role: " + userInfo.getRole());
+        System.out.println("Bearer token: " + userInfo.getBearer());
         return new ValueResponse<>(userInfo);
     }
 
