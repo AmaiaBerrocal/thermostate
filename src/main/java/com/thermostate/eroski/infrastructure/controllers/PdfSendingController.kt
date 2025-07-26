@@ -22,6 +22,9 @@ class PdfSendingController(val eventBus: EventBus) {
         @RequestPart("file") file: MultipartFile) {
         println("Received file: $fileName")
         println("File size: ${file.size} bytes")
+        if (!fileName.matches(Regex("^[a-zA-Z0-9._-]+$"))) {
+            throw IllegalArgumentException("Nombre de archivo inválido")
+        }
         val filePath: Path = Paths.get(System.getProperty("user.home") + "/$fileName")
         if (Files.exists(filePath)) {
             Files.delete(filePath)
