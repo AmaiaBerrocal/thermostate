@@ -30,4 +30,24 @@ public class TicketTest {
                 .assertThatResponseIsOk();
 
     }
+
+    @Test
+    public void should_create_a_ticket_opnce_when_asked_twice() {
+        String bearer = getBearer();
+        E2ERequest
+                .to("http://localhost:8080/upload")
+                .withHeader("Authorization", bearer)
+                .withContentType("application/form-data;charset=UTF-8")
+                .sendAFilePost("/home/inigo/projects/thermostate/src/test/resources/Compra.pdf", "file",
+                        Map.of("fileName", "testticket.pdf"))
+                .assertThatResponseIsOk();
+        E2ERequest
+                .to("http://localhost:8080/upload")
+                .withHeader("Authorization", bearer)
+                .withContentType("application/form-data;charset=UTF-8")
+                .sendAFilePost("/home/inigo/projects/thermostate/src/test/resources/Compra.pdf", "file",
+                        Map.of("fileName", "testticket.pdf"))
+                .assertThatResponseIsOk();
+
+    }
 }

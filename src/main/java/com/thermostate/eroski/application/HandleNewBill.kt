@@ -14,6 +14,10 @@ class HandleNewBill(val loaders: List<TicketLoader>,
     override fun handle(newBillArrived: NewBillArrived) {
         val fileLines = parser.parse(newBillArrived.fileName)
         val ticket = Ticket.buildTicket(fileLines, loaders)
-        ticket.persist(repository)
+        if (ticket.doesNotExist(repository)) {
+            ticket.persist(repository)
+        } else {
+            println("Ticket with id ${ticket.id} already exists: skipping")
+        }
     }
 }

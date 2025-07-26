@@ -14,4 +14,10 @@ class ItemsRepo(val items: Items) : TicketRepository{
             items.save(ItemJpa.fromDomain(it, ticket.id))
         }
     }
+
+    override fun findByTicketId(id: String): Boolean {
+        items.findByTicketId(id).let {
+            return it.isNotEmpty()
+        }
+    }
 }
