@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.nio.file.Files
+import java.nio.file.OpenOption
 import java.nio.file.Path
 import java.nio.file.Paths
+import java.nio.file.StandardOpenOption
 
 @RestController
 @CrossOrigin
@@ -20,8 +22,15 @@ class PdfSendingController(val eventBus: EventBus) {
         @RequestPart("file") file: MultipartFile) {
         println("Received file: $fileName")
         println("File size: ${file.size} bytes")
-        val filePath: Path = Paths.get("/tmp/$fileName")
-        Files.write(filePath, file.bytes)
-        eventBus.emit(NewBillArrived("/tmp/$fileName"))
+        val baseDir: Path = Paths.get(System.getProperty("user.home")).normalize().toAbsolutePath()
+        val filePath: Path = baseDir.resolve(fileName).normalize().toAbsolutePath()
+        if (!filePath.startsWith(baseDir)) {
+            throw IllegalArgumentException("Invalid file path")
+        }
+        if (Files.exists(filePath)) {
+            Files.delete(filePath)
+        }
+        Files.write(filePath, file.bytes, StandardOpenOption.CREATE_NEW)
+        eventBus.emit(NewBillArrived(filePath.toString()))
     }
 }

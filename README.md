@@ -103,3 +103,14 @@ to switch it on or:
 ```Runtime.getRuntime().exec("gpio write 25 1");```
 
 to switch it off.
+
+# Docker
+
+To use docker image you should install QEMU to run ARM images on x86:
+
+```docker run --rm --privileged multiarch/qemu-user-static --reset -p yes'''
+
+build the image:
+
+'''docker buildx build --platform linux/arm/amd64 -t thermostate .''' 
+ 
